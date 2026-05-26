@@ -1,4 +1,4 @@
-import { Button, ButtonBase, Link } from "@mui/material";
+import { ButtonBase } from "@mui/material";
 import type { BotaoProps } from "./Button.types";
 import * as styles from "./Button.style";
 
