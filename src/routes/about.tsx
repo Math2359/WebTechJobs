@@ -9,7 +9,6 @@ export const Route = createFileRoute('/about')({
 function RouteComponent() {
   return (
     <Stack>
-        <Logo />
     </Stack>
   )
 }
