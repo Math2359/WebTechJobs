@@ -10,9 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as AppRouteRouteImport } from './routes/app/route'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as _homeRouteRouteImport } from './routes/__home/route'
 import { Route as ApprotasClienteRouteImport } from './routes/app/(rotas)/cliente'
 
 const LoginRoute = LoginRouteImport.update({
@@ -20,19 +19,13 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppRouteRoute = AppRouteRouteImport.update({
   id: '/app',
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const _homeRouteRoute = _homeRouteRouteImport.update({
+  id: '/__home',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApprotasClienteRoute = ApprotasClienteRouteImport.update({
@@ -42,39 +35,35 @@ const ApprotasClienteRoute = ApprotasClienteRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof _homeRouteRoute
   '/app': typeof AppRouteRouteWithChildren
-  '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/app/cliente': typeof ApprotasClienteRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof _homeRouteRoute
   '/app': typeof AppRouteRouteWithChildren
-  '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/app/cliente': typeof ApprotasClienteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/__home': typeof _homeRouteRoute
   '/app': typeof AppRouteRouteWithChildren
-  '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/app/(rotas)/cliente': typeof ApprotasClienteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/about' | '/login' | '/app/cliente'
+  fullPaths: '/' | '/app' | '/login' | '/app/cliente'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app' | '/about' | '/login' | '/app/cliente'
-  id: '__root__' | '/' | '/app' | '/about' | '/login' | '/app/(rotas)/cliente'
+  to: '/' | '/app' | '/login' | '/app/cliente'
+  id: '__root__' | '/__home' | '/app' | '/login' | '/app/(rotas)/cliente'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  _homeRouteRoute: typeof _homeRouteRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
-  AboutRoute: typeof AboutRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -87,13 +76,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/app': {
       id: '/app'
       path: '/app'
@@ -101,11 +83,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
+    '/__home': {
+      id: '/__home'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof _homeRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/(rotas)/cliente': {
@@ -131,9 +113,8 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  _homeRouteRoute: _homeRouteRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
-  AboutRoute: AboutRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
