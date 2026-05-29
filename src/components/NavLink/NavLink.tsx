@@ -9,5 +9,5 @@ const BasicNavLink = ({ ...props }: NavLinkProps) => {
 const TanStackLink = createLink(BasicNavLink)
 
 export const NavLink: LinkComponent<typeof BasicNavLink> = (props) => {
-    return <TanStackLink activeProps={{ sx: styles.ActiveNavLinkStyle }} {...props} />
+    return <TanStackLink activeProps={{ sx: styles.GerarEstiloNavLink(props.underLineColor ?? "primary") }} {...props} />
 }

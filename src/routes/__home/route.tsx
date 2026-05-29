@@ -15,11 +15,11 @@ function RouteComponent() {
         <Logo />
         <Grid container spacing={3} sx={{ alignItems: "center" }}>
           <Grid container spacing={3}>
-            <NavLink to="/">Página Inicial</NavLink>
-            <NavLink to="/app/cliente">Sobre nós</NavLink>
-            <NavLink to="/app">Fale conosco</NavLink>
+            <NavLink underLineColor='secondary' to="/">Página Inicial</NavLink>
+            <NavLink underLineColor='secondary' to="/app/cliente">Sobre nós</NavLink>
+            <NavLink underLineColor='secondary' to="/app">Fale conosco</NavLink>
           </Grid>
-          <Botao cor='secondary' to="/login">Login</Botao>
+          <Botao variante='outlined' cor='secondary' to="/login">Login</Botao>
         </Grid>
       </Box>
       <Outlet />

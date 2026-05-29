@@ -3,6 +3,10 @@ import type { ButtonBaseProps } from "@mui/material";
 export type BotaoProps = ButtonBaseProps & {
     cor?: CorBotao,
     to?: string | number
+    variante?: VarianteBotao
+    fullWidth?: boolean
 }
 
 export type CorBotao = "primary" | "secondary";
+
+export type VarianteBotao = "outlined" | "contained"

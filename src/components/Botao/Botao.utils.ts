@@ -1,7 +1,8 @@
-import type { Theme } from "@mui/material";
-import type { CorBotao } from "./Botao.types";
+import type { SxProps, Theme } from "@mui/material";
+import type { CorBotao, VarianteBotao } from "./Botao.types";
+import { GerarEstiloBotaoOutlined, GerarEstiloBotaoContaind } from "./Botao.styles";
 
-export const CoresBotao: Record<CorBotao, (theme: Theme) => string> = {
-    primary: (theme) => theme.palette.primary.main,
-    secondary: (theme) => theme.palette.secondary.main,
+export const EstilosBotao: Record<VarianteBotao, (cor: CorBotao) => SxProps<Theme>> = {
+    contained: GerarEstiloBotaoContaind,
+    outlined: GerarEstiloBotaoOutlined
 }

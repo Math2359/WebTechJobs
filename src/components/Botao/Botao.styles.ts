@@ -1,13 +1,23 @@
 import type { SxProps, Theme } from "@mui/material";
-import { CoresBotao } from "./Botao.utils";
 import type { CorBotao } from "./Botao.types";
 
-export const GerarEstiloBotao = (cor: CorBotao): SxProps<Theme> => {
+export const GerarEstiloBotaoOutlined = (cor: CorBotao): SxProps<Theme> => {
     return (theme) => ({
-        border: '1px solid',
-        borderColor: CoresBotao[cor],
-        padding: theme.spacing(0.7, 2.5),
-        typography: theme.typography.body2,
-        borderRadius: 100,
+        borderColor: theme.palette[cor].main,
     })
 }
+
+export const GerarEstiloBotaoContaind = (cor: CorBotao): SxProps<Theme> => {
+    return (theme) => ({
+        borderColor: theme.palette[cor].main,
+        background: theme.palette[cor].main,
+        color: theme.palette[cor].contrastText,
+    })
+}
+
+export const EstiloPadrao: SxProps<Theme> = (theme) => ({
+    border: '1px solid',
+    padding: theme.spacing(1, 2.5),
+    typography: theme.typography.subtitle2,
+    borderRadius: 100,
+})

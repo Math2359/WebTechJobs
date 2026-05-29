@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as EsqueciMinhaSenhaRouteImport } from './routes/esqueci-minha-senha'
+import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as _homeRouteRouteImport } from './routes/__home/route'
 import { Route as ApprotasClienteRouteImport } from './routes/app/(rotas)/cliente'
@@ -17,6 +19,16 @@ import { Route as ApprotasClienteRouteImport } from './routes/app/(rotas)/client
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsqueciMinhaSenhaRoute = EsqueciMinhaSenhaRouteImport.update({
+  id: '/esqueci-minha-senha',
+  path: '/esqueci-minha-senha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRouteRoute = AppRouteRouteImport.update({
@@ -37,12 +49,16 @@ const ApprotasClienteRoute = ApprotasClienteRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof _homeRouteRoute
   '/app': typeof AppRouteRouteWithChildren
+  '/cadastro': typeof CadastroRoute
+  '/esqueci-minha-senha': typeof EsqueciMinhaSenhaRoute
   '/login': typeof LoginRoute
   '/app/cliente': typeof ApprotasClienteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof _homeRouteRoute
   '/app': typeof AppRouteRouteWithChildren
+  '/cadastro': typeof CadastroRoute
+  '/esqueci-minha-senha': typeof EsqueciMinhaSenhaRoute
   '/login': typeof LoginRoute
   '/app/cliente': typeof ApprotasClienteRoute
 }
@@ -50,20 +66,43 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/__home': typeof _homeRouteRoute
   '/app': typeof AppRouteRouteWithChildren
+  '/cadastro': typeof CadastroRoute
+  '/esqueci-minha-senha': typeof EsqueciMinhaSenhaRoute
   '/login': typeof LoginRoute
   '/app/(rotas)/cliente': typeof ApprotasClienteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/login' | '/app/cliente'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/cadastro'
+    | '/esqueci-minha-senha'
+    | '/login'
+    | '/app/cliente'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app' | '/login' | '/app/cliente'
-  id: '__root__' | '/__home' | '/app' | '/login' | '/app/(rotas)/cliente'
+  to:
+    | '/'
+    | '/app'
+    | '/cadastro'
+    | '/esqueci-minha-senha'
+    | '/login'
+    | '/app/cliente'
+  id:
+    | '__root__'
+    | '/__home'
+    | '/app'
+    | '/cadastro'
+    | '/esqueci-minha-senha'
+    | '/login'
+    | '/app/(rotas)/cliente'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   _homeRouteRoute: typeof _homeRouteRoute
   AppRouteRoute: typeof AppRouteRouteWithChildren
+  CadastroRoute: typeof CadastroRoute
+  EsqueciMinhaSenhaRoute: typeof EsqueciMinhaSenhaRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -74,6 +113,20 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/esqueci-minha-senha': {
+      id: '/esqueci-minha-senha'
+      path: '/esqueci-minha-senha'
+      fullPath: '/esqueci-minha-senha'
+      preLoaderRoute: typeof EsqueciMinhaSenhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app': {
@@ -115,6 +168,8 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   _homeRouteRoute: _homeRouteRoute,
   AppRouteRoute: AppRouteRouteWithChildren,
+  CadastroRoute: CadastroRoute,
+  EsqueciMinhaSenhaRoute: EsqueciMinhaSenhaRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport

@@ -6,8 +6,8 @@ import { Logo } from '../assets'
 
 const RootLayout = () => {
   return (
-    <Stack sx={{ flexGrow: 1, height: '100vh' }}>
-      <Box sx={(theme) => ({ justifyContent: "space-between", display: "flex", padding: theme.spacing(2, 4), alignItems: "center" })}>
+    <Stack sx={{ flexGrow: 1, height: '100dvh' }}>
+      <Box sx={(theme) => ({ position: "fixed", justifyContent: "space-between", display: "flex", padding: theme.spacing(2, 4), alignItems: "center" })}>
         <Logo />
       </Box>
       <Outlet />
