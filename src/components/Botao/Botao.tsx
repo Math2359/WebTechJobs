@@ -3,8 +3,9 @@ import type { BotaoProps } from "./Botao.types";
 import { Link } from "@tanstack/react-router";
 import { EstilosBotao } from "./Botao.utils";
 import * as styles from "./Botao.styles"
+import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 
-export const Botao = ({ cor = "primary", variante = "contained", fullWidth, children, to, ...props }: BotaoProps) => {
+export const Botao = ({ cor = "primary", loading = false, variante = "contained", fullWidth, children, to, ...props }: BotaoProps) => {
     const linkProps = {
         LinkComponent: Link,
         to
@@ -16,7 +17,7 @@ export const Botao = ({ cor = "primary", variante = "contained", fullWidth, chil
             EstilosBotao[variante](cor),
             fullWidth && { width: "100%" }
         ] as SxProps<Theme>} {...props} {...linkProps}>
-            {children}
+            {loading ? <CachedRoundedIcon /> : children}
         </ButtonBase>
     )
 }

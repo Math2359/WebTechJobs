@@ -1,6 +1,6 @@
 import z from "zod";
 import { baseSchema } from "../schema";
-import { validarCNPJ } from "../../../../lib/documento";
+import { validarCNPJ } from "@/lib/documento";
 
 export const empresaSchema = baseSchema.extend({
     cnpj: z

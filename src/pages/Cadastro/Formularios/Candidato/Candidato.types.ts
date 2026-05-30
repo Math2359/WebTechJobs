@@ -1,4 +1,4 @@
 import z from "zod";
-import type { baseSchema } from "../schema";
+import type { candidatoSchema } from "./Candidato.schema";
 
-export type CandidatoSchema = z.infer<typeof baseSchema>
+export type CandidatoSchema = z.infer<typeof candidatoSchema>

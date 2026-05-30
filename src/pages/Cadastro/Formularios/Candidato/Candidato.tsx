@@ -1,17 +1,39 @@
 import { Grid, Stack } from "@mui/material"
-import { useFormCustomizado } from "../../../../components/Formulario"
+import { candidatoSchema } from "./Candidato.schema"
+import { useNavigate } from "@tanstack/react-router"
+import { useCriarUsuario } from "@/api/usuario/usuario"
+import { useFormCustomizado } from "@/components/Formulario"
 import { DEFAULT_VALUES } from "./Candidato.utils"
-import { Botao } from "../../../../components/Botao/Botao"
-import { baseSchema } from "../schema"
+import type { CriarUsuarioRequest } from "@/api/usuario/usuario.types"
+import { Dominios } from "@/lib/dominios"
+import { MASCARA_CPF } from "@/lib/mascaras"
+import { Botao } from "@/components/Botao/Botao"
 
 export const CandidatoForm = () => {
+    const { mutateAsync } = useCriarUsuario()
+
+    const navigate = useNavigate()
+
     const { AppForm, AppField, Subscribe, handleSubmit } = useFormCustomizado({
         defaultValues: DEFAULT_VALUES,
         validators: {
-            onChange: baseSchema
+            onChange: candidatoSchema
         },
-        onSubmit: ({ value }) => {
-            console.log(value)
+        onSubmit: async ({ value }) => {
+            const request: CriarUsuarioRequest = {
+                documento: value.cpf,
+                login: value.email,
+                nome: value.nome,
+                perfil: Dominios.Perfil.Candidato,
+                senha: value.senha
+            }
+
+            await mutateAsync(request)
+
+            navigate({
+                to: "/login",
+                viewTransition: true
+            })
         }
     })
 
@@ -26,6 +48,10 @@ export const CandidatoForm = () => {
                     <AppField
                         name="email"
                         children={(field) => <field.InputForm placeholder="E-mail" cor="primary" variante="normal" label="Email:" />}
+                    />
+                    <AppField
+                        name="cpf"
+                        children={(field) => <field.InputForm mask={MASCARA_CPF} placeholder="Ex.: 000.000.000-00" variante="mascara" label="CPF:" />}
                     />
                     <AppField
                         name="senha"

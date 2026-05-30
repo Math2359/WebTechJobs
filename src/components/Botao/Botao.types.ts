@@ -5,6 +5,7 @@ export type BotaoProps = ButtonBaseProps & {
     to?: string | number
     variante?: VarianteBotao
     fullWidth?: boolean
+    loading?: boolean
 }
 
 export type CorBotao = "primary" | "secondary";

@@ -4,5 +4,6 @@ export const DEFAULT_VALUES: CandidatoSchema = {
     confirmarSenha: "",
     email: "",
     nome: "",
-    senha: ""
+    senha: "",
+    cpf: ""
 }
