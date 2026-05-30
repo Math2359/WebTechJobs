@@ -12,7 +12,7 @@ export const api = axios.create({
 api.interceptors.request.use((config) => {
     const credentials = obterCookie<CredencialState>(CookiesDisponiveis.Credenciais)
     
-    const accessToken = credentials?.accessToken
+    const accessToken = credentials?.token
 
     if (accessToken) config.headers["Authorization"] = `Bearer ${accessToken}`
 
