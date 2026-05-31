@@ -21,7 +21,7 @@ export const Cadastro = () => {
         alignItems: 'center',
       }}
     >
-      <Grid size={3.5}>
+      <Grid size={3}>
         <Stack sx={{ width: "100%" }} spacing={4}>
           <Typography variant='h4'>
             Seja bem-vindo!
@@ -67,7 +67,7 @@ export const Cadastro = () => {
         </Stack>
       </Grid>
 
-      <Grid size={3.5}>
+      <Grid size={3}>
         <CadastroIlustration width="100%" />
       </Grid>
     </Grid>

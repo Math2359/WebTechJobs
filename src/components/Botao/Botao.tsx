@@ -3,7 +3,24 @@ import type { BotaoProps } from "./Botao.types";
 import { Link } from "@tanstack/react-router";
 import { EstilosBotao } from "./Botao.utils";
 import * as styles from "./Botao.styles"
-import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
+import { motion } from "motion/react"
+import { LoaderIcon } from "@/assets";
+
+const AnimacaoLoading = () => {
+    return (
+        <motion.div
+            style={{
+                display: "flex",
+                alignItems: "center"
+            }}
+            animate={{ 
+                rotate: 360,
+                transition: { duration: 1.5, ease: "linear", repeat: Infinity }
+            }}>
+            <LoaderIcon />
+        </motion.div>
+    )
+}
 
 export const Botao = ({ cor = "primary", loading = false, variante = "contained", fullWidth, children, to, ...props }: BotaoProps) => {
     const linkProps = {
@@ -12,12 +29,14 @@ export const Botao = ({ cor = "primary", loading = false, variante = "contained"
     }
 
     return (
-        <ButtonBase sx={[
+        <ButtonBase disabled={loading} sx={[
             styles.EstiloPadrao,
-            EstilosBotao[variante](cor),
+            loading ? styles.EstiloLoading : EstilosBotao[variante](cor),
             fullWidth && { width: "100%" }
         ] as SxProps<Theme>} {...props} {...linkProps}>
-            {loading ? <CachedRoundedIcon /> : children}
+            {loading ? <AnimacaoLoading />
+                : children
+            }
         </ButtonBase>
     )
 }

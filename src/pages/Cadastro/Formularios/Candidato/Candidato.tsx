@@ -1,4 +1,4 @@
-import { Grid, Stack } from "@mui/material"
+import { Stack } from "@mui/material"
 import { candidatoSchema } from "./Candidato.schema"
 import { useNavigate } from "@tanstack/react-router"
 import { useCriarUsuario } from "@/api/usuario/usuario"
@@ -17,7 +17,8 @@ export const CandidatoForm = () => {
     const { AppForm, AppField, Subscribe, handleSubmit } = useFormCustomizado({
         defaultValues: DEFAULT_VALUES,
         validators: {
-            onChange: candidatoSchema
+            onBlur: candidatoSchema,
+            onSubmit: candidatoSchema
         },
         onSubmit: async ({ value }) => {
             const request: CriarUsuarioRequest = {
@@ -47,7 +48,7 @@ export const CandidatoForm = () => {
                     />
                     <AppField
                         name="email"
-                        children={(field) => <field.InputForm placeholder="E-mail" cor="primary" variante="normal" label="Email:" />}
+                        children={(field) => <field.InputForm placeholder="Digite seu e-mail" cor="primary" variante="normal" label="E-mail:" />}
                     />
                     <AppField
                         name="cpf"
@@ -62,11 +63,10 @@ export const CandidatoForm = () => {
                         children={(field) => <field.InputForm placeholder="Confirme sua senha" cor="primary" variante="senha" label="Confirme sua senha:" />}
                     />
                 </Stack>
-                <Grid container sx={{ justifyContent: "center" }}>
-                    <Subscribe
-                        children={() => <Botao onClick={handleSubmit} type="submit">Finalizar cadastro</Botao>}
-                    />
-                </Grid>
+                <Subscribe
+                    selector={selector => [selector.isSubmitting]}
+                    children={([isSubmitting]) => <Botao fullWidth loading={isSubmitting} onClick={handleSubmit} type="submit">Finalizar cadastro</Botao>}
+                />
             </Stack>
         </AppForm>
     )

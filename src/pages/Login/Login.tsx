@@ -8,6 +8,7 @@ import { Divider, Grid, Stack, Typography } from '@mui/material'
 import { useNavigate } from '@tanstack/react-router'
 import { useDispatch } from 'react-redux'
 import { loginSchema } from './Login.schema'
+import { Dominios } from '@/lib/dominios'
 
 export const Login = () => {
     const { mutateAsync } = useGerarToken()
@@ -20,15 +21,17 @@ export const Login = () => {
             senha: ""
         },
         validators: {
-            onBlur: loginSchema
+            onBlur: loginSchema,
+            onSubmit: loginSchema,
         },
         onSubmit: async ({ value }) => {
             const data = await mutateAsync(value)
-
+            
+            
             dispatch(credencialActions.definirCredenciais(data))
 
             navigate({
-                to: "/app/cliente",
+                to: data.perfil === Dominios.Perfil.Candidato ? "/candidato" : "/",
                 viewTransition: true
             })
         }
@@ -74,7 +77,7 @@ export const Login = () => {
                         </Stack>
                         <Stack sx={{ alignItems: "center" }}>
                             <Grid size={9}>
-                                <Subscribe children={() => <Botao fullWidth type="submit" onClick={handleSubmit}>Entrar</Botao>} />
+                                <Subscribe selector={selector => [selector.isSubmitting]} children={([isSubmitting]) => <Botao loading={isSubmitting} fullWidth type="submit" onClick={handleSubmit}>Entrar</Botao>} />
                             </Grid>
                         </Stack>
                         <Typography variant='subtitle2'>

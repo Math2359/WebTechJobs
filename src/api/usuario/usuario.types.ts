@@ -1,9 +1,9 @@
-import type { PerfilUsuario } from "@/lib/dominios/perfil";
+import type { Perfil } from "@/lib/dominios/perfil";
 
 export type CriarUsuarioRequest = {
     senha: string;
     login: string;
-    perfil: PerfilUsuario;
+    perfil: Perfil;
     documento: string;
     nome: string;
     cep?: string;
@@ -19,5 +19,5 @@ export type GerarTokenResponse = {
     token: string
     nomeUsuario: string
     email: string
-    perfil: PerfilUsuario
+    perfil: Perfil
 }

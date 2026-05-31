@@ -13,3 +13,7 @@ export type InputPadraoProps = {
 } & InputBaseProps
 
 export type CorInput = "primary" | "secondary";
+
+export type ErroInput = {
+    message?: string
+}

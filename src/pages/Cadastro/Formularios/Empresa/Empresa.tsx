@@ -1,5 +1,5 @@
 import { useFormCustomizado } from "@/components/Formulario"
-import { Grid, Stack } from "@mui/material"
+import { Stack } from "@mui/material"
 import { DEFAULT_VALUES } from "./Empresa.utils"
 import { empresaSchema } from "./Empresa.schema"
 import { MASCARA_CNPJ } from "@/lib/mascaras"
@@ -17,7 +17,8 @@ export const EmpresaForm = () => {
     const { AppForm, AppField, Subscribe, handleSubmit } = useFormCustomizado({
         defaultValues: DEFAULT_VALUES,
         validators: {
-            onBlur: empresaSchema
+            onBlur: empresaSchema,
+            onSubmit: empresaSchema
         },
         onSubmit: async ({ value }) => {
             const request: CriarUsuarioRequest = {
@@ -47,7 +48,7 @@ export const EmpresaForm = () => {
                     />
                     <AppField
                         name="email"
-                        children={(field) => <field.InputForm placeholder="E-mail" cor="secondary" variante="normal" label="Email:" />}
+                        children={(field) => <field.InputForm placeholder="Digite seu e-mail" cor="secondary" variante="normal" label="E-mail:" />}
                     />
                     <AppField
                         name="cnpj"
@@ -62,12 +63,10 @@ export const EmpresaForm = () => {
                         children={(field) => <field.InputForm placeholder="Confirme sua senha" cor="secondary" variante="senha" label="Confirme sua senha:" />}
                     />
                 </Stack>
-                <Grid container sx={{ justifyContent: "center" }}>
                     <Subscribe
                         selector={selector => [selector.isSubmitting]}
-                        children={([isSubmitting]) => <Botao loading={isSubmitting} cor="secondary" onClick={handleSubmit} type="submit">Finalizar cadastro</Botao>}
+                        children={([isSubmitting]) => <Botao fullWidth loading={isSubmitting} cor="secondary" onClick={handleSubmit} type="submit">Finalizar cadastro</Botao>}
                     />
-                </Grid>
             </Stack>
         </AppForm>
     )

@@ -17,7 +17,13 @@ export const GerarEstiloBotaoContaind = (cor: CorBotao): SxProps<Theme> => {
 
 export const EstiloPadrao: SxProps<Theme> = (theme) => ({
     border: '1px solid',
-    padding: theme.spacing(1, 2.5),
+    padding: theme.spacing(1, 3),
     typography: theme.typography.subtitle2,
     borderRadius: 100,
+    alignItems: "center"
+})
+
+export const EstiloLoading: SxProps<Theme> = (theme) => ({
+    background: theme.palette.grey[200],
+    borderColor: theme.palette.grey[700]
 })

@@ -16,8 +16,8 @@ function RouteComponent() {
         <Grid container spacing={3} sx={{ alignItems: "center" }}>
           <Grid container spacing={3}>
             <NavLink underLineColor='secondary' to="/">Página Inicial</NavLink>
-            <NavLink underLineColor='secondary' to="/app/cliente">Sobre nós</NavLink>
-            <NavLink underLineColor='secondary' to="/app">Fale conosco</NavLink>
+            <NavLink underLineColor='secondary' to="/">Sobre nós</NavLink>
+            <NavLink underLineColor='secondary' to="/">Fale conosco</NavLink>
           </Grid>
           <Botao variante='outlined' cor='secondary' to="/login">Login</Botao>
         </Grid>

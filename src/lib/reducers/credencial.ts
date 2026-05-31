@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { CookiesDisponiveis, definirCookie, obterCookie, removerCookie } from "../cookies";
-import type { PerfilUsuario } from "../dominios/perfil";
+import type { Perfil } from "../dominios/perfil";
 import { api } from "../axios";
 import { toast } from "sonner";
 
@@ -8,7 +8,7 @@ export type CredencialState = {
     token: string
     nomeUsuario: string
     email: string
-    perfil: PerfilUsuario
+    perfil: Perfil
 } | null
 
 const INITIAL_STATE: CredencialState = obterCookie<CredencialState>(CookiesDisponiveis.Credenciais) 

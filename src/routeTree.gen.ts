@@ -12,9 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EsqueciMinhaSenhaRouteImport } from './routes/esqueci-minha-senha'
 import { Route as CadastroRouteImport } from './routes/cadastro'
-import { Route as AppRouteRouteImport } from './routes/app/route'
+import { Route as CandidatoRouteRouteImport } from './routes/candidato/route'
 import { Route as _homeRouteRouteImport } from './routes/__home/route'
-import { Route as ApprotasClienteRouteImport } from './routes/app/(rotas)/cliente'
+import { Route as CandidatorotasIndexRouteImport } from './routes/candidato/(rotas)/index'
+import { Route as CandidatorotasVagasRouteImport } from './routes/candidato/(rotas)/vagas'
+import { Route as CandidatorotasCandidaturasRouteImport } from './routes/candidato/(rotas)/candidaturas'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -31,76 +33,97 @@ const CadastroRoute = CadastroRouteImport.update({
   path: '/cadastro',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRouteRoute = AppRouteRouteImport.update({
-  id: '/app',
-  path: '/app',
+const CandidatoRouteRoute = CandidatoRouteRouteImport.update({
+  id: '/candidato',
+  path: '/candidato',
   getParentRoute: () => rootRouteImport,
 } as any)
 const _homeRouteRoute = _homeRouteRouteImport.update({
   id: '/__home',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApprotasClienteRoute = ApprotasClienteRouteImport.update({
-  id: '/(rotas)/cliente',
-  path: '/cliente',
-  getParentRoute: () => AppRouteRoute,
+const CandidatorotasIndexRoute = CandidatorotasIndexRouteImport.update({
+  id: '/(rotas)/',
+  path: '/',
+  getParentRoute: () => CandidatoRouteRoute,
 } as any)
+const CandidatorotasVagasRoute = CandidatorotasVagasRouteImport.update({
+  id: '/(rotas)/vagas',
+  path: '/vagas',
+  getParentRoute: () => CandidatoRouteRoute,
+} as any)
+const CandidatorotasCandidaturasRoute =
+  CandidatorotasCandidaturasRouteImport.update({
+    id: '/(rotas)/candidaturas',
+    path: '/candidaturas',
+    getParentRoute: () => CandidatoRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof _homeRouteRoute
-  '/app': typeof AppRouteRouteWithChildren
+  '/candidato': typeof CandidatoRouteRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/esqueci-minha-senha': typeof EsqueciMinhaSenhaRoute
   '/login': typeof LoginRoute
-  '/app/cliente': typeof ApprotasClienteRoute
+  '/candidato/candidaturas': typeof CandidatorotasCandidaturasRoute
+  '/candidato/vagas': typeof CandidatorotasVagasRoute
+  '/candidato/': typeof CandidatorotasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof _homeRouteRoute
-  '/app': typeof AppRouteRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/esqueci-minha-senha': typeof EsqueciMinhaSenhaRoute
   '/login': typeof LoginRoute
-  '/app/cliente': typeof ApprotasClienteRoute
+  '/candidato/candidaturas': typeof CandidatorotasCandidaturasRoute
+  '/candidato/vagas': typeof CandidatorotasVagasRoute
+  '/candidato': typeof CandidatorotasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/__home': typeof _homeRouteRoute
-  '/app': typeof AppRouteRouteWithChildren
+  '/candidato': typeof CandidatoRouteRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/esqueci-minha-senha': typeof EsqueciMinhaSenhaRoute
   '/login': typeof LoginRoute
-  '/app/(rotas)/cliente': typeof ApprotasClienteRoute
+  '/candidato/(rotas)/candidaturas': typeof CandidatorotasCandidaturasRoute
+  '/candidato/(rotas)/vagas': typeof CandidatorotasVagasRoute
+  '/candidato/(rotas)/': typeof CandidatorotasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/app'
+    | '/candidato'
     | '/cadastro'
     | '/esqueci-minha-senha'
     | '/login'
-    | '/app/cliente'
+    | '/candidato/candidaturas'
+    | '/candidato/vagas'
+    | '/candidato/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/app'
     | '/cadastro'
     | '/esqueci-minha-senha'
     | '/login'
-    | '/app/cliente'
+    | '/candidato/candidaturas'
+    | '/candidato/vagas'
+    | '/candidato'
   id:
     | '__root__'
     | '/__home'
-    | '/app'
+    | '/candidato'
     | '/cadastro'
     | '/esqueci-minha-senha'
     | '/login'
-    | '/app/(rotas)/cliente'
+    | '/candidato/(rotas)/candidaturas'
+    | '/candidato/(rotas)/vagas'
+    | '/candidato/(rotas)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   _homeRouteRoute: typeof _homeRouteRoute
-  AppRouteRoute: typeof AppRouteRouteWithChildren
+  CandidatoRouteRoute: typeof CandidatoRouteRouteWithChildren
   CadastroRoute: typeof CadastroRoute
   EsqueciMinhaSenhaRoute: typeof EsqueciMinhaSenhaRoute
   LoginRoute: typeof LoginRoute
@@ -129,11 +152,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CadastroRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app': {
-      id: '/app'
-      path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof AppRouteRouteImport
+    '/candidato': {
+      id: '/candidato'
+      path: '/candidato'
+      fullPath: '/candidato'
+      preLoaderRoute: typeof CandidatoRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/__home': {
@@ -143,31 +166,49 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof _homeRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app/(rotas)/cliente': {
-      id: '/app/(rotas)/cliente'
-      path: '/cliente'
-      fullPath: '/app/cliente'
-      preLoaderRoute: typeof ApprotasClienteRouteImport
-      parentRoute: typeof AppRouteRoute
+    '/candidato/(rotas)/': {
+      id: '/candidato/(rotas)/'
+      path: '/'
+      fullPath: '/candidato/'
+      preLoaderRoute: typeof CandidatorotasIndexRouteImport
+      parentRoute: typeof CandidatoRouteRoute
+    }
+    '/candidato/(rotas)/vagas': {
+      id: '/candidato/(rotas)/vagas'
+      path: '/vagas'
+      fullPath: '/candidato/vagas'
+      preLoaderRoute: typeof CandidatorotasVagasRouteImport
+      parentRoute: typeof CandidatoRouteRoute
+    }
+    '/candidato/(rotas)/candidaturas': {
+      id: '/candidato/(rotas)/candidaturas'
+      path: '/candidaturas'
+      fullPath: '/candidato/candidaturas'
+      preLoaderRoute: typeof CandidatorotasCandidaturasRouteImport
+      parentRoute: typeof CandidatoRouteRoute
     }
   }
 }
 
-interface AppRouteRouteChildren {
-  ApprotasClienteRoute: typeof ApprotasClienteRoute
+interface CandidatoRouteRouteChildren {
+  CandidatorotasCandidaturasRoute: typeof CandidatorotasCandidaturasRoute
+  CandidatorotasVagasRoute: typeof CandidatorotasVagasRoute
+  CandidatorotasIndexRoute: typeof CandidatorotasIndexRoute
 }
 
-const AppRouteRouteChildren: AppRouteRouteChildren = {
-  ApprotasClienteRoute: ApprotasClienteRoute,
+const CandidatoRouteRouteChildren: CandidatoRouteRouteChildren = {
+  CandidatorotasCandidaturasRoute: CandidatorotasCandidaturasRoute,
+  CandidatorotasVagasRoute: CandidatorotasVagasRoute,
+  CandidatorotasIndexRoute: CandidatorotasIndexRoute,
 }
 
-const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
-  AppRouteRouteChildren,
+const CandidatoRouteRouteWithChildren = CandidatoRouteRoute._addFileChildren(
+  CandidatoRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
   _homeRouteRoute: _homeRouteRoute,
-  AppRouteRoute: AppRouteRouteWithChildren,
+  CandidatoRouteRoute: CandidatoRouteRouteWithChildren,
   CadastroRoute: CadastroRoute,
   EsqueciMinhaSenhaRoute: EsqueciMinhaSenhaRoute,
   LoginRoute: LoginRoute,

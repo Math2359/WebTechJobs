@@ -4,5 +4,5 @@ export const Perfil = {
     Empresa: 2,
 } as const
 
-export type PerfilUsuario =
+export type Perfil =
     typeof Perfil[keyof typeof Perfil];

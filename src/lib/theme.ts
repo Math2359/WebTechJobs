@@ -7,7 +7,7 @@ export const theme = createTheme({
         },
         secondary: {
             main: "#FF9900",
-            contrastText: "white"
+            contrastText: "#ffff"
         },
         grey: {
             "700": "#686868"
@@ -22,6 +22,12 @@ export const theme = createTheme({
         fontFamily: "Montserrat, sans-serif",
         h4: {
             textAlign: "center",
+        },
+        overline: {
+            fontWeight: "bold",
+            color: "GrayText",
+            fontSize: 18,
+            lineHeight: 1
         }
     }
 })
