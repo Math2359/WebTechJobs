@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export const Habilidade = comFormulario({
     ...editarFormOptions,
-    render: ({ form: { AppField, } }) => {
+    render: function HabilidadeItem({ form: { AppField } }) {
         const [habilidade, setHabilidade] = useState("")
         return (
             <Stack spacing={2}>

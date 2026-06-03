@@ -8,7 +8,7 @@ import { editarFormOptions } from "../FormularioEditar.utils";
 
 export const SobreMim = comFormulario({
     ...editarFormOptions,
-    render: ({ form: { AppField } }) => {
+    render: function SobreMimItem({ form: { AppField } }) {
         const [preferencia, setPreferencia] = useState("")
         return (
             <Stack spacing={2}>
