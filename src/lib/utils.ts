@@ -70,3 +70,23 @@ export function validarCpf(cpf: string): boolean {
 
     return resto === Number(cpf[10]);
 }
+
+export const formatarTelefone = (telefone: string | undefined) => {
+    if (!telefone) return undefined;
+
+    const numeros = telefone.replace(/\D/g, "");
+
+    if (numeros.length <= 10) {
+        return numeros.replace(
+            /(\d{2})(\d{4})(\d{0,4})/,
+            (_, ddd, parte1, parte2) =>
+                `(${ddd}) ${parte1}${parte2 ? `-${parte2}` : ""}`
+        );
+    }
+
+    return numeros.replace(
+        /(\d{2})(\d{5})(\d{0,4})/,
+        (_, ddd, parte1, parte2) =>
+            `(${ddd}) ${parte1}${parte2 ? `-${parte2}` : ""}`
+    );
+}

@@ -31,7 +31,7 @@ export const Botao = ({ cor = "primary", loading = false, variante = "contained"
     return (
         <ButtonBase disabled={loading} sx={[
             styles.EstiloPadrao,
-            loading ? styles.EstiloLoading : EstilosBotao[variante](cor),
+            loading || props.disabled ? styles.EstiloDesabilitado : EstilosBotao[variante](cor),
             fullWidth && { width: "100%" }
         ] as SxProps<Theme>} {...props} {...linkProps}>
             {loading ? <AnimacaoLoading />

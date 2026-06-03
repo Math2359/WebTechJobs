@@ -1,21 +1,21 @@
 import { Stack, Typography } from "@mui/material"
-import type { ErroInput, InputFormProps } from "./InputForm.types"
+import type { InputFormProps } from "./InputForm.types"
 import { Variantes } from "./variantes"
 import { useFieldContext } from "@/lib/formulario"
-import { retornarTipoErro } from "./InputForm.utils"
+import { TextoErro } from "../TextoErro/TextoErro"
 
 export const InputForm = ({ label, variante, ...props }: InputFormProps) => {
-    const { state: { meta: { errorMap, isBlurred } } } = useFieldContext<string>()
+    const { state: { meta: { errors, isTouched } } } = useFieldContext<string | number>()
 
     const Input = Variantes[variante];
 
-    const errors = errorMap[retornarTipoErro(isBlurred)] as ErroInput[] ?? []
+    const errosLimpos = [... new Set(errors.map(x => x.message))]
 
     return (
         <Stack spacing={1}>
-            <Typography variant="body2">{label}</Typography>
-            <Input error={errors.length > 0} {...props} />
-            {errors.map((erro, index) => <Typography variant="caption" color="error" key={index}>{erro.message}</Typography>)}
+            <Typography variant="body2">{label}:</Typography>
+            <Input error={isTouched && errosLimpos.length > 0} {...props} />
+            <TextoErro />
         </Stack>
     )
 }

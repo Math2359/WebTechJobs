@@ -1,8 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { CookiesDisponiveis, definirCookie, obterCookie, removerCookie } from "../cookies";
+import { CookiesDisponiveis, definirCookie, obterCookie } from "../cookies";
 import type { Perfil } from "../dominios/perfil";
-import { api } from "../axios";
-import { toast } from "sonner";
 
 export type CredencialState = {
     token: string
@@ -11,10 +9,10 @@ export type CredencialState = {
     perfil: Perfil
 } | null
 
-const INITIAL_STATE: CredencialState = obterCookie<CredencialState>(CookiesDisponiveis.Credenciais) 
+const INITIAL_STATE: CredencialState = obterCookie<CredencialState>(CookiesDisponiveis.Credenciais)
 
 export const { reducer: credencialReducer, actions: credencialActions } = createSlice({
-    name: "credentials",
+    name: "credencial",
     initialState: INITIAL_STATE,
     reducers: {
         definirCredenciais: (_, action: PayloadAction<CredencialState>) => {
@@ -22,12 +20,6 @@ export const { reducer: credencialReducer, actions: credencialActions } = create
 
             return action?.payload || null
         },
-        deslogarUsuario: () => {
-            removerCookie("credenciais")
-
-            api.defaults.headers.Authorization = ""
-
-            toast.message("Sua conta foi desconectada!")
-        }
+        deslogarUsuario: () => null
     }
 })

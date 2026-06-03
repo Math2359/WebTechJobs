@@ -1,10 +1,10 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
-import { Logo } from '../../assets'
-import { NavLink } from '../../components/NavLink/NavLink'
-import { Botao } from '../../components/Botao/Botao'
+import { createFileRoute } from '@tanstack/react-router'
 import { Box, Grid } from '@mui/material'
+import { Logo } from '@/assets'
+import { NavLink } from '@/components/NavLink/NavLink'
+import { Botao } from '@/components/Botao/Botao'
 
-export const Route = createFileRoute('/__home')({
+export const Route = createFileRoute('/')({
   component: RouteComponent,
 })
 
@@ -22,7 +22,6 @@ function RouteComponent() {
           <Botao variante='outlined' cor='secondary' to="/login">Login</Botao>
         </Grid>
       </Box>
-      <Outlet />
     </>
   )
 }

@@ -3,7 +3,7 @@ import type { IconeTextoProps } from "./IconeTexto.types";
 
 const GerarTexto = (texto: React.ReactNode, link: boolean) => {
     if (!texto)
-        return "-"
+        return "--"
 
     if (link)
         return <Link target="_blank" href={texto as string}>{(texto as string).replace(/^https?:\/\//, "")}</Link>

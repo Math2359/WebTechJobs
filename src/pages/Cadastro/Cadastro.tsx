@@ -8,10 +8,6 @@ import { ListaTab } from '@/components/ListaTab/ListaTab'
 export const Cadastro = () => {
   const [value, setValue] = useState("1")
 
-  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
-
   return (
     <Grid
       container
@@ -36,7 +32,7 @@ export const Cadastro = () => {
                 }}
               >
                 <ListaTab
-                  onChange={handleChange}
+                  onChange={setValue}
                   tabs={[{
                     label: "Candidato",
                     value: "1",

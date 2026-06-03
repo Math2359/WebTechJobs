@@ -1,5 +1,4 @@
 import type { InputBaseProps } from "@mui/material"
-import type { TiposVariantes } from "./variantes"
 import type { MaskedInputBaseProps } from "./variantes/Mascara/Mascara.types"
 
 export type InputFormProps = {
@@ -17,3 +16,5 @@ export type CorInput = "primary" | "secondary";
 export type ErroInput = {
     message?: string
 }
+
+export type TiposVariantes = "senha" | "normal" | "mascara"

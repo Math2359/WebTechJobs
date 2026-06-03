@@ -4,6 +4,7 @@ import type { CorBotao } from "./Botao.types";
 export const GerarEstiloBotaoOutlined = (cor: CorBotao): SxProps<Theme> => {
     return (theme) => ({
         borderColor: theme.palette[cor].main,
+        color: theme.palette[cor].main,
     })
 }
 
@@ -20,10 +21,11 @@ export const EstiloPadrao: SxProps<Theme> = (theme) => ({
     padding: theme.spacing(1, 3),
     typography: theme.typography.subtitle2,
     borderRadius: 100,
-    alignItems: "center"
+    placeItems: "center",
+    gap: theme.spacing(1),
 })
 
-export const EstiloLoading: SxProps<Theme> = (theme) => ({
+export const EstiloDesabilitado: SxProps<Theme> = (theme) => ({
     background: theme.palette.grey[200],
     borderColor: theme.palette.grey[700]
 })

@@ -21,7 +21,7 @@ const InputMask = forwardRef<HTMLInputElement, MaskedInputBaseProps>(({ onChange
     )
 })
 
-export const Mascara = ({ placeholder, mask, error, cor = "primary" }: InputPadraoProps) => {
+export const Mascara = ({ placeholder, mask, error, cor = "primary", ...props }: InputPadraoProps) => {
     const field = useFieldContext<string>()
 
     return (
@@ -34,6 +34,7 @@ export const Mascara = ({ placeholder, mask, error, cor = "primary" }: InputPadr
 
             onBlur={field.handleBlur}
             onChange={(e) => field.handleChange(e.target.value)}
+            {...props}
         />
     )
 }

@@ -1,6 +1,6 @@
 import z from "zod";
 import { baseSchema } from "../schema";
-import { validarCpf } from "@/lib/documento";
+import { validarCpf } from "@/lib/utils";
 
 export const candidatoSchema = baseSchema.extend({
     cpf: z

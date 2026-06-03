@@ -6,8 +6,8 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import { useFieldContext } from "@/lib/formulario";
 
-export const Senha = ({ placeholder, error, cor = "primary" }: InputPadraoProps) => {
-    const field = useFieldContext<string>()
+export const Senha = ({ placeholder, error, cor = "primary", ...props }: InputPadraoProps) => {
+    const field = useFieldContext<string | number>()
 
     const [verSenha, setVerSenha] = useState(false)
 
@@ -28,6 +28,7 @@ export const Senha = ({ placeholder, error, cor = "primary" }: InputPadraoProps)
 
             onBlur={field.handleBlur}
             onChange={(e) => field.handleChange(e.target.value)}
+            {...props}
         />
     )
 }

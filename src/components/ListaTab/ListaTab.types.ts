@@ -1,8 +1,9 @@
 import type { Theme } from "@mui/material"
 
 export type ListaTabProps = {
-    onChange: (event: React.SyntheticEvent<Element, Event>, value: string) => void
+    onChange: (value: string) => void
     tabs: TabItemProps[]
+    orientation?: "vertical" | "horizontal"
 }
 
 type TabItemProps = {
@@ -12,6 +13,6 @@ type TabItemProps = {
 }
 
 type SelectedProps = {
-    corFundo: ((theme: Theme) => string) | string
-    cor: ((theme: Theme) => string) | string
+    corFundo?: ((theme: Theme) => string) | string
+    cor?: ((theme: Theme) => string) | string
 }

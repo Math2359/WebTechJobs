@@ -3,7 +3,7 @@ import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Card } from "@/components/Card/Card";
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto";
-import { useObterExperiencias, useObterInformacoes } from "@/api/candidato/candidato";
+import { useObterInformacoes } from "@/api/candidato/candidato";
 import { useMemo } from "react";
 import { Dominios } from "@/lib/dominios";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -13,54 +13,59 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Experiencias } from "./components/Experiencias/Experiencias";
 import { IconeTexto } from "./components/IconeTexto/IconeTexto";
+import { Botao } from "@/components/Botao/Botao";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { SemDados } from "@/components/SemDados/SemDados";
+import { formatarTelefone } from "@/lib/utils";
+import CircleIcon from '@mui/icons-material/Circle';
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
 
-    const { data: experienciasCandidato } = useObterExperiencias()
     const { data: informacoesCandidato } = useObterInformacoes()
 
     const experiencias = useMemo(() => ({
-        trabalho: experienciasCandidato?.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Trabalho) ?? [],
-        formacao: experienciasCandidato?.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Formacao) ?? []
-    }), [experienciasCandidato])
+        trabalho: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Trabalho) ?? [],
+        formacao: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Formacao) ?? []
+    }), [informacoesCandidato])
 
-    const preferencias = [
-        "PJ ou CLT",
-        "Remoto / Híbrido",
-        "A partir de 10mil",
-    ]
+    const localizacao = (informacoesCandidato?.cidade ? informacoesCandidato.cidade + ", " : "") + (informacoesCandidato?.estado ?? "")
+
     return (
         <Stack spacing={4}>
             <Card>
                 <Box sx={{ background: theme => theme.palette.primary.main, height: "70px" }} />
-                <Stack sx={{ padding: 2 }}>
+                <Grid sx={{ padding: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <Grid container spacing={2}>
                         <AccountCircleIcon sx={{ fontSize: 70 }} color='secondary' />
 
                         <Stack spacing={1}>
                             <Stack>
                                 <Typography variant="h6">{usuario?.nomeUsuario}</Typography>
-                                <Typography variant="caption">Desenvolvedor Full Stack - São Paulo, SP</Typography>
+                                <Typography variant="caption">{informacoesCandidato?.area} - {localizacao}</Typography>
                             </Stack>
                             <Grid container spacing={3}>
-                                <Typography variant="caption"><b>12</b> candidaturas</Typography>
-                                <Typography variant="caption"><b>3</b> em andamento</Typography>
-                                <Typography variant="caption"><b>5</b> anos de exp.</Typography>
+                                <Typography variant="caption"><b>{informacoesCandidato?.vagasAplicadas ?? 0}</b> candidaturas</Typography>
+                                <Typography variant="caption"><b>{informacoesCandidato?.processosAtivos ?? 0}</b> em andamento</Typography>
+                                <Typography variant="caption"><b>{informacoesCandidato?.anosExperiencia ?? "-"}</b> anos de exp.</Typography>
                             </Grid>
                         </Stack>
                     </Grid>
-                </Stack>
+                    <Botao variante="outlined" to="/candidato/editar">Editar perfil <EditOutlinedIcon /></Botao>
+                </Grid>
             </Card>
 
             <Grid container spacing={2}>
-                <Stack>
+                <Grid size={3}>
                     <Stack spacing={2}>
                         <Card padding={2}>
                             <Stack spacing={2}>
                                 <Typography variant="overline">Habilidades</Typography>
-                                <Grid container size={7} rowSpacing={1} columnSpacing={2}>
-                                    {informacoesCandidato?.habilidades?.split(",").map((item, index) => <Chip key={index} color="primary" label={item} />)}
+                                <Grid container rowSpacing={1} columnSpacing={2}>
+                                    {informacoesCandidato?.habilidades?.length ? (
+                                        informacoesCandidato.habilidades.split(",").map((item, index) => <Chip key={index} color="primary" label={item} />)
+                                    ) : (
+                                        <SemDados titulo="Nenhuma habiliade cadastrada" descricao="Edite seu perfil para adicionar suas habilidades profissionais" />)}
                                 </Grid>
                             </Stack>
                         </Card>
@@ -70,7 +75,7 @@ export const Dashboard = () => {
                                 <Stack spacing={0.5}>
                                     <IconeTexto icon={EmailIcon} texto={informacoesCandidato?.emailPessoal} />
                                     <IconeTexto icon={ContactMailIcon} texto={informacoesCandidato?.emailCorporativo} />
-                                    <IconeTexto icon={LocalPhoneIcon} texto={informacoesCandidato?.telefone} />
+                                    <IconeTexto icon={LocalPhoneIcon} texto={formatarTelefone(informacoesCandidato?.telefone)} />
                                     <IconeTexto link icon={LinkedInIcon} texto={informacoesCandidato?.linkedin} />
                                     <IconeTexto link icon={GitHubIcon} texto={informacoesCandidato?.github} />
                                 </Stack>
@@ -80,12 +85,24 @@ export const Dashboard = () => {
                             <Stack spacing={2}>
                                 <Typography variant="overline">Preferências</Typography>
                                 <Stack spacing={0.5}>
-                                    {preferencias.map((item, index) => <Typography variant="body2" key={index}>{item}</Typography>)}
+                                    {informacoesCandidato?.preferencias?.length ? (
+                                        informacoesCandidato.preferencias.split(",").map((item, index) =>
+                                            <Grid container spacing={1} sx={{ placeItems: "center" }} key={index}>
+                                                <CircleIcon sx={{ fontSize: 7 }} />
+                                                <Typography variant="body2">
+                                                    {item}
+                                                </Typography>
+
+                                            </Grid>
+                                        )
+                                    ) : (
+                                        <SemDados titulo="Nenhuma preferência cadastrada" descricao="Edite seu perfil para adicionar suas preferências" />
+                                    )}
                                 </Stack>
                             </Stack>
                         </Card>
                     </Stack>
-                </Stack>
+                </Grid>
                 <Grid size="grow">
                     <Stack spacing={2}>
                         <Card padding={2}>
