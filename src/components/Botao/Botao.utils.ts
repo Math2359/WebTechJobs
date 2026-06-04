@@ -4,5 +4,5 @@ import { GerarEstiloBotaoOutlined, GerarEstiloBotaoContaind } from "./Botao.styl
 
 export const EstilosBotao: Record<VarianteBotao, (cor: CorBotao) => SxProps<Theme>> = {
     contained: GerarEstiloBotaoContaind,
-    outlined: GerarEstiloBotaoOutlined
+    outlined: GerarEstiloBotaoOutlined,
 }

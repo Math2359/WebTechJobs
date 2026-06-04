@@ -17,6 +17,12 @@ export const theme = createTheme({
             secondary: "#686868",
             disabled: "#686868",
         },
+        cinza: {
+            main: "#686868",
+            light: "#8b8b8b",
+            contrastText: "#0000",
+            dark: "#5a5a5a"
+        }
     },
     typography: {
         fontFamily: "Montserrat, sans-serif",

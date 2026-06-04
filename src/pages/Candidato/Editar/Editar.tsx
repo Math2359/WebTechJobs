@@ -11,6 +11,7 @@ import { ListaTab } from "@/components/ListaTab/ListaTab"
 import { FormularioEditar } from "./FormularioEditar"
 import { toast } from "sonner"
 import { editarFormOptions } from "./FormularioEditar/FormularioEditar.utils"
+import { Dominios } from "@/lib/dominios"
 
 export const Editar = () => {
     const { data: informacoesCandidato } = useObterInformacoes()
@@ -39,6 +40,20 @@ export const Editar = () => {
             },
             habilidade: {
                 habilidades: informacoesCandidato?.habilidades?.split(",").filter(Boolean) ?? [],
+            },
+            experiencia: {
+                profissional: informacoesCandidato?.experiencias
+                    .filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Trabalho)
+                    .map(x => ({
+                        ...x,
+                        dataInicio: x.dataInicio ? new Date(x.dataInicio) : new Date(),
+                        dataFim: x.dataFim ? new Date(x.dataFim) : undefined,
+                    })) ?? [],
+                formacao: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Formacao) .map(x => ({
+                        ...x,
+                        dataInicio: x.dataInicio ? new Date(x.dataInicio) : new Date(),
+                        dataFim: x.dataFim ? new Date(x.dataFim) : undefined,
+                    })) ?? [],
             }
         },
         onSubmit: async ({ value }) => {
@@ -47,7 +62,7 @@ export const Editar = () => {
                 habilidades: value.habilidade.habilidades?.join(","),
                 emailPessoal: value.contato.emailPessoal,
                 emailCorporativo: value.contato.emailCorporativo,
-                experiencias: [],
+                experiencias: [...value.experiencia.profissional, ...value.experiencia.formacao],
                 telefone: value.contato.telefone,
                 linkedin: value.contato.linkedin,
                 github: value.contato.github,
@@ -68,7 +83,7 @@ export const Editar = () => {
                 return keys.map(chave => {
                     const erroItem = erro[chave]
 
-                    return erroItem.map(item => <Typography variant="caption"><b>{String(item.path?.findLast(x => x))}: </b>{item.message}</Typography>)
+                    return erroItem.map((item, index) => <Typography key={index} variant="caption"><b>{String(item.path?.findLast(x => x))}: </b>{item.message}</Typography>)
                 })
             })
 

@@ -7,7 +7,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import { useFieldContext } from "@/lib/formulario";
 
 export const Senha = ({ placeholder, error, cor = "primary", ...props }: InputPadraoProps) => {
-    const field = useFieldContext<string | number>()
+    const field = useFieldContext<string>()
 
     const [verSenha, setVerSenha] = useState(false)
 
@@ -20,9 +20,9 @@ export const Senha = ({ placeholder, error, cor = "primary", ...props }: InputPa
             placeholder={placeholder}
             type={verSenha ? "text" : "password"}
             endAdornment={
-                <IconButton sx={{ cursor: "pointer" }} onClick={handleVerSenha} >
-                    {verSenha ? <VisibilityOff /> :
-                        <Visibility />}
+                <IconButton size="small" sx={{ cursor: "pointer" }} onClick={handleVerSenha} >
+                    {verSenha ? <VisibilityOff fontSize="small" /> :
+                        <Visibility fontSize="small" />}
                 </IconButton>
             }
 

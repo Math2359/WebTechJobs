@@ -11,7 +11,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { Experiencias } from "./components/Experiencias/Experiencias";
+import { Experiencias } from "../components/Experiencias/Experiencias";
 import { IconeTexto } from "./components/IconeTexto/IconeTexto";
 import { Botao } from "@/components/Botao/Botao";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -117,8 +117,7 @@ export const Dashboard = () => {
                             <Grid container spacing={2}
                                 sx={{
                                     flexGrow: 1,
-                                    justifyContent: "space-between",
-                                    alignItems: 'center',
+                                    justifyContent: "space-between"
                                 }}>
                                 <Grid size={5.7}>
                                     <Stack spacing={2}>
@@ -140,7 +139,6 @@ export const Dashboard = () => {
                                         <Experiencias experiencias={experiencias.formacao} />
                                     </Stack>
                                 </Grid>
-
                             </Grid>
                         </Card>
                     </Stack>

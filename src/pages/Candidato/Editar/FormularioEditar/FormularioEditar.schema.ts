@@ -1,4 +1,33 @@
+import { TipoExperiencia } from "@/lib/dominios/tipoExperiencia"
 import z from "zod"
+
+export const experienciaSchema = z
+    .object({
+        instituicao: z
+            .string()
+            .min(1, "Instituição é obrigatória"),
+        descricao: z
+            .string()
+            .min(1, "Descrição é obrigatória"),
+        dataInicio: z
+            .date("Data de início é obrigatória")
+            .max(new Date(), "A data de início não pode ser futura"),
+        dataFim: z
+            .date().or(z.undefined()),
+        tipoExperiencia: z.enum(TipoExperiencia),
+    })
+    .superRefine((data, ctx) => {
+        if (
+            data.dataFim &&
+            data.dataFim < data.dataInicio
+        ) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["dataFim"],
+                message: "A data de término não pode ser anterior à data de início",
+            })
+        }
+    })
 
 export const editarSchema = z.object({
     sobreMim: z.object({
@@ -20,5 +49,9 @@ export const editarSchema = z.object({
     }),
     habilidade: z.object({
         habilidades: z.array(z.string()).max(7, "Máximo de 7 habilidades"),
+    }),
+    experiencia: z.object({
+        profissional: z.array(experienciaSchema),
+        formacao: z.array(experienciaSchema)
     })
 })

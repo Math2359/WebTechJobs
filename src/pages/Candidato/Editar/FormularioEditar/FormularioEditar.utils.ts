@@ -21,6 +21,10 @@ export const DEFAULT_VALUES: EditarSchema = {
     habilidade: {
         habilidades: [],
     },
+    experiencia: {
+        formacao: [],
+        profissional: []
+    }
 }
 
 export const editarFormOptions = formOptions({
