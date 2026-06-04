@@ -1,5 +1,9 @@
 import type { Perfil } from "@/lib/dominios/perfil";
 
+export const UsuarioQueryKeys = {
+    ObterFotoPerfil: "obterFotoPerfil"
+} as const
+
 export type CriarUsuarioRequest = {
     senha: string;
     login: string;
@@ -20,4 +24,8 @@ export type GerarTokenResponse = {
     nomeUsuario: string
     email: string
     perfil: Perfil
+}
+
+export type EditarFotoPerfilRequest = {
+    file: File
 }

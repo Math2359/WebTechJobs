@@ -4,7 +4,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Card } from "@/components/Card/Card";
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto";
 import { useObterInformacoes } from "@/api/candidato/candidato";
-import { useMemo } from "react";
+import { useMemo, useState, type ChangeEvent } from "react";
 import { Dominios } from "@/lib/dominios";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
@@ -18,11 +18,35 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { SemDados } from "@/components/SemDados/SemDados";
 import { formatarTelefone } from "@/lib/utils";
 import CircleIcon from '@mui/icons-material/Circle';
+import { useEditarFotoPerfil } from "@/api/usuario/usuario";
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
 
     const { data: informacoesCandidato } = useObterInformacoes()
+
+    const [selectedFile, setSelectedFile] = useState<File>();
+
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+
+        const file = files?.[0] ?? undefined
+
+        if (file) {
+            setSelectedFile(file);
+            console.log("Selected file:", file.name);
+        }
+    }
+
+    const { mutateAsync } = useEditarFotoPerfil()
+
+    const onSubmit = async () => {
+        if (selectedFile) {
+            await mutateAsync({
+                file: selectedFile
+            })
+        }
+    }
 
     const experiencias = useMemo(() => ({
         trabalho: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Trabalho) ?? [],
@@ -37,7 +61,8 @@ export const Dashboard = () => {
                 <Box sx={{ background: theme => theme.palette.primary.main, height: "70px" }} />
                 <Grid sx={{ padding: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <Grid container spacing={2}>
-                        <AccountCircleIcon sx={{ fontSize: 70 }} color='secondary' />
+                        <AccountCircleIcon onClick={onSubmit} sx={{ fontSize: 70 }} color='secondary' />
+                        <input onChange={handleFileChange} type="file" />
 
                         <Stack spacing={1}>
                             <Stack>

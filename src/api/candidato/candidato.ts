@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import type { ErroResponse } from "../types";
 import { queryClient } from "@/lib/queryClient";
 
-
 export const useObterInformacoes = () => useQuery({
     queryKey: [CandidatoQueryKeys.ObterInformacoes],
     queryFn: async () => {

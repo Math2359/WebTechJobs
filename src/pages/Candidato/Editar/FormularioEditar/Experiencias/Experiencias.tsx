@@ -1,6 +1,6 @@
 import { comFormulario } from "@/components/Formulario";
 import { editarFormOptions } from "../FormularioEditar.utils";
-import { Divider, Grid, IconButton, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import { Divider, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { Experiencias as ExperienciaItem } from "@/pages/Candidato/components/Experiencias/Experiencias";
 import AddIcon from "@mui/icons-material/Add"
 import { ModalNovaExperiencia } from "./modais/ModalNovaExperiencia/ModalNovaExperiencia";

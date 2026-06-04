@@ -1,12 +1,13 @@
 import { Logo } from '@/assets'
 import { NavLink } from '@/components/NavLink/NavLink'
 import { Dominios } from '@/lib/dominios'
-import { Box, Grid, IconButton, Menu, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Grid, IconButton, Menu, Stack, Typography } from '@mui/material'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { store } from '@/lib/reducers'
 import { useState } from 'react'
 import { deslogarUsuarioTotal } from '@/lib/autenticacao'
+import { useObterFotoPerfil } from '@/api/usuario/usuario'
 
 export const Route = createFileRoute('/candidato')({
     component: RouteComponent,
@@ -37,6 +38,8 @@ function RouteComponent() {
         setAnchorEl(null);
     };
 
+    const { data: urlAssinada } = useObterFotoPerfil()
+
     return (
         <>
             <Box sx={(theme) => ({ justifyContent: "space-between", marginBottom: theme.spacing(5), display: "flex", alignItems: "center" })}>
@@ -47,7 +50,7 @@ function RouteComponent() {
                         <NavLink underLineColor='primary' to="/candidato/candidaturas">Candidaturas</NavLink>
                     </Grid>
                     <IconButton onClick={handleAbrirMenu}>
-                        <AccountCircleIcon sx={{ fontSize: 50 }} color='disabled' />
+                        {urlAssinada ? <Avatar src={urlAssinada} /> : <Avatar><AccountCircleIcon sx={{ fontSize: 50 }} color='disabled' /></Avatar>}
                     </IconButton>
                     <Menu
                         anchorEl={anchorEl}
