@@ -8,6 +8,6 @@ export type BotaoProps = ButtonBaseProps & {
     loading?: boolean
 }
 
-export type CorBotao = "primary" | "secondary" | "cinza"
+export type CorBotao = "primary" | "secondary" | "cinza" | "success" | "error"
 
-export type VarianteBotao = "outlined" | "contained"
+export type VarianteBotao = "outlined" | "contained" | "ghost"

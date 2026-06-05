@@ -11,7 +11,7 @@ export const useObterFotoPerfil = () => useQuery({
         const { data } = await api.get<string>("/usuario/foto-perfil")
 
         return data
-    }
+    },
 })
 
 export const useCriarUsuario = () => useMutation({
@@ -56,6 +56,20 @@ export const useEditarFotoPerfil = () => useMutation({
     onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [UsuarioQueryKeys.ObterFotoPerfil] })
         toast.success("Foto de perfil atualizada com sucesso!")
+    },
+    onError: (erro: ErroResponse) => {
+        toast.error(erro.response?.data.mensagem)
+    }
+})
+
+export const useDeletarFotoPerfil = () => useMutation({
+    mutationFn: async () => {
+
+        await api.delete("/usuario/foto-perfil")
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [UsuarioQueryKeys.ObterFotoPerfil] })
+        toast.success("Foto de perfil deletada com sucesso!")
     },
     onError: (erro: ErroResponse) => {
         toast.error(erro.response?.data.mensagem)

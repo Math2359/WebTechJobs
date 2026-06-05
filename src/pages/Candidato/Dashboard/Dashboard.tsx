@@ -1,10 +1,9 @@
 import { useAppSelector } from "@/lib/reducers"
-import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Box, Chip, Divider, Grid, IconButton, ListItemIcon, Menu, MenuItem, Stack, Typography } from "@mui/material"
 import { Card } from "@/components/Card/Card";
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto";
 import { useObterInformacoes } from "@/api/candidato/candidato";
-import { useMemo, useState, type ChangeEvent } from "react";
+import { useMemo, useRef, useState, type ChangeEvent } from "react";
 import { Dominios } from "@/lib/dominios";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
@@ -18,14 +17,27 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { SemDados } from "@/components/SemDados/SemDados";
 import { formatarTelefone } from "@/lib/utils";
 import CircleIcon from '@mui/icons-material/Circle';
-import { useEditarFotoPerfil } from "@/api/usuario/usuario";
+import { useObterFotoPerfil } from "@/api/usuario/usuario";
+import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { ModalEditarFotoPerfil } from "./modais/ModalEditarFotoPerfil/ModalEditarFotoPerfil";
+import { ModalConfirmarDeletarFotoPerfil } from "./modais/ModalConfirmarDeletarFotoPerfil/ModalConfirmarDeletarFotoPerfil";
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
 
     const { data: informacoesCandidato } = useObterInformacoes()
 
-    const [selectedFile, setSelectedFile] = useState<File>();
+    const [arquivo, setArquivo] = useState<File>();
+    const [modalEditarFotoPerfil, setModalEditarFotoPerfil] = useState(false)
+    const [modalConfirmarDeletar, setModalConfirmarDeletar] = useState(false)
+    const handleCLoseModalEditarPerfil = () => {
+        setArquivo(undefined)
+        setModalEditarFotoPerfil(false)
+        if (inputFileRef.current)
+            inputFileRef.current.value = ""
+    }
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -33,20 +45,24 @@ export const Dashboard = () => {
         const file = files?.[0] ?? undefined
 
         if (file) {
-            setSelectedFile(file);
-            console.log("Selected file:", file.name);
+            setArquivo(file);
+            setModalEditarFotoPerfil(true)
+            setAnchorEl(null)
         }
     }
 
-    const { mutateAsync } = useEditarFotoPerfil()
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleAbrirMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
 
-    const onSubmit = async () => {
-        if (selectedFile) {
-            await mutateAsync({
-                file: selectedFile
-            })
-        }
-    }
+    const inputFileRef = useRef<HTMLInputElement>(null)
+
+    const { data: urlAssinada } = useObterFotoPerfil()
 
     const experiencias = useMemo(() => ({
         trabalho: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Trabalho) ?? [],
@@ -61,8 +77,34 @@ export const Dashboard = () => {
                 <Box sx={{ background: theme => theme.palette.primary.main, height: "70px" }} />
                 <Grid sx={{ padding: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <Grid container spacing={2}>
-                        <AccountCircleIcon onClick={onSubmit} sx={{ fontSize: 70 }} color='secondary' />
-                        <input onChange={handleFileChange} type="file" />
+                        <Stack>
+                            <IconButton sx={{ padding: 0 }} onClick={handleAbrirMenu}>
+                                <AvatarPerfil src={urlAssinada} />
+                                <input ref={inputFileRef} hidden onChange={handleFileChange} type="file" />
+                            </IconButton>
+                        </Stack>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleCloseMenu}
+                            anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "center"
+                            }}
+                        >
+                            <MenuItem onClick={() => inputFileRef?.current?.click()}>
+                                <ListItemIcon>
+                                    <EditIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography variant="subtitle2">Editar</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => { setModalConfirmarDeletar(true); handleCloseMenu(); }}>
+                                <ListItemIcon>
+                                    <DeleteIcon color="error" fontSize="small" />
+                                </ListItemIcon>
+                                <Typography color="error" variant="subtitle2">Deletar</Typography>
+                            </MenuItem>
+                        </Menu>
 
                         <Stack spacing={1}>
                             <Stack>
@@ -168,8 +210,9 @@ export const Dashboard = () => {
                         </Card>
                     </Stack>
                 </Grid>
-
             </Grid>
+            <ModalEditarFotoPerfil open={modalEditarFotoPerfil} arquivo={arquivo} handleClose={handleCLoseModalEditarPerfil} />
+            <ModalConfirmarDeletarFotoPerfil open={modalConfirmarDeletar} handleClose={() => setModalConfirmarDeletar(false)} />
         </Stack>
     )
 }
