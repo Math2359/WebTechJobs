@@ -5,17 +5,20 @@ import * as styles from "../../InputForm.styles"
 import { useFieldContext } from "@/lib/formulario";
 import { MenuItem } from "@mui/material";
 
-export const Select = ({ placeholder, children, error, cor = "primary", ...props }: InputPadraoProps) => {
-    const field = useFieldContext<string | number>()
+export const Select = ({ placeholder, children, error, cor = "primary", disabled, ...props }: InputPadraoProps) => {
+    const field = useFieldContext<string | number | boolean>()
 
     return (
         <SelectMui
+            disabled={disabled}
+            sx={styles.GerarEstuloInputForm(cor, error)}
             variant="standard"
             label={placeholder}
             input={<InputBase
                 sx={styles.GerarEstuloInputForm(cor, error)}
                 value={field.state.value}
                 placeholder={placeholder}
+                disabled={disabled}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 {...props}

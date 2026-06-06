@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect, useNavigate } from '@tanstack/react-router'
 import { Logo } from '@/assets'
 import { NavLink } from '@/components/NavLink/NavLink'
 import { Box, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material'
@@ -33,13 +33,15 @@ function RouteComponent() {
 
     const { data: urlAssinada } = useObterFotoPerfil()
 
+    const navigate = useNavigate()
+
     return (
         <>
             <Box sx={(theme) => ({ justifyContent: "space-between", marginBottom: theme.spacing(5), display: "flex", alignItems: "center" })}>
                 <Logo />
                 <Grid container spacing={3} sx={{ alignItems: "center" }}>
                     <Grid container spacing={3}>
-                        <NavLink underLineColor='primary' to="/candidato/vagas">Vagas</NavLink>
+                        <NavLink underLineColor='primary' to="/empresa/vaga">Vagas</NavLink>
                         <NavLink underLineColor='primary' to="/candidato/candidaturas">Candidaturas</NavLink>
                     </Grid>
                     <IconButton onClick={handleAbrirMenu}>
@@ -54,6 +56,13 @@ function RouteComponent() {
                             horizontal: "center"
                         }}
                     >
+                        <MenuItem onClick={() => navigate({
+                            to: "/empresa"
+                        })}>
+                            <Typography variant="subtitle2">
+                                Meu perfil
+                            </Typography>
+                        </MenuItem>
                         <MenuItem onClick={deslogarUsuarioTotal}>
                             <Typography variant="subtitle2" color="error">
                                 Desconectar conta

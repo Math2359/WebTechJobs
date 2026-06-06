@@ -34,3 +34,29 @@ export const MASCARA_TELEFONE = [
         },
     },
 ]
+
+export const MASCARA_CEP = [
+    {
+        mask: "00000-000",
+        maxLength: 8,
+        definitions: {
+            "0": /[0-9]/,
+        },
+    },
+]
+
+export const MASCARA_DINHEIRO_REAL = [
+    {
+        mask: "R$ num",
+        blocks: {
+            num: {
+                mask: Number,
+                thousandsSeparator: ".",
+                radix: ",",
+                scale: 2,
+                normalizeZeros: false,
+                padFractionalZeros: false,
+            },
+        },
+    },
+]

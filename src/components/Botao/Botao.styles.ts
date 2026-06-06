@@ -31,6 +31,7 @@ export const EstiloPadrao: SxProps<Theme> = (theme) => ({
     borderRadius: 100,
     placeItems: "center",
     gap: theme.spacing(1),
+    height: theme.spacing(4.5)
 })
 
 export const EstiloDesabilitado: SxProps<Theme> = (theme) => ({

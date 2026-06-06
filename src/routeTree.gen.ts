@@ -23,6 +23,8 @@ import { Route as AutenticadoEmpresarotasEditarRouteImport } from './routes/_aut
 import { Route as AutenticadoCandidatorotasVagasRouteImport } from './routes/_autenticado/candidato/(rotas)/vagas'
 import { Route as AutenticadoCandidatorotasEditarRouteImport } from './routes/_autenticado/candidato/(rotas)/editar'
 import { Route as AutenticadoCandidatorotasCandidaturasRouteImport } from './routes/_autenticado/candidato/(rotas)/candidaturas'
+import { Route as AutenticadoEmpresarotasVagaIndexRouteImport } from './routes/_autenticado/empresa/(rotas)/vaga/index'
+import { Route as AutenticadoEmpresarotasVagaIdRouteImport } from './routes/_autenticado/empresa/(rotas)/vaga/$id'
 
 const NaoAutenticadoRouteRoute = NaoAutenticadoRouteRouteImport.update({
   id: '/_naoAutenticado',
@@ -102,6 +104,18 @@ const AutenticadoCandidatorotasCandidaturasRoute =
     path: '/candidaturas',
     getParentRoute: () => AutenticadoCandidatoRouteRoute,
   } as any)
+const AutenticadoEmpresarotasVagaIndexRoute =
+  AutenticadoEmpresarotasVagaIndexRouteImport.update({
+    id: '/(rotas)/vaga/',
+    path: '/vaga/',
+    getParentRoute: () => AutenticadoEmpresaRouteRoute,
+  } as any)
+const AutenticadoEmpresarotasVagaIdRoute =
+  AutenticadoEmpresarotasVagaIdRouteImport.update({
+    id: '/(rotas)/vaga/$id',
+    path: '/vaga/$id',
+    getParentRoute: () => AutenticadoEmpresaRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -116,6 +130,8 @@ export interface FileRoutesByFullPath {
   '/empresa/editar': typeof AutenticadoEmpresarotasEditarRoute
   '/candidato/': typeof AutenticadoCandidatorotasIndexRoute
   '/empresa/': typeof AutenticadoEmpresarotasIndexRoute
+  '/empresa/vaga/$id': typeof AutenticadoEmpresarotasVagaIdRoute
+  '/empresa/vaga/': typeof AutenticadoEmpresarotasVagaIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -128,6 +144,8 @@ export interface FileRoutesByTo {
   '/empresa/editar': typeof AutenticadoEmpresarotasEditarRoute
   '/candidato': typeof AutenticadoCandidatorotasIndexRoute
   '/empresa': typeof AutenticadoEmpresarotasIndexRoute
+  '/empresa/vaga/$id': typeof AutenticadoEmpresarotasVagaIdRoute
+  '/empresa/vaga': typeof AutenticadoEmpresarotasVagaIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -145,6 +163,8 @@ export interface FileRoutesById {
   '/_autenticado/empresa/(rotas)/editar': typeof AutenticadoEmpresarotasEditarRoute
   '/_autenticado/candidato/(rotas)/': typeof AutenticadoCandidatorotasIndexRoute
   '/_autenticado/empresa/(rotas)/': typeof AutenticadoEmpresarotasIndexRoute
+  '/_autenticado/empresa/(rotas)/vaga/$id': typeof AutenticadoEmpresarotasVagaIdRoute
+  '/_autenticado/empresa/(rotas)/vaga/': typeof AutenticadoEmpresarotasVagaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +181,8 @@ export interface FileRouteTypes {
     | '/empresa/editar'
     | '/candidato/'
     | '/empresa/'
+    | '/empresa/vaga/$id'
+    | '/empresa/vaga/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -173,6 +195,8 @@ export interface FileRouteTypes {
     | '/empresa/editar'
     | '/candidato'
     | '/empresa'
+    | '/empresa/vaga/$id'
+    | '/empresa/vaga'
   id:
     | '__root__'
     | '/'
@@ -189,6 +213,8 @@ export interface FileRouteTypes {
     | '/_autenticado/empresa/(rotas)/editar'
     | '/_autenticado/candidato/(rotas)/'
     | '/_autenticado/empresa/(rotas)/'
+    | '/_autenticado/empresa/(rotas)/vaga/$id'
+    | '/_autenticado/empresa/(rotas)/vaga/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -297,6 +323,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AutenticadoCandidatorotasCandidaturasRouteImport
       parentRoute: typeof AutenticadoCandidatoRouteRoute
     }
+    '/_autenticado/empresa/(rotas)/vaga/': {
+      id: '/_autenticado/empresa/(rotas)/vaga/'
+      path: '/vaga'
+      fullPath: '/empresa/vaga/'
+      preLoaderRoute: typeof AutenticadoEmpresarotasVagaIndexRouteImport
+      parentRoute: typeof AutenticadoEmpresaRouteRoute
+    }
+    '/_autenticado/empresa/(rotas)/vaga/$id': {
+      id: '/_autenticado/empresa/(rotas)/vaga/$id'
+      path: '/vaga/$id'
+      fullPath: '/empresa/vaga/$id'
+      preLoaderRoute: typeof AutenticadoEmpresarotasVagaIdRouteImport
+      parentRoute: typeof AutenticadoEmpresaRouteRoute
+    }
   }
 }
 
@@ -324,12 +364,17 @@ const AutenticadoCandidatoRouteRouteWithChildren =
 interface AutenticadoEmpresaRouteRouteChildren {
   AutenticadoEmpresarotasEditarRoute: typeof AutenticadoEmpresarotasEditarRoute
   AutenticadoEmpresarotasIndexRoute: typeof AutenticadoEmpresarotasIndexRoute
+  AutenticadoEmpresarotasVagaIdRoute: typeof AutenticadoEmpresarotasVagaIdRoute
+  AutenticadoEmpresarotasVagaIndexRoute: typeof AutenticadoEmpresarotasVagaIndexRoute
 }
 
 const AutenticadoEmpresaRouteRouteChildren: AutenticadoEmpresaRouteRouteChildren =
   {
     AutenticadoEmpresarotasEditarRoute: AutenticadoEmpresarotasEditarRoute,
     AutenticadoEmpresarotasIndexRoute: AutenticadoEmpresarotasIndexRoute,
+    AutenticadoEmpresarotasVagaIdRoute: AutenticadoEmpresarotasVagaIdRoute,
+    AutenticadoEmpresarotasVagaIndexRoute:
+      AutenticadoEmpresarotasVagaIndexRoute,
   }
 
 const AutenticadoEmpresaRouteRouteWithChildren =

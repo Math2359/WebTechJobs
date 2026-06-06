@@ -1,0 +1,15 @@
+import z from "zod";
+
+
+export const cadastrarVagaSchema = z.object({
+    nome: z.string().min(1, "Nome da vaga é obrigatório"),
+    cargo: z.string().min(1, "Cargo é obrigatório"),
+    modelo: z.string().min(1, "Modelo é obrigatório"),
+    nivelExperiencia: z.string().min(1, "Nível de experiência é obrigatório"),
+    descricao: z.string().min(1, "Descrição é obrigatória"),
+    cep: z.string().optional(),
+    numero: z.string().optional(),
+    salarioPrevisto: z.string(),
+    interna: z.boolean(),
+    dataFimInscricoes: z.date().or(z.undefined())
+})
