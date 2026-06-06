@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Modal, Stack, Typography } from "@mui/material"
+import { Divider, Grid, Stack, Typography } from "@mui/material"
 import AddIcon from "@mui/icons-material/AddBoxOutlined"
 import type { ModalNovaExperienciaProps } from "./ModalNovaExperiencia.types"
 import { experienciaSchema } from "../../../FormularioEditar.schema"
