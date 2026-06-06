@@ -9,24 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as CandidatoRouteRouteImport } from './routes/candidato/route'
 import { Route as NaoAutenticadoRouteRouteImport } from './routes/_naoAutenticado/route'
+import { Route as AutenticadoRouteRouteImport } from './routes/_autenticado/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CandidatorotasIndexRouteImport } from './routes/candidato/(rotas)/index'
-import { Route as CandidatorotasVagasRouteImport } from './routes/candidato/(rotas)/vagas'
-import { Route as CandidatorotasEditarRouteImport } from './routes/candidato/(rotas)/editar'
-import { Route as CandidatorotasCandidaturasRouteImport } from './routes/candidato/(rotas)/candidaturas'
+import { Route as AutenticadoEmpresaRouteRouteImport } from './routes/_autenticado/empresa/route'
+import { Route as AutenticadoCandidatoRouteRouteImport } from './routes/_autenticado/candidato/route'
 import { Route as NaoAutenticadorotasLoginRouteImport } from './routes/_naoAutenticado/(rotas)/login'
 import { Route as NaoAutenticadorotasEsqueciMinhaSenhaRouteImport } from './routes/_naoAutenticado/(rotas)/esqueci-minha-senha'
 import { Route as NaoAutenticadorotasCadastroRouteImport } from './routes/_naoAutenticado/(rotas)/cadastro'
+import { Route as AutenticadoEmpresarotasIndexRouteImport } from './routes/_autenticado/empresa/(rotas)/index'
+import { Route as AutenticadoCandidatorotasIndexRouteImport } from './routes/_autenticado/candidato/(rotas)/index'
+import { Route as AutenticadoEmpresarotasEditarRouteImport } from './routes/_autenticado/empresa/(rotas)/editar'
+import { Route as AutenticadoCandidatorotasVagasRouteImport } from './routes/_autenticado/candidato/(rotas)/vagas'
+import { Route as AutenticadoCandidatorotasEditarRouteImport } from './routes/_autenticado/candidato/(rotas)/editar'
+import { Route as AutenticadoCandidatorotasCandidaturasRouteImport } from './routes/_autenticado/candidato/(rotas)/candidaturas'
 
-const CandidatoRouteRoute = CandidatoRouteRouteImport.update({
-  id: '/candidato',
-  path: '/candidato',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const NaoAutenticadoRouteRoute = NaoAutenticadoRouteRouteImport.update({
   id: '/_naoAutenticado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutenticadoRouteRoute = AutenticadoRouteRouteImport.update({
+  id: '/_autenticado',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -34,26 +37,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CandidatorotasIndexRoute = CandidatorotasIndexRouteImport.update({
-  id: '/(rotas)/',
-  path: '/',
-  getParentRoute: () => CandidatoRouteRoute,
+const AutenticadoEmpresaRouteRoute = AutenticadoEmpresaRouteRouteImport.update({
+  id: '/empresa',
+  path: '/empresa',
+  getParentRoute: () => AutenticadoRouteRoute,
 } as any)
-const CandidatorotasVagasRoute = CandidatorotasVagasRouteImport.update({
-  id: '/(rotas)/vagas',
-  path: '/vagas',
-  getParentRoute: () => CandidatoRouteRoute,
-} as any)
-const CandidatorotasEditarRoute = CandidatorotasEditarRouteImport.update({
-  id: '/(rotas)/editar',
-  path: '/editar',
-  getParentRoute: () => CandidatoRouteRoute,
-} as any)
-const CandidatorotasCandidaturasRoute =
-  CandidatorotasCandidaturasRouteImport.update({
-    id: '/(rotas)/candidaturas',
-    path: '/candidaturas',
-    getParentRoute: () => CandidatoRouteRoute,
+const AutenticadoCandidatoRouteRoute =
+  AutenticadoCandidatoRouteRouteImport.update({
+    id: '/candidato',
+    path: '/candidato',
+    getParentRoute: () => AutenticadoRouteRoute,
   } as any)
 const NaoAutenticadorotasLoginRoute =
   NaoAutenticadorotasLoginRouteImport.update({
@@ -73,53 +66,101 @@ const NaoAutenticadorotasCadastroRoute =
     path: '/cadastro',
     getParentRoute: () => NaoAutenticadoRouteRoute,
   } as any)
+const AutenticadoEmpresarotasIndexRoute =
+  AutenticadoEmpresarotasIndexRouteImport.update({
+    id: '/(rotas)/',
+    path: '/',
+    getParentRoute: () => AutenticadoEmpresaRouteRoute,
+  } as any)
+const AutenticadoCandidatorotasIndexRoute =
+  AutenticadoCandidatorotasIndexRouteImport.update({
+    id: '/(rotas)/',
+    path: '/',
+    getParentRoute: () => AutenticadoCandidatoRouteRoute,
+  } as any)
+const AutenticadoEmpresarotasEditarRoute =
+  AutenticadoEmpresarotasEditarRouteImport.update({
+    id: '/(rotas)/editar',
+    path: '/editar',
+    getParentRoute: () => AutenticadoEmpresaRouteRoute,
+  } as any)
+const AutenticadoCandidatorotasVagasRoute =
+  AutenticadoCandidatorotasVagasRouteImport.update({
+    id: '/(rotas)/vagas',
+    path: '/vagas',
+    getParentRoute: () => AutenticadoCandidatoRouteRoute,
+  } as any)
+const AutenticadoCandidatorotasEditarRoute =
+  AutenticadoCandidatorotasEditarRouteImport.update({
+    id: '/(rotas)/editar',
+    path: '/editar',
+    getParentRoute: () => AutenticadoCandidatoRouteRoute,
+  } as any)
+const AutenticadoCandidatorotasCandidaturasRoute =
+  AutenticadoCandidatorotasCandidaturasRouteImport.update({
+    id: '/(rotas)/candidaturas',
+    path: '/candidaturas',
+    getParentRoute: () => AutenticadoCandidatoRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/candidato': typeof CandidatoRouteRouteWithChildren
+  '/candidato': typeof AutenticadoCandidatoRouteRouteWithChildren
+  '/empresa': typeof AutenticadoEmpresaRouteRouteWithChildren
   '/cadastro': typeof NaoAutenticadorotasCadastroRoute
   '/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/login': typeof NaoAutenticadorotasLoginRoute
-  '/candidato/candidaturas': typeof CandidatorotasCandidaturasRoute
-  '/candidato/editar': typeof CandidatorotasEditarRoute
-  '/candidato/vagas': typeof CandidatorotasVagasRoute
-  '/candidato/': typeof CandidatorotasIndexRoute
+  '/candidato/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
+  '/candidato/editar': typeof AutenticadoCandidatorotasEditarRoute
+  '/candidato/vagas': typeof AutenticadoCandidatorotasVagasRoute
+  '/empresa/editar': typeof AutenticadoEmpresarotasEditarRoute
+  '/candidato/': typeof AutenticadoCandidatorotasIndexRoute
+  '/empresa/': typeof AutenticadoEmpresarotasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cadastro': typeof NaoAutenticadorotasCadastroRoute
   '/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/login': typeof NaoAutenticadorotasLoginRoute
-  '/candidato/candidaturas': typeof CandidatorotasCandidaturasRoute
-  '/candidato/editar': typeof CandidatorotasEditarRoute
-  '/candidato/vagas': typeof CandidatorotasVagasRoute
-  '/candidato': typeof CandidatorotasIndexRoute
+  '/candidato/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
+  '/candidato/editar': typeof AutenticadoCandidatorotasEditarRoute
+  '/candidato/vagas': typeof AutenticadoCandidatorotasVagasRoute
+  '/empresa/editar': typeof AutenticadoEmpresarotasEditarRoute
+  '/candidato': typeof AutenticadoCandidatorotasIndexRoute
+  '/empresa': typeof AutenticadoEmpresarotasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_autenticado': typeof AutenticadoRouteRouteWithChildren
   '/_naoAutenticado': typeof NaoAutenticadoRouteRouteWithChildren
-  '/candidato': typeof CandidatoRouteRouteWithChildren
+  '/_autenticado/candidato': typeof AutenticadoCandidatoRouteRouteWithChildren
+  '/_autenticado/empresa': typeof AutenticadoEmpresaRouteRouteWithChildren
   '/_naoAutenticado/(rotas)/cadastro': typeof NaoAutenticadorotasCadastroRoute
   '/_naoAutenticado/(rotas)/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/_naoAutenticado/(rotas)/login': typeof NaoAutenticadorotasLoginRoute
-  '/candidato/(rotas)/candidaturas': typeof CandidatorotasCandidaturasRoute
-  '/candidato/(rotas)/editar': typeof CandidatorotasEditarRoute
-  '/candidato/(rotas)/vagas': typeof CandidatorotasVagasRoute
-  '/candidato/(rotas)/': typeof CandidatorotasIndexRoute
+  '/_autenticado/candidato/(rotas)/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
+  '/_autenticado/candidato/(rotas)/editar': typeof AutenticadoCandidatorotasEditarRoute
+  '/_autenticado/candidato/(rotas)/vagas': typeof AutenticadoCandidatorotasVagasRoute
+  '/_autenticado/empresa/(rotas)/editar': typeof AutenticadoEmpresarotasEditarRoute
+  '/_autenticado/candidato/(rotas)/': typeof AutenticadoCandidatorotasIndexRoute
+  '/_autenticado/empresa/(rotas)/': typeof AutenticadoEmpresarotasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/candidato'
+    | '/empresa'
     | '/cadastro'
     | '/esqueci-minha-senha'
     | '/login'
     | '/candidato/candidaturas'
     | '/candidato/editar'
     | '/candidato/vagas'
+    | '/empresa/editar'
     | '/candidato/'
+    | '/empresa/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -129,41 +170,47 @@ export interface FileRouteTypes {
     | '/candidato/candidaturas'
     | '/candidato/editar'
     | '/candidato/vagas'
+    | '/empresa/editar'
     | '/candidato'
+    | '/empresa'
   id:
     | '__root__'
     | '/'
+    | '/_autenticado'
     | '/_naoAutenticado'
-    | '/candidato'
+    | '/_autenticado/candidato'
+    | '/_autenticado/empresa'
     | '/_naoAutenticado/(rotas)/cadastro'
     | '/_naoAutenticado/(rotas)/esqueci-minha-senha'
     | '/_naoAutenticado/(rotas)/login'
-    | '/candidato/(rotas)/candidaturas'
-    | '/candidato/(rotas)/editar'
-    | '/candidato/(rotas)/vagas'
-    | '/candidato/(rotas)/'
+    | '/_autenticado/candidato/(rotas)/candidaturas'
+    | '/_autenticado/candidato/(rotas)/editar'
+    | '/_autenticado/candidato/(rotas)/vagas'
+    | '/_autenticado/empresa/(rotas)/editar'
+    | '/_autenticado/candidato/(rotas)/'
+    | '/_autenticado/empresa/(rotas)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AutenticadoRouteRoute: typeof AutenticadoRouteRouteWithChildren
   NaoAutenticadoRouteRoute: typeof NaoAutenticadoRouteRouteWithChildren
-  CandidatoRouteRoute: typeof CandidatoRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/candidato': {
-      id: '/candidato'
-      path: '/candidato'
-      fullPath: '/candidato'
-      preLoaderRoute: typeof CandidatoRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_naoAutenticado': {
       id: '/_naoAutenticado'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof NaoAutenticadoRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_autenticado': {
+      id: '/_autenticado'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AutenticadoRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -173,33 +220,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/candidato/(rotas)/': {
-      id: '/candidato/(rotas)/'
-      path: '/'
-      fullPath: '/candidato/'
-      preLoaderRoute: typeof CandidatorotasIndexRouteImport
-      parentRoute: typeof CandidatoRouteRoute
+    '/_autenticado/empresa': {
+      id: '/_autenticado/empresa'
+      path: '/empresa'
+      fullPath: '/empresa'
+      preLoaderRoute: typeof AutenticadoEmpresaRouteRouteImport
+      parentRoute: typeof AutenticadoRouteRoute
     }
-    '/candidato/(rotas)/vagas': {
-      id: '/candidato/(rotas)/vagas'
-      path: '/vagas'
-      fullPath: '/candidato/vagas'
-      preLoaderRoute: typeof CandidatorotasVagasRouteImport
-      parentRoute: typeof CandidatoRouteRoute
-    }
-    '/candidato/(rotas)/editar': {
-      id: '/candidato/(rotas)/editar'
-      path: '/editar'
-      fullPath: '/candidato/editar'
-      preLoaderRoute: typeof CandidatorotasEditarRouteImport
-      parentRoute: typeof CandidatoRouteRoute
-    }
-    '/candidato/(rotas)/candidaturas': {
-      id: '/candidato/(rotas)/candidaturas'
-      path: '/candidaturas'
-      fullPath: '/candidato/candidaturas'
-      preLoaderRoute: typeof CandidatorotasCandidaturasRouteImport
-      parentRoute: typeof CandidatoRouteRoute
+    '/_autenticado/candidato': {
+      id: '/_autenticado/candidato'
+      path: '/candidato'
+      fullPath: '/candidato'
+      preLoaderRoute: typeof AutenticadoCandidatoRouteRouteImport
+      parentRoute: typeof AutenticadoRouteRoute
     }
     '/_naoAutenticado/(rotas)/login': {
       id: '/_naoAutenticado/(rotas)/login'
@@ -222,8 +255,100 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NaoAutenticadorotasCadastroRouteImport
       parentRoute: typeof NaoAutenticadoRouteRoute
     }
+    '/_autenticado/empresa/(rotas)/': {
+      id: '/_autenticado/empresa/(rotas)/'
+      path: '/'
+      fullPath: '/empresa/'
+      preLoaderRoute: typeof AutenticadoEmpresarotasIndexRouteImport
+      parentRoute: typeof AutenticadoEmpresaRouteRoute
+    }
+    '/_autenticado/candidato/(rotas)/': {
+      id: '/_autenticado/candidato/(rotas)/'
+      path: '/'
+      fullPath: '/candidato/'
+      preLoaderRoute: typeof AutenticadoCandidatorotasIndexRouteImport
+      parentRoute: typeof AutenticadoCandidatoRouteRoute
+    }
+    '/_autenticado/empresa/(rotas)/editar': {
+      id: '/_autenticado/empresa/(rotas)/editar'
+      path: '/editar'
+      fullPath: '/empresa/editar'
+      preLoaderRoute: typeof AutenticadoEmpresarotasEditarRouteImport
+      parentRoute: typeof AutenticadoEmpresaRouteRoute
+    }
+    '/_autenticado/candidato/(rotas)/vagas': {
+      id: '/_autenticado/candidato/(rotas)/vagas'
+      path: '/vagas'
+      fullPath: '/candidato/vagas'
+      preLoaderRoute: typeof AutenticadoCandidatorotasVagasRouteImport
+      parentRoute: typeof AutenticadoCandidatoRouteRoute
+    }
+    '/_autenticado/candidato/(rotas)/editar': {
+      id: '/_autenticado/candidato/(rotas)/editar'
+      path: '/editar'
+      fullPath: '/candidato/editar'
+      preLoaderRoute: typeof AutenticadoCandidatorotasEditarRouteImport
+      parentRoute: typeof AutenticadoCandidatoRouteRoute
+    }
+    '/_autenticado/candidato/(rotas)/candidaturas': {
+      id: '/_autenticado/candidato/(rotas)/candidaturas'
+      path: '/candidaturas'
+      fullPath: '/candidato/candidaturas'
+      preLoaderRoute: typeof AutenticadoCandidatorotasCandidaturasRouteImport
+      parentRoute: typeof AutenticadoCandidatoRouteRoute
+    }
   }
 }
+
+interface AutenticadoCandidatoRouteRouteChildren {
+  AutenticadoCandidatorotasCandidaturasRoute: typeof AutenticadoCandidatorotasCandidaturasRoute
+  AutenticadoCandidatorotasEditarRoute: typeof AutenticadoCandidatorotasEditarRoute
+  AutenticadoCandidatorotasVagasRoute: typeof AutenticadoCandidatorotasVagasRoute
+  AutenticadoCandidatorotasIndexRoute: typeof AutenticadoCandidatorotasIndexRoute
+}
+
+const AutenticadoCandidatoRouteRouteChildren: AutenticadoCandidatoRouteRouteChildren =
+  {
+    AutenticadoCandidatorotasCandidaturasRoute:
+      AutenticadoCandidatorotasCandidaturasRoute,
+    AutenticadoCandidatorotasEditarRoute: AutenticadoCandidatorotasEditarRoute,
+    AutenticadoCandidatorotasVagasRoute: AutenticadoCandidatorotasVagasRoute,
+    AutenticadoCandidatorotasIndexRoute: AutenticadoCandidatorotasIndexRoute,
+  }
+
+const AutenticadoCandidatoRouteRouteWithChildren =
+  AutenticadoCandidatoRouteRoute._addFileChildren(
+    AutenticadoCandidatoRouteRouteChildren,
+  )
+
+interface AutenticadoEmpresaRouteRouteChildren {
+  AutenticadoEmpresarotasEditarRoute: typeof AutenticadoEmpresarotasEditarRoute
+  AutenticadoEmpresarotasIndexRoute: typeof AutenticadoEmpresarotasIndexRoute
+}
+
+const AutenticadoEmpresaRouteRouteChildren: AutenticadoEmpresaRouteRouteChildren =
+  {
+    AutenticadoEmpresarotasEditarRoute: AutenticadoEmpresarotasEditarRoute,
+    AutenticadoEmpresarotasIndexRoute: AutenticadoEmpresarotasIndexRoute,
+  }
+
+const AutenticadoEmpresaRouteRouteWithChildren =
+  AutenticadoEmpresaRouteRoute._addFileChildren(
+    AutenticadoEmpresaRouteRouteChildren,
+  )
+
+interface AutenticadoRouteRouteChildren {
+  AutenticadoCandidatoRouteRoute: typeof AutenticadoCandidatoRouteRouteWithChildren
+  AutenticadoEmpresaRouteRoute: typeof AutenticadoEmpresaRouteRouteWithChildren
+}
+
+const AutenticadoRouteRouteChildren: AutenticadoRouteRouteChildren = {
+  AutenticadoCandidatoRouteRoute: AutenticadoCandidatoRouteRouteWithChildren,
+  AutenticadoEmpresaRouteRoute: AutenticadoEmpresaRouteRouteWithChildren,
+}
+
+const AutenticadoRouteRouteWithChildren =
+  AutenticadoRouteRoute._addFileChildren(AutenticadoRouteRouteChildren)
 
 interface NaoAutenticadoRouteRouteChildren {
   NaoAutenticadorotasCadastroRoute: typeof NaoAutenticadorotasCadastroRoute
@@ -241,28 +366,10 @@ const NaoAutenticadoRouteRouteChildren: NaoAutenticadoRouteRouteChildren = {
 const NaoAutenticadoRouteRouteWithChildren =
   NaoAutenticadoRouteRoute._addFileChildren(NaoAutenticadoRouteRouteChildren)
 
-interface CandidatoRouteRouteChildren {
-  CandidatorotasCandidaturasRoute: typeof CandidatorotasCandidaturasRoute
-  CandidatorotasEditarRoute: typeof CandidatorotasEditarRoute
-  CandidatorotasVagasRoute: typeof CandidatorotasVagasRoute
-  CandidatorotasIndexRoute: typeof CandidatorotasIndexRoute
-}
-
-const CandidatoRouteRouteChildren: CandidatoRouteRouteChildren = {
-  CandidatorotasCandidaturasRoute: CandidatorotasCandidaturasRoute,
-  CandidatorotasEditarRoute: CandidatorotasEditarRoute,
-  CandidatorotasVagasRoute: CandidatorotasVagasRoute,
-  CandidatorotasIndexRoute: CandidatorotasIndexRoute,
-}
-
-const CandidatoRouteRouteWithChildren = CandidatoRouteRoute._addFileChildren(
-  CandidatoRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AutenticadoRouteRoute: AutenticadoRouteRouteWithChildren,
   NaoAutenticadoRouteRoute: NaoAutenticadoRouteRouteWithChildren,
-  CandidatoRouteRoute: CandidatoRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

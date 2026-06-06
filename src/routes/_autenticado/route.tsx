@@ -1,15 +1,14 @@
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { Logo } from '@/assets'
 import { NavLink } from '@/components/NavLink/NavLink'
-import { Dominios } from '@/lib/dominios'
-import { Box, Grid, IconButton, Menu, Stack, Typography } from '@mui/material'
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { Box, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material'
 import { store } from '@/lib/reducers'
 import { useState } from 'react'
 import { deslogarUsuarioTotal } from '@/lib/autenticacao'
 import { useObterFotoPerfil } from '@/api/usuario/usuario'
 import { AvatarPerfil } from '@/components/AvatarPerfil/AvatarPerfil'
 
-export const Route = createFileRoute('/candidato')({
+export const Route = createFileRoute('/_autenticado')({
     component: RouteComponent,
     beforeLoad: () => {
         const usuario = store.getState().credencial
@@ -17,12 +16,6 @@ export const Route = createFileRoute('/candidato')({
         if (!usuario) {
             throw redirect({
                 to: "/login",
-            })
-        }
-
-        if (usuario.perfil !== Dominios.Perfil.Candidato) {
-            throw redirect({
-                to: "/",
             })
         }
     },
@@ -61,11 +54,11 @@ function RouteComponent() {
                             horizontal: "center"
                         }}
                     >
-                        <Stack sx={{ padding: 1 }} spacing={2}>
-                            <Typography sx={{ cursor: "pointer" }} variant="subtitle2" color="error" onClick={deslogarUsuarioTotal}>
+                        <MenuItem onClick={deslogarUsuarioTotal}>
+                            <Typography variant="subtitle2" color="error">
                                 Desconectar conta
                             </Typography>
-                        </Stack>
+                        </MenuItem>
                     </Menu>
                 </Grid>
             </Box>

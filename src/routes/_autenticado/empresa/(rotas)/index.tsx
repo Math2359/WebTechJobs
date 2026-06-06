@@ -1,10 +1,10 @@
 import { Pages } from '@/pages'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/candidato/(rotas)/')({
+export const Route = createFileRoute('/_autenticado/empresa/(rotas)/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <Pages.Candidato.Dashboard />
+  return <Pages.Empresa.Dashboard />
 }

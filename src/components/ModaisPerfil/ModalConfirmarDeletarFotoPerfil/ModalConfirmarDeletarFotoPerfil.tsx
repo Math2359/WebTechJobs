@@ -25,7 +25,7 @@ export const ModalConfirmarDeletarFotoPerfil = ({ open, handleClose }: ModalBase
 
                 <Grid container spacing={2}>
                     <Grid size="grow">
-                        <Botao fullWidth onClick={handleClose} variante="ghost">Cancelar</Botao>
+                        <Botao fullWidth cor="cinza" onClick={handleClose} variante="ghost">Cancelar</Botao>
                     </Grid>
                     <Grid size="grow">
                         <Botao fullWidth variante="outlined" cor="error" onClick={handleConfirm} loading={isPending}>

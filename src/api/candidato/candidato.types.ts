@@ -1,7 +1,7 @@
 import type { TipoExperiencia } from "@/lib/dominios/tipoExperiencia"
 
 export const CandidatoQueryKeys = {
-    ObterInformacoes: "obterInformacoes"
+    ObterInformacoes: "obterInformacoesCandidato"
 } as const
 
 export type Experiencia = {

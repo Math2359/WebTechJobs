@@ -6,5 +6,5 @@ export const Route = createFileRoute('/_naoAutenticado/(rotas)/login')({
 })
 
 function RouteComponent() {
-  return <Pages.Login />
+  return <Pages.NaoAutenticado.Login />
 }

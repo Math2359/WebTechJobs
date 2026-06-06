@@ -2,7 +2,7 @@ import { Grid, IconButton, Stack, Typography } from "@mui/material"
 import { Card } from "@/components/Card/Card"
 import { Botao } from "@/components/Botao/Botao"
 import { useFormCustomizado } from "@/components/Formulario"
-import { useAtualizarInformacoes, useObterInformacoes } from "@/api/candidato/candidato"
+import { useAtualizarInformacoesCandidato, useObterInformacoesCandidato } from "@/api/candidato/candidato"
 import { useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -14,9 +14,9 @@ import { editarFormOptions } from "./FormularioEditar/FormularioEditar.utils"
 import { Dominios } from "@/lib/dominios"
 
 export const Editar = () => {
-    const { data: informacoesCandidato } = useObterInformacoes()
+    const { data: informacoesCandidato } = useObterInformacoesCandidato()
 
-    const { mutateAsync: atualizarInformacoes } = useAtualizarInformacoes()
+    const { mutateAsync: atualizarInformacoes } = useAtualizarInformacoesCandidato()
 
     const navigate = useNavigate()
 

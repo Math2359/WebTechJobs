@@ -51,7 +51,7 @@ export const SobreMim = comFormulario({
                             <Grid container>
                                 <Grid size={3}>
     
-                                    <Stack spacing={1}>
+                                    <Stack spacing={0.5}>
                                         <Typography variant="body2">Preferências (máx. 4):</Typography>
                                         <Grid container>
                                             <Grid size="grow">

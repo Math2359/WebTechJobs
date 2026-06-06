@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import type { ErroResponse } from "../types";
 import { queryClient } from "@/lib/queryClient";
 
-export const useObterInformacoes = () => useQuery({
+export const useObterInformacoesCandidato = () => useQuery({
     queryKey: [CandidatoQueryKeys.ObterInformacoes],
     queryFn: async () => {
         const { data } = await api.get<ObterInformacoesResponse>("/candidato/informacoes")
@@ -14,7 +14,7 @@ export const useObterInformacoes = () => useQuery({
     }
 })
 
-export const useAtualizarInformacoes = () => useMutation({
+export const useAtualizarInformacoesCandidato = () => useMutation({
     mutationFn: async (request: AtualizarInformacoesRequest) => {
         await api.put("/candidato/informacoes", request)
     },

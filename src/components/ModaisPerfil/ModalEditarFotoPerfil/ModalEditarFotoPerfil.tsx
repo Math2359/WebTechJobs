@@ -42,7 +42,7 @@ export const ModalEditarFotoPerfil = ({ arquivo, handleClose, open }: Modaledita
                 
                 <Grid container spacing={2}>
                     <Grid size="grow">
-                        <Botao fullWidth variante="ghost" onClick={onClose}>Cancelar</Botao>
+                        <Botao cor="cinza" fullWidth variante="ghost" onClick={onClose}>Cancelar</Botao>
                     </Grid>
                     <Grid size="grow">
                         <Botao fullWidth variante="outlined" cor="success" onClick={onSubmit} loading={isPending}>Aceitar</Botao>

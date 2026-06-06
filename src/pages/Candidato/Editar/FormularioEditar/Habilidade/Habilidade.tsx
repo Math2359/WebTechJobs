@@ -20,7 +20,7 @@ export const Habilidade = comFormulario({
                         <Stack spacing={2}>
                             <Grid container>
                                 <Grid size={3}>
-                                    <Stack spacing={1}>
+                                    <Stack spacing={0.5}>
                                         <Typography variant="body2">Habilidades (máx. 7):</Typography>
                                         <Grid container>
                                             <Grid size="grow">

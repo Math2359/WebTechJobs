@@ -3,7 +3,7 @@ import { Botao } from '@/components/Botao/Botao'
 import { useFormCustomizado } from '@/components/Formulario'
 import { LinkCustomizado } from '@/components/LinkCustomizado/LinkCustomizado'
 import { credencialActions } from '@/lib/reducers/credencial'
-import { LoginIlustration } from '../../assets'
+import { LoginIlustration } from '../../../assets'
 import { Divider, Grid, Stack, Typography } from '@mui/material'
 import { useNavigate } from '@tanstack/react-router'
 import { useDispatch } from 'react-redux'
@@ -31,7 +31,7 @@ export const Login = () => {
             dispatch(credencialActions.definirCredenciais(data))
 
             navigate({
-                to: data.perfil === Dominios.Perfil.Candidato ? "/candidato" : "/",
+                to: data.perfil === Dominios.Perfil.Candidato ? "/candidato" : "/empresa",
                 viewTransition: true
             })
         }

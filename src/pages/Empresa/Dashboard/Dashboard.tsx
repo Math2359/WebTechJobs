@@ -1,33 +1,26 @@
-import { useAppSelector } from "@/lib/reducers"
-import { Box, Chip, Divider, Grid, IconButton, ListItemIcon, Menu, MenuItem, Stack, Typography } from "@mui/material"
-import { Card } from "@/components/Card/Card";
-import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto";
-import { useObterInformacoesCandidato } from "@/api/candidato/candidato";
-import { useMemo, useRef, useState, type ChangeEvent } from "react";
-import { Dominios } from "@/lib/dominios";
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import EmailIcon from '@mui/icons-material/Email';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import { Experiencias } from "../components/Experiencias/Experiencias";
-import { IconeTexto } from "../../../components/IconeTexto/IconeTexto";
-import { Botao } from "@/components/Botao/Botao";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { SemDados } from "@/components/SemDados/SemDados";
-import { formatarTelefone } from "@/lib/utils";
-import CircleIcon from '@mui/icons-material/Circle';
 import { useObterFotoPerfil } from "@/api/usuario/usuario";
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil";
+import { Card } from "@/components/Card/Card";
+import { Box, Chip, Grid, IconButton, ListItemIcon, Menu, MenuItem, Stack, Typography } from "@mui/material"
+import { useRef, useState, type ChangeEvent } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import EditIcon from '@mui/icons-material/Edit';
-import { ModalEditarFotoPerfil } from "../../../components/ModaisPerfil/ModalEditarFotoPerfil/ModalEditarFotoPerfil";
-import { ModalConfirmarDeletarFotoPerfil } from "../../../components/ModaisPerfil/ModalConfirmarDeletarFotoPerfil/ModalConfirmarDeletarFotoPerfil";
+import { useAppSelector } from "@/lib/reducers";
+import { Botao } from "@/components/Botao/Botao";
+import { useObterInformacoesEmpresa } from "@/api/empresa/empresa";
+import { ModalEditarFotoPerfil } from "@/components/ModaisPerfil/ModalEditarFotoPerfil/ModalEditarFotoPerfil";
+import ModalConfirmarDeletarFotoPerfil from "@/components/ModaisPerfil/ModalConfirmarDeletarFotoPerfil/ModalConfirmarDeletarFotoPerfil";
+import { SemDados } from "@/components/SemDados/SemDados";
+import { IconeTexto } from "@/components/IconeTexto/IconeTexto";
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto";
+import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
 
-    const { data: informacoesCandidato } = useObterInformacoesCandidato()
+    const { data: informacoesEmpresa } = useObterInformacoesEmpresa()
 
     const [arquivo, setArquivo] = useState<File>();
     const [modalEditarFotoPerfil, setModalEditarFotoPerfil] = useState(false)
@@ -64,17 +57,10 @@ export const Dashboard = () => {
 
     const { data: urlAssinada } = useObterFotoPerfil()
 
-    const experiencias = useMemo(() => ({
-        trabalho: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Trabalho) ?? [],
-        formacao: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Formacao) ?? []
-    }), [informacoesCandidato])
-
-    const localizacao = (informacoesCandidato?.cidade ? informacoesCandidato.cidade + ", " : "") + (informacoesCandidato?.estado ?? "")
-
     return (
         <Stack spacing={4}>
             <Card>
-                <Box sx={{ background: theme => theme.palette.primary.main, height: "70px" }} />
+                <Box sx={{ background: theme => theme.palette.secondary.main, height: "70px" }} />
                 <Grid sx={{ padding: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <Grid container spacing={2}>
                         <Stack>
@@ -109,46 +95,41 @@ export const Dashboard = () => {
                         <Stack spacing={1}>
                             <Stack>
                                 <Typography variant="h6">{usuario?.nomeUsuario}</Typography>
-                                <Typography variant="caption">{informacoesCandidato?.area} - {localizacao}</Typography>
+                                <Typography variant="caption">{informacoesEmpresa?.setor ?? "-"}</Typography>
                             </Stack>
                             <Grid container spacing={3}>
-                                <Typography variant="caption"><b>{informacoesCandidato?.vagasAplicadas ?? 0}</b> candidaturas</Typography>
-                                <Typography variant="caption"><b>{informacoesCandidato?.processosAtivos ?? 0}</b> em andamento</Typography>
-                                <Typography variant="caption"><b>{informacoesCandidato?.anosExperiencia ?? "-"}</b> anos de exp.</Typography>
+                                <Typography variant="caption"><b>{informacoesEmpresa?.vagasDisponiveis ?? 0}</b> vagas ativas</Typography>
+                                <Typography variant="caption"><b>{informacoesEmpresa?.candidatos ?? 0}</b> candidaturas</Typography>
                             </Grid>
                         </Stack>
                     </Grid>
-                    <Botao variante="outlined" to="/candidato/editar">Editar perfil <EditOutlinedIcon /></Botao>
+                    <Botao cor="secondary" variante="outlined" to="/empresa/editar">Editar perfil <EditOutlinedIcon /></Botao>
                 </Grid>
             </Card>
-
             <Grid container spacing={2}>
                 <Grid size={3}>
                     <Stack spacing={2}>
                         <Card padding={2}>
                             <Stack spacing={2}>
-                                <Typography variant="overline">Habilidades</Typography>
-                                <Grid container rowSpacing={1} columnSpacing={2}>
-                                    {informacoesCandidato?.habilidades?.length ? (
-                                        informacoesCandidato.habilidades.split(",").map((item, index) => <Chip key={index} color="primary" label={item} />)
-                                    ) : (
-                                        <SemDados titulo="Nenhuma habiliade cadastrada" descricao="Edite seu perfil para adicionar suas habilidades profissionais" />)}
-                                </Grid>
-                            </Stack>
-                        </Card>
-                        <Card padding={2}>
-                            <Stack spacing={2}>
-                                <Typography variant="overline">Contato</Typography>
+                                <Typography variant="overline">Informações</Typography>
                                 <Stack spacing={0.5}>
-                                    <IconeTexto icon={EmailIcon} texto={informacoesCandidato?.emailPessoal} />
-                                    <IconeTexto icon={ContactMailIcon} texto={informacoesCandidato?.emailCorporativo} />
-                                    <IconeTexto icon={LocalPhoneIcon} texto={formatarTelefone(informacoesCandidato?.telefone)} />
-                                    <IconeTexto link icon={LinkedInIcon} texto={informacoesCandidato?.linkedin} />
-                                    <IconeTexto link icon={GitHubIcon} texto={informacoesCandidato?.github} />
+                                    <IconeTexto icon={BusinessOutlinedIcon} texto={informacoesEmpresa?.setor} />
+                                    <IconeTexto link icon={LinkOutlinedIcon} texto={informacoesEmpresa?.linkSite} />
                                 </Stack>
                             </Stack>
                         </Card>
                         <Card padding={2}>
+                            <Stack spacing={2}>
+                                <Typography variant="overline">Tecnologias</Typography>
+                                <Grid container rowSpacing={1} columnSpacing={2}>
+                                    {informacoesEmpresa?.tecnologias ? (
+                                        informacoesEmpresa?.tecnologias.split(",").map((item, index) => <Chip key={index} color="secondary" label={item} />)
+                                    ) : (
+                                        <SemDados titulo="Nenhuma tecnologia cadastrada" descricao="Edite seu perfil para adicionar as tecnologias da empresa" />)}
+                                </Grid>
+                            </Stack>
+                        </Card>
+                        {/* <Card padding={2}>
                             <Stack spacing={2}>
                                 <Typography variant="overline">Preferências</Typography>
                                 <Stack spacing={0.5}>
@@ -167,7 +148,7 @@ export const Dashboard = () => {
                                     )}
                                 </Stack>
                             </Stack>
-                        </Card>
+                        </Card> */}
                     </Stack>
                 </Grid>
                 <Grid size="grow">
@@ -175,42 +156,15 @@ export const Dashboard = () => {
                         <Card padding={2}>
                             <Stack spacing={4}>
                                 <Stack spacing={2}>
-                                    <Typography variant="overline">Sobre mim</Typography>
-                                    <RenderizarTexto texto={informacoesCandidato?.descricao ?? ""} />
+                                    <Typography variant="overline">Sobre a empresa</Typography>
+                                    <RenderizarTexto texto={informacoesEmpresa?.descricao ?? ""} />
                                 </Stack>
                             </Stack>
-                        </Card>
-                        <Card padding={2}>
-                            <Grid container spacing={2}
-                                sx={{
-                                    flexGrow: 1,
-                                    justifyContent: "space-between"
-                                }}>
-                                <Grid size={5.7}>
-                                    <Stack spacing={2}>
-                                        <Typography variant="overline">Experiências</Typography>
-                                        <Experiencias experiencias={experiencias.trabalho} />
-                                    </Stack>
-                                </Grid>
-
-                                <Grid sx={{ height: "stretch", justifyContent: "center", display: "flex" }}>
-                                    <Divider
-                                        orientation="vertical"
-                                        variant='fullWidth'
-                                    />
-                                </Grid>
-
-                                <Grid size={5.7}>
-                                    <Stack spacing={2}>
-                                        <Typography variant="overline">Formações</Typography>
-                                        <Experiencias experiencias={experiencias.formacao} />
-                                    </Stack>
-                                </Grid>
-                            </Grid>
                         </Card>
                     </Stack>
                 </Grid>
             </Grid>
+            
             <ModalEditarFotoPerfil open={modalEditarFotoPerfil} arquivo={arquivo} handleClose={handleCLoseModalEditarPerfil} />
             <ModalConfirmarDeletarFotoPerfil open={modalConfirmarDeletar} handleClose={() => setModalConfirmarDeletar(false)} />
         </Stack>
