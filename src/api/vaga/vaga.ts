@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { queryClient } from "@/lib/queryClient";
-import { VagaQueryKeys, type AtualizarVagaEmpresaRequest, type CadastrarVagaRequest, type ObterVagaEmpresaPorIdResponse, type ObterVagasEmpresaResponse } from "./vaga.types";
+import { VagaQueryKeys, type AtualizarVagaEmpresaRequest, type CadastrarVagaRequest, type ObterVagaEmpresaPorIdResponse, type ObterVagaPorIdResponse, type ObterVagasDisponiveisRequest, type ObterVagasDisponiveisResponse, type ObterVagasEmpresaResponse } from "./vaga.types";
 import { api } from "@/lib/axios";
 import type { ErroResponse } from "../types";
 
@@ -19,6 +19,27 @@ export const useObterVagaEmpresaPorId = (id: number | undefined) => useQuery({
     enabled: !!id,
     queryFn: async () => {
         const { data } = await api.get<ObterVagaEmpresaPorIdResponse>(`/vaga/empresa/${id}`)
+
+        return data
+    }
+})
+
+export const useObterVagasDisponiveis = (request: ObterVagasDisponiveisRequest) => useQuery({
+    queryKey: [VagaQueryKeys.ObterVagasDisponiveis, request],
+    queryFn: async () => {
+        const { data } = await api.get<ObterVagasDisponiveisResponse>("/vaga/todas", {
+            params: request
+        })
+
+        return data
+    }
+})
+
+export const useObterVagaPorId = (id: number | undefined) => useQuery({
+    queryKey: [VagaQueryKeys.ObterVagasDisponiveis, id],
+    enabled: !!id,
+    queryFn: async () => {
+        const { data } = await api.get<ObterVagaPorIdResponse>(`/vaga/${id}`)
 
         return data
     }

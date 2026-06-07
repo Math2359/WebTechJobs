@@ -13,25 +13,24 @@ import { useFormCustomizado } from "@/components/Formulario"
 import { useAtualizarVagaEmpresa, useObterVagaEmpresaPorId } from "@/api/vaga/vaga"
 import { MASCARA_CEP, MASCARA_DINHEIRO_REAL } from "@/lib/mascaras"
 import { cadastrarVagaSchema } from "../Busca/modais/ModalNovaVaga/ModalNovaVaga.schema"
-import { defaultvalues } from "../Busca/modais/ModalNovaVaga/ModalNovaVaga.utils"
-import type z from "zod"
 import type { Vaga } from "@/api/vaga/vaga.types"
+import type { CadastrarVagaSchema } from "../Busca/modais/ModalNovaVaga/ModalNovaVaga.types"
 
 type DetalhesProps = {
     id: number
 }
 
-const obterValoresFormulario = (vaga: Vaga): z.infer<typeof cadastrarVagaSchema> => ({
-    nome: vaga.nome,
-    cargo: vaga.cargo,
-    modelo: vaga.modelo,
-    nivelExperiencia: vaga.nivelExperiencia,
-    descricao: vaga.descricao,
-    cep: vaga.cep ?? "",
-    numero: vaga.numero ?? "",
-    salarioPrevisto: vaga.salarioPrevisto ? String(vaga.salarioPrevisto) : "",
-    interna: vaga.interna,
-    dataFimInscricoes: vaga.dataFimInscricoes ? new Date(vaga.dataFimInscricoes) : undefined,
+const obterValoresFormulario = (vaga?: Vaga): CadastrarVagaSchema => ({
+    nome: vaga?.nome ?? "",
+    cargo: vaga?.cargo ?? "",
+    modelo: vaga?.modelo ?? "",
+    nivelExperiencia: vaga?.nivelExperiencia ?? "",
+    descricao: vaga?.descricao ?? "",
+    cep: vaga?.cep ?? "",
+    numero: vaga?.numero ?? "",
+    salarioPrevisto: vaga?.salarioPrevisto ? String(vaga.salarioPrevisto) : "",
+    interna: vaga?.interna ?? false,
+    dataFimInscricoes: vaga?.dataFimInscricoes ? new Date(vaga.dataFimInscricoes) : undefined,
 })
 
 export const Detalhes = ({ id }: DetalhesProps) => {
@@ -44,7 +43,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
     const { mutateAsync: atualizarVaga, isPending } = useAtualizarVagaEmpresa()
 
     const { AppField, Subscribe, handleSubmit, reset } = useFormCustomizado({
-        defaultValues: defaultvalues,
+        defaultValues: obterValoresFormulario(data?.vaga),
         validators: {
             onSubmit: cadastrarVagaSchema,
             onBlur: cadastrarVagaSchema
@@ -59,19 +58,10 @@ export const Detalhes = ({ id }: DetalhesProps) => {
         }
     })
 
-    useEffect(() => {
-        if (data?.vaga) reset(obterValoresFormulario(data.vaga))
-    }, [data?.vaga, reset])
-
     const aplicacoes = data?.aplicacoes ?? []
 
     const { dadosGrid } = useGerarDadosGrid({
         colunas: [
-            {
-                largura: 80,
-                nomeHeader: "ID",
-                renderizarValor: (linha) => linha.id
-            },
             {
                 largura: 180,
                 nomeHeader: "Nome",
@@ -86,8 +76,8 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                 largura: 120,
                 nomeHeader: "Ações",
                 renderizarValor: () => (
-                    <IconButton color="secondary">
-                        <Visibility />
+                    <IconButton>
+                        <Visibility fontSize="small" />
                     </IconButton>
                 )
             }
@@ -97,7 +87,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
     })
 
     const cancelarEdicao = () => {
-        if (data?.vaga) reset(obterValoresFormulario(data.vaga))
+        reset()
         setEditando(false)
     }
 

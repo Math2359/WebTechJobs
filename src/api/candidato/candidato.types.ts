@@ -39,3 +39,8 @@ export type ObterInformacoesResponse = DadosVagas & InformacoesCandidato & {
 export type AtualizarInformacoesRequest = InformacoesCandidato & {
     experiencias: Experiencia[]
 }
+
+export type AplicarVagaRequest = {
+    idVaga: number
+    arquivo: File
+}

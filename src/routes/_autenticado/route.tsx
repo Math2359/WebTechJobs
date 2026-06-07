@@ -2,11 +2,12 @@ import { createFileRoute, Outlet, redirect, useNavigate } from '@tanstack/react-
 import { Logo } from '@/assets'
 import { NavLink } from '@/components/NavLink/NavLink'
 import { Box, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material'
-import { store } from '@/lib/reducers'
+import { store, useAppSelector } from '@/lib/reducers'
 import { useState } from 'react'
 import { deslogarUsuarioTotal } from '@/lib/autenticacao'
 import { useObterFotoPerfil } from '@/api/usuario/usuario'
 import { AvatarPerfil } from '@/components/AvatarPerfil/AvatarPerfil'
+import { Dominios } from '@/lib/dominios'
 
 export const Route = createFileRoute('/_autenticado')({
     component: RouteComponent,
@@ -34,6 +35,7 @@ function RouteComponent() {
     const { data: urlAssinada } = useObterFotoPerfil()
 
     const navigate = useNavigate()
+    const { perfil } = useAppSelector(state => state.credencial)!
 
     return (
         <>
@@ -57,7 +59,7 @@ function RouteComponent() {
                         }}
                     >
                         <MenuItem onClick={() => navigate({
-                            to: "/empresa"
+                            to: perfil === Dominios.Perfil.Empresa ? "/empresa" : "/candidato"
                         })}>
                             <Typography variant="subtitle2">
                                 Meu perfil

@@ -1,7 +1,6 @@
-import type z from "zod";
-import type { cadastrarVagaSchema } from "./ModalNovaVaga.schema";
+import type { CadastrarVagaSchema } from "./ModalNovaVaga.types";
 
-export const defaultvalues: z.infer<typeof cadastrarVagaSchema> = {
+export const defaultvalues: CadastrarVagaSchema = {
     nome: "",
     cargo: "",
     descricao: "",

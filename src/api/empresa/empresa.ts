@@ -14,6 +14,16 @@ export const useObterInformacoesEmpresa = () => useQuery({
     }
 })
 
+export const useObterFotoPerfilEmpresa = (idEmpresa: number | undefined) => useQuery({
+    queryKey: [EmpresaQueryKeys.ObterFotoPerfil, idEmpresa],
+    enabled: !!idEmpresa,
+    queryFn: async () => {
+        const { data } = await api.get<string>(`/usuario/foto-perfil/empresa/${idEmpresa}`)
+
+        return data
+    }
+})
+
 export const useAtualizarInformacoesEmpresa = () => useMutation({
     mutationFn: async (request: AtualizarInformacoesRequest) => {
         await api.put("/empresa/informacoes", request)

@@ -1,33 +1,35 @@
+import { differenceInDays, differenceInHours, differenceInMinutes, differenceInMonths, differenceInYears } from "date-fns"
+
 export const validarCNPJ = (cnpj: string) => {
-  const cnpjLimpo = cnpj.replace(/\D/g, "")
+    const cnpjLimpo = cnpj.replace(/\D/g, "")
 
-  if (cnpjLimpo.length !== 14) return false
+    if (cnpjLimpo.length !== 14) return false
 
-  // Elimina CNPJs inválidos conhecidos
-  if (/^(\d)\1+$/.test(cnpjLimpo)) return false
+    // Elimina CNPJs inválidos conhecidos
+    if (/^(\d)\1+$/.test(cnpjLimpo)) return false
 
-  const calcularDigito = (base: string, pesos: number[]) => {
-    const soma = base
-      .split("")
-      .reduce((acc, num, index) => {
-        return acc + Number(num) * pesos[index]
-      }, 0)
+    const calcularDigito = (base: string, pesos: number[]) => {
+        const soma = base
+            .split("")
+            .reduce((acc, num, index) => {
+                return acc + Number(num) * pesos[index]
+            }, 0)
 
-    const resto = soma % 11
+        const resto = soma % 11
 
-    return resto < 2 ? 0 : 11 - resto
-  }
+        return resto < 2 ? 0 : 11 - resto
+    }
 
-  const base = cnpjLimpo.slice(0, 12)
+    const base = cnpjLimpo.slice(0, 12)
 
-  const digito1 = calcularDigito(base, [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2])
+    const digito1 = calcularDigito(base, [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2])
 
-  const digito2 = calcularDigito(
-    base + digito1,
-    [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
-  )
+    const digito2 = calcularDigito(
+        base + digito1,
+        [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+    )
 
-  return cnpjLimpo === `${base}${digito1}${digito2}`
+    return cnpjLimpo === `${base}${digito1}${digito2}`
 }
 
 export function validarCpf(cpf: string): boolean {
@@ -89,4 +91,50 @@ export const formatarTelefone = (telefone: string | undefined) => {
         (_, ddd, parte1, parte2) =>
             `(${ddd}) ${parte1}${parte2 ? `-${parte2}` : ""}`
     );
+}
+
+export function formatarReal(valor: number): string {
+    return new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+    }).format(valor);
+}
+
+export function formatarTempoCadastro(dataCadastro: Date): string {
+    const hoje = new Date()
+
+    const anos = differenceInYears(hoje, dataCadastro)
+
+    if (anos > 1)
+        return `${anos} anos`
+    if (anos > 0)
+        return `${anos} ano`
+
+    const meses = differenceInMonths(hoje, dataCadastro)
+
+    if (meses > 1)
+        return `${meses} meses`
+    if (meses > 0)
+        return `${meses} mês`
+
+    const dias = differenceInDays(hoje, dataCadastro)
+
+    if (dias > 1)
+        return `${dias} dias`
+    if (dias > 0)
+        return `${dias} dia`
+
+    const horas = differenceInHours(hoje, dataCadastro)
+
+    if (horas > 1)
+        return `${horas} horas`
+    if (horas > 0)
+        return `${horas} hora`
+
+    const minutos = differenceInMinutes(hoje, dataCadastro)
+
+    if (minutos > 1)
+        return `${minutos} minutos`
+
+    return `1 minuto`
 }

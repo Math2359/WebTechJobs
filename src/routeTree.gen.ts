@@ -20,11 +20,12 @@ import { Route as NaoAutenticadorotasCadastroRouteImport } from './routes/_naoAu
 import { Route as AutenticadoEmpresarotasIndexRouteImport } from './routes/_autenticado/empresa/(rotas)/index'
 import { Route as AutenticadoCandidatorotasIndexRouteImport } from './routes/_autenticado/candidato/(rotas)/index'
 import { Route as AutenticadoEmpresarotasEditarRouteImport } from './routes/_autenticado/empresa/(rotas)/editar'
-import { Route as AutenticadoCandidatorotasVagasRouteImport } from './routes/_autenticado/candidato/(rotas)/vagas'
 import { Route as AutenticadoCandidatorotasEditarRouteImport } from './routes/_autenticado/candidato/(rotas)/editar'
 import { Route as AutenticadoCandidatorotasCandidaturasRouteImport } from './routes/_autenticado/candidato/(rotas)/candidaturas'
 import { Route as AutenticadoEmpresarotasVagaIndexRouteImport } from './routes/_autenticado/empresa/(rotas)/vaga/index'
+import { Route as AutenticadoCandidatorotasVagaIndexRouteImport } from './routes/_autenticado/candidato/(rotas)/vaga/index'
 import { Route as AutenticadoEmpresarotasVagaIdRouteImport } from './routes/_autenticado/empresa/(rotas)/vaga/$id'
+import { Route as AutenticadoCandidatorotasVagaIdRouteImport } from './routes/_autenticado/candidato/(rotas)/vaga/$id'
 
 const NaoAutenticadoRouteRoute = NaoAutenticadoRouteRouteImport.update({
   id: '/_naoAutenticado',
@@ -86,12 +87,6 @@ const AutenticadoEmpresarotasEditarRoute =
     path: '/editar',
     getParentRoute: () => AutenticadoEmpresaRouteRoute,
   } as any)
-const AutenticadoCandidatorotasVagasRoute =
-  AutenticadoCandidatorotasVagasRouteImport.update({
-    id: '/(rotas)/vagas',
-    path: '/vagas',
-    getParentRoute: () => AutenticadoCandidatoRouteRoute,
-  } as any)
 const AutenticadoCandidatorotasEditarRoute =
   AutenticadoCandidatorotasEditarRouteImport.update({
     id: '/(rotas)/editar',
@@ -110,11 +105,23 @@ const AutenticadoEmpresarotasVagaIndexRoute =
     path: '/vaga/',
     getParentRoute: () => AutenticadoEmpresaRouteRoute,
   } as any)
+const AutenticadoCandidatorotasVagaIndexRoute =
+  AutenticadoCandidatorotasVagaIndexRouteImport.update({
+    id: '/(rotas)/vaga/',
+    path: '/vaga/',
+    getParentRoute: () => AutenticadoCandidatoRouteRoute,
+  } as any)
 const AutenticadoEmpresarotasVagaIdRoute =
   AutenticadoEmpresarotasVagaIdRouteImport.update({
     id: '/(rotas)/vaga/$id',
     path: '/vaga/$id',
     getParentRoute: () => AutenticadoEmpresaRouteRoute,
+  } as any)
+const AutenticadoCandidatorotasVagaIdRoute =
+  AutenticadoCandidatorotasVagaIdRouteImport.update({
+    id: '/(rotas)/vaga/$id',
+    path: '/vaga/$id',
+    getParentRoute: () => AutenticadoCandidatoRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -126,11 +133,12 @@ export interface FileRoutesByFullPath {
   '/login': typeof NaoAutenticadorotasLoginRoute
   '/candidato/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
   '/candidato/editar': typeof AutenticadoCandidatorotasEditarRoute
-  '/candidato/vagas': typeof AutenticadoCandidatorotasVagasRoute
   '/empresa/editar': typeof AutenticadoEmpresarotasEditarRoute
   '/candidato/': typeof AutenticadoCandidatorotasIndexRoute
   '/empresa/': typeof AutenticadoEmpresarotasIndexRoute
+  '/candidato/vaga/$id': typeof AutenticadoCandidatorotasVagaIdRoute
   '/empresa/vaga/$id': typeof AutenticadoEmpresarotasVagaIdRoute
+  '/candidato/vaga/': typeof AutenticadoCandidatorotasVagaIndexRoute
   '/empresa/vaga/': typeof AutenticadoEmpresarotasVagaIndexRoute
 }
 export interface FileRoutesByTo {
@@ -140,11 +148,12 @@ export interface FileRoutesByTo {
   '/login': typeof NaoAutenticadorotasLoginRoute
   '/candidato/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
   '/candidato/editar': typeof AutenticadoCandidatorotasEditarRoute
-  '/candidato/vagas': typeof AutenticadoCandidatorotasVagasRoute
   '/empresa/editar': typeof AutenticadoEmpresarotasEditarRoute
   '/candidato': typeof AutenticadoCandidatorotasIndexRoute
   '/empresa': typeof AutenticadoEmpresarotasIndexRoute
+  '/candidato/vaga/$id': typeof AutenticadoCandidatorotasVagaIdRoute
   '/empresa/vaga/$id': typeof AutenticadoEmpresarotasVagaIdRoute
+  '/candidato/vaga': typeof AutenticadoCandidatorotasVagaIndexRoute
   '/empresa/vaga': typeof AutenticadoEmpresarotasVagaIndexRoute
 }
 export interface FileRoutesById {
@@ -159,11 +168,12 @@ export interface FileRoutesById {
   '/_naoAutenticado/(rotas)/login': typeof NaoAutenticadorotasLoginRoute
   '/_autenticado/candidato/(rotas)/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
   '/_autenticado/candidato/(rotas)/editar': typeof AutenticadoCandidatorotasEditarRoute
-  '/_autenticado/candidato/(rotas)/vagas': typeof AutenticadoCandidatorotasVagasRoute
   '/_autenticado/empresa/(rotas)/editar': typeof AutenticadoEmpresarotasEditarRoute
   '/_autenticado/candidato/(rotas)/': typeof AutenticadoCandidatorotasIndexRoute
   '/_autenticado/empresa/(rotas)/': typeof AutenticadoEmpresarotasIndexRoute
+  '/_autenticado/candidato/(rotas)/vaga/$id': typeof AutenticadoCandidatorotasVagaIdRoute
   '/_autenticado/empresa/(rotas)/vaga/$id': typeof AutenticadoEmpresarotasVagaIdRoute
+  '/_autenticado/candidato/(rotas)/vaga/': typeof AutenticadoCandidatorotasVagaIndexRoute
   '/_autenticado/empresa/(rotas)/vaga/': typeof AutenticadoEmpresarotasVagaIndexRoute
 }
 export interface FileRouteTypes {
@@ -177,11 +187,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/candidato/candidaturas'
     | '/candidato/editar'
-    | '/candidato/vagas'
     | '/empresa/editar'
     | '/candidato/'
     | '/empresa/'
+    | '/candidato/vaga/$id'
     | '/empresa/vaga/$id'
+    | '/candidato/vaga/'
     | '/empresa/vaga/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -191,11 +202,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/candidato/candidaturas'
     | '/candidato/editar'
-    | '/candidato/vagas'
     | '/empresa/editar'
     | '/candidato'
     | '/empresa'
+    | '/candidato/vaga/$id'
     | '/empresa/vaga/$id'
+    | '/candidato/vaga'
     | '/empresa/vaga'
   id:
     | '__root__'
@@ -209,11 +221,12 @@ export interface FileRouteTypes {
     | '/_naoAutenticado/(rotas)/login'
     | '/_autenticado/candidato/(rotas)/candidaturas'
     | '/_autenticado/candidato/(rotas)/editar'
-    | '/_autenticado/candidato/(rotas)/vagas'
     | '/_autenticado/empresa/(rotas)/editar'
     | '/_autenticado/candidato/(rotas)/'
     | '/_autenticado/empresa/(rotas)/'
+    | '/_autenticado/candidato/(rotas)/vaga/$id'
     | '/_autenticado/empresa/(rotas)/vaga/$id'
+    | '/_autenticado/candidato/(rotas)/vaga/'
     | '/_autenticado/empresa/(rotas)/vaga/'
   fileRoutesById: FileRoutesById
 }
@@ -302,13 +315,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AutenticadoEmpresarotasEditarRouteImport
       parentRoute: typeof AutenticadoEmpresaRouteRoute
     }
-    '/_autenticado/candidato/(rotas)/vagas': {
-      id: '/_autenticado/candidato/(rotas)/vagas'
-      path: '/vagas'
-      fullPath: '/candidato/vagas'
-      preLoaderRoute: typeof AutenticadoCandidatorotasVagasRouteImport
-      parentRoute: typeof AutenticadoCandidatoRouteRoute
-    }
     '/_autenticado/candidato/(rotas)/editar': {
       id: '/_autenticado/candidato/(rotas)/editar'
       path: '/editar'
@@ -330,6 +336,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AutenticadoEmpresarotasVagaIndexRouteImport
       parentRoute: typeof AutenticadoEmpresaRouteRoute
     }
+    '/_autenticado/candidato/(rotas)/vaga/': {
+      id: '/_autenticado/candidato/(rotas)/vaga/'
+      path: '/vaga'
+      fullPath: '/candidato/vaga/'
+      preLoaderRoute: typeof AutenticadoCandidatorotasVagaIndexRouteImport
+      parentRoute: typeof AutenticadoCandidatoRouteRoute
+    }
     '/_autenticado/empresa/(rotas)/vaga/$id': {
       id: '/_autenticado/empresa/(rotas)/vaga/$id'
       path: '/vaga/$id'
@@ -337,14 +350,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AutenticadoEmpresarotasVagaIdRouteImport
       parentRoute: typeof AutenticadoEmpresaRouteRoute
     }
+    '/_autenticado/candidato/(rotas)/vaga/$id': {
+      id: '/_autenticado/candidato/(rotas)/vaga/$id'
+      path: '/vaga/$id'
+      fullPath: '/candidato/vaga/$id'
+      preLoaderRoute: typeof AutenticadoCandidatorotasVagaIdRouteImport
+      parentRoute: typeof AutenticadoCandidatoRouteRoute
+    }
   }
 }
 
 interface AutenticadoCandidatoRouteRouteChildren {
   AutenticadoCandidatorotasCandidaturasRoute: typeof AutenticadoCandidatorotasCandidaturasRoute
   AutenticadoCandidatorotasEditarRoute: typeof AutenticadoCandidatorotasEditarRoute
-  AutenticadoCandidatorotasVagasRoute: typeof AutenticadoCandidatorotasVagasRoute
   AutenticadoCandidatorotasIndexRoute: typeof AutenticadoCandidatorotasIndexRoute
+  AutenticadoCandidatorotasVagaIdRoute: typeof AutenticadoCandidatorotasVagaIdRoute
+  AutenticadoCandidatorotasVagaIndexRoute: typeof AutenticadoCandidatorotasVagaIndexRoute
 }
 
 const AutenticadoCandidatoRouteRouteChildren: AutenticadoCandidatoRouteRouteChildren =
@@ -352,8 +373,10 @@ const AutenticadoCandidatoRouteRouteChildren: AutenticadoCandidatoRouteRouteChil
     AutenticadoCandidatorotasCandidaturasRoute:
       AutenticadoCandidatorotasCandidaturasRoute,
     AutenticadoCandidatorotasEditarRoute: AutenticadoCandidatorotasEditarRoute,
-    AutenticadoCandidatorotasVagasRoute: AutenticadoCandidatorotasVagasRoute,
     AutenticadoCandidatorotasIndexRoute: AutenticadoCandidatorotasIndexRoute,
+    AutenticadoCandidatorotasVagaIdRoute: AutenticadoCandidatorotasVagaIdRoute,
+    AutenticadoCandidatorotasVagaIndexRoute:
+      AutenticadoCandidatorotasVagaIndexRoute,
   }
 
 const AutenticadoCandidatoRouteRouteWithChildren =

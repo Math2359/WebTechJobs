@@ -1,6 +1,8 @@
 export const VagaQueryKeys = {
     ObterVagasEmpresa: "obterVagasEmpresa",
-    ObterVagaEmpresaPorId: "obterVagaEmpresaPorId"
+    ObterVagaEmpresaPorId: "obterVagaEmpresaPorId",
+    ObterVagasDisponiveis: "obterVagasDisponiveis",
+    ObterVagaPorId: "obterVagaPorId"
 } as const
 
 export type Vaga = {
@@ -48,3 +50,15 @@ export type ObterVagaEmpresaPorIdResponse = {
         email: string
     }[]
 }
+
+export type ObterVagasDisponiveisRequest = {
+    termoBusca?: string
+}
+
+type VagaVisualizacaoCandidato = Vaga & {
+    nomeEmpresa: string
+}
+
+export type ObterVagasDisponiveisResponse = VagaVisualizacaoCandidato[]
+
+export type ObterVagaPorIdResponse = VagaVisualizacaoCandidato

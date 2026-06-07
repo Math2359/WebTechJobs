@@ -59,7 +59,7 @@ export const Busca = () => {
                     params: {
                         id: String(linha.id)
                     }
-                })}><Visibility /></IconButton>
+                })}><Visibility fontSize="small" /></IconButton>
             }
         ],
         linhas: vagas,
@@ -71,10 +71,10 @@ export const Busca = () => {
             <Stack spacing={4}>
                 <Stack spacing={1}>
                     <Grid container sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <Grid>
+                        <Stack>
                             <Typography variant="h6">Minhas vagas</Typography>
-                            <Typography variant="caption">Gerencia as suas principais vagas</Typography>
-                        </Grid>
+                            <Typography variant="caption">Gerencie as suas principais vagas</Typography>
+                        </Stack>
                         <Grid>
                             <Botao cor="secondary" onClick={() => setModalAdicionarVaga(true)}>
                                 Adicionar vaga <AddIcon />

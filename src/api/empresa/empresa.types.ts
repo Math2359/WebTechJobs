@@ -1,5 +1,6 @@
 export const EmpresaQueryKeys = {
-    ObterInformacoes: "obterInformacoesEmpresa"
+    ObterInformacoes: "obterInformacoesEmpresa",
+    ObterFotoPerfil: "obterFotoPerfil"
 } as const
 
 type InformacoesEmpresa = {
