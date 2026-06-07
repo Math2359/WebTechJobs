@@ -1,3 +1,4 @@
+import { Pages } from '@/pages'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_autenticado/candidato/(rotas)/candidaturas')({
@@ -5,5 +6,5 @@ export const Route = createFileRoute('/_autenticado/candidato/(rotas)/candidatur
 })
 
 function RouteComponent() {
-  return <div>Hello "/candidato/(rotas)/candidaturas"!</div>
+  return <Pages.Candidato.Candidaturas />
 }

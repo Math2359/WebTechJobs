@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { CandidatoQueryKeys, type AplicarVagaRequest, type AtualizarInformacoesRequest, type ObterInformacoesResponse } from "./candidato.types";
+import { CandidatoQueryKeys, type AplicarVagaRequest, type AtualizarInformacoesRequest, type ObterAplicacaoResponse, type ObterAplicacoesResponse, type ObterInformacoesResponse } from "./candidato.types";
 import { api } from "@/lib/axios";
 import { toast } from "sonner";
 import type { ErroResponse } from "../types";
@@ -40,8 +40,33 @@ export const useAplicarVaga = () => useMutation({
     },
     onSuccess: () => {
         toast.success("Aplicação feita com sucesso!")
+        queryClient.invalidateQueries({
+            queryKey: [CandidatoQueryKeys.ObterAplicacoes]
+        })
+        queryClient.invalidateQueries({
+            queryKey: [CandidatoQueryKeys.ObterAplicacoes]
+        })
     },
     onError: (erro: ErroResponse) => {
         toast.error(erro.response?.data.mensagem)
+    }
+})
+
+export const useObterAplicacoesCandidato = () => useQuery({
+    queryKey: [CandidatoQueryKeys.ObterAplicacoes],
+    queryFn: async () => {
+        const { data } = await api.get<ObterAplicacoesResponse>("/candidato/aplicacoes")
+
+        return data
+    }
+})
+
+export const useObterVagaAplicacaoCandidato = (idVaga: number | undefined) => useQuery({
+    queryKey: [CandidatoQueryKeys.ObterAplicacoes, idVaga],
+    enabled: !!idVaga,
+    queryFn: async () => {
+        const { data } = await api.get<ObterAplicacaoResponse>(`/candidato/vaga/${idVaga}`)
+
+        return data
     }
 })

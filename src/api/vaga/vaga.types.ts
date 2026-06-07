@@ -55,7 +55,7 @@ export type ObterVagasDisponiveisRequest = {
     termoBusca?: string
 }
 
-type VagaVisualizacaoCandidato = Vaga & {
+export type VagaVisualizacaoCandidato = Vaga & {
     nomeEmpresa: string
 }
 

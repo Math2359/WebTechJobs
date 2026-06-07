@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react"
-import { Avatar, Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
+import { useState } from "react"
+import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined"
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
@@ -8,12 +8,13 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import { Botao } from "@/components/Botao/Botao"
 import { Card } from "@/components/Card/Card"
-import { useObterVagaPorId } from "@/api/vaga/vaga"
 import { formatarReal, formatarTempoCadastro } from "@/lib/utils"
 import { ModalCandidatura } from "./modais/ModalCandidatura/ModalCandidatura"
 import { useObterFotoPerfilEmpresa } from "@/api/empresa/empresa"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
+import { useObterVagaAplicacaoCandidato } from "@/api/candidato/candidato"
+import { SITUACAO_MAPEADA } from "./Detalhes.utils"
 
 type DetalhesProps = {
     id: number
@@ -21,10 +22,10 @@ type DetalhesProps = {
 
 export const Detalhes = ({ id }: DetalhesProps) => {
     const [modalCandidatura, setModalCandidatura] = useState(false)
-    const { data: vaga } = useObterVagaPorId(id)
+    const { data: vaga } = useObterVagaAplicacaoCandidato(id)
     const { data: fotoEmpresa } = useObterFotoPerfilEmpresa(vaga?.idEmpresa)
 
-    const iniciais = useMemo(() => (vaga?.nome ?? vaga?.nomeEmpresa ?? "V").slice(0, 1).toUpperCase(), [vaga])
+    const situacao = vaga?.situacao ? SITUACAO_MAPEADA[vaga.situacao] : undefined
 
     return (
         <Grid container spacing={2}>
@@ -65,11 +66,15 @@ export const Detalhes = ({ id }: DetalhesProps) => {
 
                             <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
                                 {["React", "PJ", "Remoto"].map((tag) => (
-                                    <Chip key={tag} label={tag} sx={(theme) => ({
-                                        borderRadius: 999,
-                                        fontSize: 12,
-                                        backgroundColor: theme.palette.grey[100],
-                                    })} />
+                                    <Chip
+                                        key={tag}
+                                        label={tag}
+                                        sx={(theme) => ({
+                                            borderRadius: 999,
+                                            fontSize: 12,
+                                            backgroundColor: theme.palette.grey[100],
+                                        })}
+                                    />
                                 ))}
                             </Stack>
                         </Stack>
@@ -110,20 +115,51 @@ export const Detalhes = ({ id }: DetalhesProps) => {
             <Grid size={3}>
                 <Card padding={2}>
                     <Stack spacing={2.5}>
-                        <Box>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                                Candidatar-se
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                                Seu perfil será enviado ao recrutador da {vaga?.nomeEmpresa}.
-                            </Typography>
-                        </Box>
+                        {situacao ? (
+                            <Stack spacing={1.5}>
+                                <Box>
+                                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                        Status da candidatura
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                        Você já se candidatou para esta vaga.
+                                    </Typography>
+                                </Box>
 
-                        <Stack spacing={1}>
-                            <Botao fullWidth onClick={() => setModalCandidatura(true)}>
-                                Candidatar-se agora
-                            </Botao>
-                        </Stack>
+                                <Chip
+                                    label={situacao.descricao}
+                                    sx={{
+                                        width: "fit-content",
+                                        borderRadius: 999,
+                                        backgroundColor: situacao.corFundo,
+                                        color: situacao.cor,
+                                        fontWeight: 700,
+                                        px: 0.5,
+                                    }}
+                                />
+
+                                <Typography variant="caption" color="text.secondary">
+                                    Atualizado em {new Date(vaga?.dataCadastro ?? "").toLocaleDateString("pt-BR")}
+                                </Typography>
+                            </Stack>
+                        ) : (
+                            <>
+                                <Box>
+                                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                        Candidatar-se
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                        Seu perfil será enviado ao recrutador da {vaga?.nomeEmpresa}.
+                                    </Typography>
+                                </Box>
+
+                                <Stack spacing={1}>
+                                    <Botao fullWidth onClick={() => setModalCandidatura(true)}>
+                                        Candidatar-se agora
+                                    </Botao>
+                                </Stack>
+                            </>
+                        )}
 
                         <Stack spacing={0.75} sx={{ pt: 2 }}>
                             <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
@@ -153,10 +189,14 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                     </Stack>
                 </Card>
             </Grid>
-            <ModalCandidatura handleClose={() => setModalCandidatura(false)} open={modalCandidatura} vaga={{
-                id: vaga?.id ?? 0,
-                nomeEmpresa: vaga?.nomeEmpresa ?? ""
-            }} />
+            <ModalCandidatura
+                handleClose={() => setModalCandidatura(false)}
+                open={modalCandidatura}
+                vaga={{
+                    id: vaga?.id ?? 0,
+                    nomeEmpresa: vaga?.nomeEmpresa ?? ""
+                }}
+            />
         </Grid>
     )
 }

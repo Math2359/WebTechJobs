@@ -1,7 +1,11 @@
+import type { Situacao } from "@/lib/dominios/situacao"
+import type { VagaVisualizacaoCandidato } from "@/api/vaga/vaga.types"
 import type { TipoExperiencia } from "@/lib/dominios/tipoExperiencia"
 
 export const CandidatoQueryKeys = {
-    ObterInformacoes: "obterInformacoesCandidato"
+    ObterInformacoes: "obterInformacoesCandidato",
+    ObterAplicacoes: "obterAplicacoesCandidato",
+    ObterAplicacaoVaga: "obterAplicacaoVaga"
 } as const
 
 export type Experiencia = {
@@ -44,3 +48,11 @@ export type AplicarVagaRequest = {
     idVaga: number
     arquivo: File
 }
+
+export type AplicacaoVagaCandidato = VagaVisualizacaoCandidato & {
+    situacao: Situacao | undefined
+}
+
+export type ObterAplicacoesResponse = AplicacaoVagaCandidato[]
+
+export type ObterAplicacaoResponse = AplicacaoVagaCandidato
