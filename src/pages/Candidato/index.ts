@@ -1,8 +1,8 @@
-import { Dashboard } from "./Dashboard/Dashboard";
-import { Editar } from "./Editar/Editar";
-import { Candidaturas } from "./Candidaturas/Candidaturas";
-import { Vaga } from "./Vaga";
-import { Empresa } from "./Empresa";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
+import { Editar } from "./pages/Editar/Editar";
+import { Candidaturas } from "./pages/Candidaturas/Candidaturas";
+import { Vaga } from "./pages/Vaga";
+import { Empresa } from "./pages/Empresa";
 
 export const Candidato = {
     Dashboard,

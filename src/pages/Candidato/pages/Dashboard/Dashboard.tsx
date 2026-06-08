@@ -10,8 +10,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { Experiencias } from "../components/Experiencias/Experiencias";
-import { IconeTexto } from "../../../components/IconeTexto/IconeTexto";
+import { Experiencias } from "../../components/Experiencias/Experiencias";
+import { IconeTexto } from "../../../../components/IconeTexto/IconeTexto";
 import { Botao } from "@/components/Botao/Botao";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { SemDados } from "@/components/SemDados/SemDados";
@@ -21,8 +21,8 @@ import { useObterFotoPerfil } from "@/api/usuario/usuario";
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { ModalEditarFotoPerfil } from "../../../components/ModaisPerfil/ModalEditarFotoPerfil/ModalEditarFotoPerfil";
-import { ModalConfirmarDeletarFotoPerfil } from "../../../components/ModaisPerfil/ModalConfirmarDeletarFotoPerfil/ModalConfirmarDeletarFotoPerfil";
+import { ModalEditarFotoPerfil } from "../../../../components/ModaisPerfil/ModalEditarFotoPerfil/ModalEditarFotoPerfil";
+import { ModalConfirmarDeletarFotoPerfil } from "../../../../components/ModaisPerfil/ModalConfirmarDeletarFotoPerfil/ModalConfirmarDeletarFotoPerfil";
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
