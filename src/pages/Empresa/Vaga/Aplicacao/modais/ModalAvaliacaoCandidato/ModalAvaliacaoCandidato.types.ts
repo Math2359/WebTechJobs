@@ -1,10 +1,10 @@
 import type { ModalBaseGenericaProps } from "@/components/ModalBase/ModalBase.types"
 import type { CandidatoAplicacao } from "../ModalAgendarEntrevista/ModalAgendarEntrevista.types"
-
-export type AcaoAvaliacaoCandidato = "aprovar" | "reprovar"
+import type { Situacao } from "@/lib/dominios/situacao"
 
 export type ModalAvaliacaoCandidatoProps = ModalBaseGenericaProps<{
-    acao?: AcaoAvaliacaoCandidato
+    idAplicacao: number
+    situacao: Situacao
     candidato?: CandidatoAplicacao
 }>
 

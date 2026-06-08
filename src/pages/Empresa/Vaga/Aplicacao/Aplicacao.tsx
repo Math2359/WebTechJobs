@@ -18,12 +18,12 @@ import { IconeTexto } from "@/components/IconeTexto/IconeTexto"
 import { Botao } from "@/components/Botao/Botao"
 import { SemDados } from "@/components/SemDados/SemDados"
 import { Experiencias } from "@/pages/Candidato/components/Experiencias/Experiencias"
-import { ModalAgendarEntrevista } from "../Detalhes/modais/ModalAgendarEntrevista/ModalAgendarEntrevista"
-import { ModalAvaliacaoCandidato } from "../Detalhes/modais/ModalAvaliacaoCandidato/ModalAvaliacaoCandidato"
+import { ModalAgendarEntrevista } from "./modais/ModalAgendarEntrevista/ModalAgendarEntrevista"
+import { ModalAvaliacaoCandidato } from "./modais/ModalAvaliacaoCandidato/ModalAvaliacaoCandidato"
 import { useObterAplicacaoEmpresaPorId, useObterCurriculoAplicacaoEmpresa } from "@/api/vaga/vaga"
 import { Dominios } from "@/lib/dominios"
 import { formatarTelefone } from "@/lib/utils"
-import type { AcaoAvaliacaoCandidato } from "../Detalhes/modais/ModalAvaliacaoCandidato/ModalAvaliacaoCandidato.types"
+import type { Situacao } from "@/lib/dominios/situacao"
 
 type AplicacaoProps = {
     idVaga: number
@@ -33,7 +33,14 @@ type AplicacaoProps = {
 export const Aplicacao = ({ idVaga, idAplicacao }: AplicacaoProps) => {
     const navigate = useNavigate()
     const [modalEntrevista, setModalEntrevista] = useState(false)
-    const [acaoAvaliacao, setAcaoAvaliacao] = useState<AcaoAvaliacaoCandidato>()
+
+    const [modalSituacao, setModalSituacao] = useState(false)
+    const [situacaoAvaliacao, setSituacaoAvaliacao] = useState<Situacao>(Dominios.Situacao.EmAnalise)
+
+    const abrirModalSituacao = (situacao: Situacao) => {
+        setModalSituacao(true)
+        setSituacaoAvaliacao(situacao)
+    }
 
     const { data: aplicacao } = useObterAplicacaoEmpresaPorId(idVaga, idAplicacao)
     const { data: urlCurriculo } = useObterCurriculoAplicacaoEmpresa(idVaga, idAplicacao)
@@ -251,10 +258,10 @@ export const Aplicacao = ({ idVaga, idAplicacao }: AplicacaoProps) => {
                                     <Botao fullWidth cor="secondary" onClick={() => setModalEntrevista(true)}>
                                         Agendar entrevista <EventAvailableOutlinedIcon fontSize="small" />
                                     </Botao>
-                                    <Botao fullWidth variante="outlined" cor="success" onClick={() => setAcaoAvaliacao("aprovar")}>
+                                    <Botao fullWidth variante="outlined" cor="success" onClick={() => abrirModalSituacao(Dominios.Situacao.Aprovado)}>
                                         Aprovar <CheckCircleOutlinedIcon fontSize="small" />
                                     </Botao>
-                                    <Botao fullWidth variante="outlined" cor="error" onClick={() => setAcaoAvaliacao("reprovar")}>
+                                    <Botao fullWidth variante="outlined" cor="error" onClick={() => abrirModalSituacao(Dominios.Situacao.Reprovado)}>
                                         Reprovar <HighlightOffIcon fontSize="small" />
                                     </Botao>
                                 </Stack>
@@ -279,10 +286,11 @@ export const Aplicacao = ({ idVaga, idAplicacao }: AplicacaoProps) => {
                 handleClose={() => setModalEntrevista(false)}
             />
             <ModalAvaliacaoCandidato
-                acao={acaoAvaliacao}
+                idAplicacao={idAplicacao}
+                situacao={situacaoAvaliacao}
                 candidato={candidato}
-                open={!!acaoAvaliacao}
-                handleClose={() => setAcaoAvaliacao(undefined)}
+                open={modalSituacao}
+                handleClose={() => setModalSituacao(false)}
             />
         </>
     )

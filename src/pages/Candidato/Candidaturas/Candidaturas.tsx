@@ -65,14 +65,10 @@ export const Candidaturas = () => {
     const carregando = isLoading || isRefetching
 
     return (
-        <Stack spacing={3}>
-            <Stack spacing={0.5}>
-                <Typography variant="h4" sx={{ fontWeight: 700, textAlign: "left" }}>
-                    Minhas candidaturas
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Acompanhe o status das suas candidaturas
-                </Typography>
+        <Stack spacing={4}>
+            <Stack>
+                <Typography variant="h6">Minhas candidaturas</Typography>
+                <Typography variant="caption">Acompanhe o status das suas candidaturas</Typography>
             </Stack>
 
             <Grid container spacing={1}>

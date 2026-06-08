@@ -18,3 +18,8 @@ type DadosVagas = {
 export type ObterInformacoesResponse = InformacoesEmpresa & DadosVagas
 
 export type AtualizarInformacoesRequest = InformacoesEmpresa
+
+export type AtualizarSituacaoAplicacaoVagaRequest = {
+    idAplicacao: number
+    situacao: number
+}
