@@ -6,15 +6,15 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_naoAutenticado')({
   component: RouteComponent,
-      beforeLoad: () => {
-          const auth = store.getState().credencial
-  
-          if (auth) {
-              throw redirect({
-                  to: RotasPerfil[auth.perfil]
-              })
-          }
-      }
+  beforeLoad: () => {
+    const auth = store.getState().credencial
+
+    if (auth) {
+      throw redirect({
+        to: RotasPerfil[auth.perfil]
+      })
+    }
+  }
 })
 
 function RouteComponent() {

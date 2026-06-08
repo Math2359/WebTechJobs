@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { queryClient } from "@/lib/queryClient";
-import { VagaQueryKeys, type AtualizarVagaEmpresaRequest, type CadastrarVagaRequest, type ObterAplicacaoEmpresaPorIdResponse, type ObterVagaEmpresaPorIdResponse, type ObterVagaPorIdResponse, type ObterVagasDisponiveisRequest, type ObterVagasDisponiveisResponse, type ObterVagasEmpresaResponse } from "./vaga.types";
+import { VagaQueryKeys, type AtualizarVagaEmpresaRequest, type CadastrarVagaRequest, type ObterAplicacaoEmpresaPorIdResponse, type ObterVagaEmpresaPorIdResponse, type ObterVagaPorIdResponse, type ObterVagasDisponiveisRequest, type ObterVagasDisponiveisResponse, type ObterVagasEmpresaResponse, type ObterVagasPorEmpresaResponse } from "./vaga.types";
 import { api } from "@/lib/axios";
 import type { ErroResponse } from "../types";
 
@@ -50,6 +50,16 @@ export const useObterVagasDisponiveis = (request: ObterVagasDisponiveisRequest) 
         const { data } = await api.get<ObterVagasDisponiveisResponse>("/vaga/todas", {
             params: request
         })
+
+        return data
+    }
+})
+
+export const useObterVagasPorEmpresa = (idEmpresa: number | undefined) => useQuery({
+    queryKey: [VagaQueryKeys.ObterVagasPorEmpresa, idEmpresa],
+    enabled: !!idEmpresa,
+    queryFn: async () => {
+        const { data } = await api.get<ObterVagasPorEmpresaResponse>(`/vaga/por-empresa/${idEmpresa}`)
 
         return data
     }

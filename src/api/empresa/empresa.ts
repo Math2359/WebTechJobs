@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { EmpresaQueryKeys, type AtualizarInformacoesRequest, type AtualizarSituacaoAplicacaoVagaRequest, type ObterInformacoesResponse } from "./empresa.types";
+import { EmpresaQueryKeys, type AtualizarInformacoesRequest, type AtualizarSituacaoAplicacaoVagaRequest, type ObterAplicacaoVagaEmpresaResponse, type ObterInformacoesEmpresaPorIdResponse, type ObterInformacoesResponse } from "./empresa.types";
 import { api } from "@/lib/axios";
 import { toast } from "sonner";
 import { queryClient } from "@/lib/queryClient";
@@ -14,11 +14,31 @@ export const useObterInformacoesEmpresa = () => useQuery({
     }
 })
 
+export const useObterInformacoesEmpresaPorId = (idEmpresa: number | undefined) => useQuery({
+    queryKey: [EmpresaQueryKeys.ObterInformacoesPorId, idEmpresa],
+    enabled: !!idEmpresa,
+    queryFn: async () => {
+        const { data } = await api.get<ObterInformacoesEmpresaPorIdResponse>(`/empresa/informacoes/${idEmpresa}`)
+
+        return data
+    }
+})
+
 export const useObterFotoPerfilEmpresa = (idEmpresa: number | undefined) => useQuery({
     queryKey: [EmpresaQueryKeys.ObterFotoPerfil, idEmpresa],
     enabled: !!idEmpresa,
     queryFn: async () => {
         const { data } = await api.get<string>(`/usuario/foto-perfil/empresa/${idEmpresa}`)
+
+        return data
+    }
+})
+
+export const useObterAplicacaoVagaEmpresa = (idAplicacao: number | undefined) => useQuery({
+    queryKey: [EmpresaQueryKeys.ObterAplicacaoVaga, idAplicacao],
+    enabled: !!idAplicacao,
+    queryFn: async () => {
+        const { data } = await api.get<ObterAplicacaoVagaEmpresaResponse>(`/empresa/aplicacao-vaga/${idAplicacao}`)
 
         return data
     }
@@ -43,6 +63,7 @@ export const useAtualizarSituacaoAplicacaoVaga = () => useMutation({
     },
     onSuccess: () => {
         toast.success("Situação da aplicação atualizada com sucesso!")
+        queryClient.invalidateQueries({ queryKey: [EmpresaQueryKeys.ObterAplicacaoVaga] })
     },
     onError: (erro: ErroResponse) => {
         toast.error(erro.response?.data.mensagem)

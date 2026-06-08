@@ -120,17 +120,15 @@ export const Detalhes = ({ id }: DetalhesProps) => {
 
     return (
         <Stack spacing={4}>
-            <Grid container sx={{ placeItems: "center", justifyContent: "space-between" }}>
-                <Stack>
-                    <Grid container sx={{ placeItems: "center" }}>
-                        <IconButton color="secondary" onClick={() => navigate({ to: "/empresa/vaga" })}>
-                            <KeyboardBackspaceIcon />
-                        </IconButton>
-                        <Typography variant="h6">Detalhes da vaga</Typography>
-                    </Grid>
-                    <Typography variant="caption">Visualize os dados da vaga e acompanhe suas aplicações.</Typography>
-                </Stack>
-            </Grid>
+            <Stack>
+                <Grid container sx={{ placeItems: "center" }}>
+                    <IconButton color="secondary" onClick={() => navigate({ to: "/empresa/vaga" })}>
+                        <KeyboardBackspaceIcon />
+                    </IconButton>
+                    <Typography variant="h6">Detalhes da vaga</Typography>
+                </Grid>
+                <Typography variant="caption">Visualize os dados da vaga e acompanhe suas aplicações.</Typography>
+            </Stack>
 
             <TabContext value={tab}>
                 <Grid container spacing={2}>
@@ -242,6 +240,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                                                 label={item}
                                                                 deleteIcon={<DeleteIcon color="error" fontSize="small" />}
                                                                 onDelete={() => field.removeValue(index)}
+                                                                disabled={!editando}
                                                             />
                                                         ))}
                                                     </Grid>

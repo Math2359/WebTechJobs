@@ -4,6 +4,7 @@ import type { TipoExperiencia } from "@/lib/dominios/tipoExperiencia"
 
 export const CandidatoQueryKeys = {
     ObterInformacoes: "obterInformacoesCandidato",
+    ObterFotoPerfil: "obterFotoPerfilCandidato",
     ObterAplicacoes: "obterAplicacoesCandidato",
     ObterAplicacaoVaga: "obterAplicacaoVaga"
 } as const
@@ -16,7 +17,7 @@ export type Experiencia = {
     dataFim: Date | undefined
 }
 
-type InformacoesCandidato = {
+export type InformacoesCandidato = {
     descricao: string | undefined
     habilidades: string | undefined
     preferencias: string | undefined

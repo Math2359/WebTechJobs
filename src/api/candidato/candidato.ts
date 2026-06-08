@@ -14,6 +14,16 @@ export const useObterInformacoesCandidato = () => useQuery({
     }
 })
 
+export const useObterFotoPerfilCandidato = (idCandidato: number | undefined) => useQuery({
+    queryKey: [CandidatoQueryKeys.ObterFotoPerfil, idCandidato],
+    enabled: !!idCandidato,
+    queryFn: async () => {
+        const { data } = await api.get<string>(`/usuario/foto-perfil/candidato/${idCandidato}`)
+
+        return data
+    }
+})
+
 export const useAtualizarInformacoesCandidato = () => useMutation({
     mutationFn: async (request: AtualizarInformacoesRequest) => {
         await api.put("/candidato/informacoes", request)

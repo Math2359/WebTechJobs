@@ -6,6 +6,7 @@ export const VagaQueryKeys = {
     ObterAplicacaoEmpresaPorId: "obterAplicacaoEmpresaPorId",
     ObterCurriculoAplicacaoEmpresa: "obterCurriculoAplicacaoEmpresa",
     ObterVagasDisponiveis: "obterVagasDisponiveis",
+    ObterVagasPorEmpresa: "obterVagasPorEmpresa",
     ObterVagaPorId: "obterVagaPorId"
 } as const
 
@@ -95,5 +96,7 @@ export type VagaVisualizacaoCandidato = Vaga & {
 }
 
 export type ObterVagasDisponiveisResponse = VagaVisualizacaoCandidato[]
+
+export type ObterVagasPorEmpresaResponse = VagaVisualizacaoCandidato[]
 
 export type ObterVagaPorIdResponse = VagaVisualizacaoCandidato

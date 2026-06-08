@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Box, Chip, InputBase, Stack, Typography } from "@mui/material"
+import { Box, Chip, Grid, Stack, Typography } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import ScheduleIcon from "@mui/icons-material/Schedule"
@@ -14,6 +14,7 @@ import { formatarReal, diffDatas } from "@/lib/utils"
 import { SemDados } from "@/components/SemDados/SemDados"
 import { useDebounce } from "@/lib/useDebounce"
 import type { Vaga } from "@/api/vaga/vaga.types"
+import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
 
 const filtros = ["Todos", "Front-end", "Back-end", "Full Stack", "Mobile", "DevOps"]
 
@@ -37,16 +38,13 @@ const VagaCard = ({ vaga }: { vaga: Vaga & { nomeEmpresa: string } }) => {
                 </Box>
 
                 <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-                    {[vaga.modelo, vaga.interna ? "PJ" : "CLT", vaga.nivelExperiencia, ...(vaga.tecnologias?.split(",").filter(Boolean) ?? [])].map((tag) => (
+                    {[vaga.modelo, vaga.nivelExperiencia, ...(vaga.tecnologias?.split(",").filter(Boolean) ?? [])].map((tag) => (
                         <Chip
                             key={tag}
                             label={tag}
                             size="small"
                             sx={(theme) => ({
-                                borderRadius: 999,
-                                fontSize: 11,
-                                height: 24,
-                                backgroundColor: theme.palette.grey[100],
+                                fontSize: theme.spacing(1.4),
                             })}
                         />
                     ))}
@@ -103,42 +101,19 @@ export const Busca = () => {
 
     return (
         <Stack spacing={4}>
-            <Stack spacing={0.5}>
-                <Typography variant="h4" sx={{ fontWeight: 700, textAlign: "left" }}>
-                    Vagas
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Encontre sua próxima oportunidade
-                </Typography>
+            <Stack>
+                <Typography variant="h6">Vagas</Typography>
+                <Typography variant="caption">Encontre a sua próxima oportunidade aqui.</Typography>
             </Stack>
 
-            <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) 240px" }, gap: 2, alignItems: "center" }}>
-                <Box
-                    sx={(theme) => ({
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        border: "1.5px solid",
-                        borderColor: theme.palette.secondary.main,
-                        borderRadius: 2,
-                        px: 2,
-                        py: 1.25,
-                        backgroundColor: theme.palette.background.paper,
-                    })}
-                >
-                    <SearchIcon color="action" fontSize="small" />
-                    <InputBase
-                        fullWidth
-                        placeholder="Qual o cargo? Digite uma palavra chave"
-                        value={termoBusca}
-                        onChange={(event) => setTermoBusca(event.target.value)}
-                        sx={{ fontSize: 14 }}
-                    />
-                </Box>
-                <Botao cor="secondary" fullWidth>
+            <Grid container spacing={2}>
+                <Grid size={4}>
+                    <InputNormal fullWidth endAdornment={<SearchIcon color="disabled" />} value={termoBusca} onChange={(e) => setTermoBusca(e.target.value)} placeholder="Busca vagas por nome, empresa..." />
+                </Grid>
+                <Botao cor="secondary">
                     Buscar
                 </Botao>
-            </Box>
+            </Grid>
 
             <Stack direction="row" spacing={1.25} sx={{ flexWrap: "wrap" }}>
                 {filtros.map((filtro) => {
@@ -150,16 +125,7 @@ export const Busca = () => {
                             label={filtro}
                             onClick={() => setFiltroAtivo(filtro)}
                             icon={filtro === "Todos" ? <FilterAltOutlinedIcon /> : undefined}
-                            sx={(theme) => ({
-                                borderRadius: 999,
-                                px: 0.5,
-                                height: 34,
-                                border: "1px solid",
-                                borderColor: ativo ? theme.palette.primary.main : theme.palette.grey[300],
-                                backgroundColor: ativo ? theme.palette.primary.light : theme.palette.background.paper,
-                                color: theme.palette.text.primary,
-                                fontWeight: 500,
-                            })}
+                            color={ativo ? "primary" : "default"}
                         />
                     )
                 })}

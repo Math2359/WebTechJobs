@@ -1,27 +1,28 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { Box, Grid } from '@mui/material'
-import { Logo } from '@/assets'
-import { NavLink } from '@/components/NavLink/NavLink'
-import { Botao } from '@/components/Botao/Botao'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { store } from '@/lib/reducers'
+import { RotasPerfil } from '@/lib/dominios/perfil'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
+
+  beforeLoad: () => {
+    const auth = store.getState().credencial
+
+    if (auth) {
+      throw redirect({
+        to: RotasPerfil[auth.perfil]
+      })
+    }
+
+    throw redirect({
+      to: "/login"
+    })
+  }
 })
 
 function RouteComponent() {
   return (
     <>
-      <Box sx={(theme) => ({ justifyContent: "space-between", display: "flex", padding: theme.spacing(2, 4), alignItems: "center" })}>
-        <Logo />
-        <Grid container spacing={3} sx={{ alignItems: "center" }}>
-          <Grid container spacing={3}>
-            <NavLink underLineColor='secondary' to="/">Página Inicial</NavLink>
-            <NavLink underLineColor='secondary' to="/">Sobre nós</NavLink>
-            <NavLink underLineColor='secondary' to="/">Fale conosco</NavLink>
-          </Grid>
-          <Botao variante='outlined' cor='secondary' to="/login">Login</Botao>
-        </Grid>
-      </Box>
     </>
   )
 }

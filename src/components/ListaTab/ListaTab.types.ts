@@ -4,6 +4,7 @@ export type ListaTabProps = {
     onChange: (value: string) => void
     tabs: TabItemProps[]
     orientation?: "vertical" | "horizontal"
+    variante?: "padrao" | "semBorda"
 }
 
 type TabItemProps = {

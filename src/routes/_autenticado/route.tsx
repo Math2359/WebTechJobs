@@ -8,6 +8,7 @@ import { deslogarUsuarioTotal } from '@/lib/autenticacao'
 import { useObterFotoPerfil } from '@/api/usuario/usuario'
 import { AvatarPerfil } from '@/components/AvatarPerfil/AvatarPerfil'
 import { Dominios } from '@/lib/dominios'
+import { RotasPerfil } from '@/lib/dominios/perfil'
 
 export const Route = createFileRoute('/_autenticado')({
     component: RouteComponent,
@@ -43,7 +44,7 @@ function RouteComponent() {
                 <Logo />
                 <Grid container spacing={3} sx={{ alignItems: "center" }}>
                     <Grid container spacing={3}>
-                        <NavLink underLineColor='primary' to="/empresa/vaga">Vagas</NavLink>
+                        <NavLink underLineColor='primary' to={RotasPerfil[perfil] + "/vaga"}>Vagas</NavLink>
                         <NavLink underLineColor='primary' to="/candidato/candidaturas">Candidaturas</NavLink>
                     </Grid>
                     <IconButton onClick={handleAbrirMenu}>
@@ -59,7 +60,7 @@ function RouteComponent() {
                         }}
                     >
                         <MenuItem onClick={() => navigate({
-                            to: perfil === Dominios.Perfil.Empresa ? "/empresa" : "/candidato"
+                            to: RotasPerfil[perfil]
                         })}>
                             <Typography variant="subtitle2">
                                 Meu perfil
