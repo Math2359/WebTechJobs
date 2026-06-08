@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Box, Chip, Stack, Typography } from "@mui/material"
+import { Box, Chip, Grid, Stack, Typography } from "@mui/material"
 import { useNavigate } from "@tanstack/react-router"
 import { Card } from "@/components/Card/Card"
 import { SemDados } from "@/components/SemDados/SemDados"
@@ -7,19 +7,14 @@ import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { useObterAplicacoesCandidato } from "@/api/candidato/candidato"
 import { useObterFotoPerfilEmpresa } from "@/api/empresa/empresa"
 import { formatarTempoCadastro } from "@/lib/utils"
+import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
+import { situacoes } from "@/components/ChipSituacao/ChipSituacao.utils"
 import type { AplicacaoVagaCandidato } from "@/api/candidato/candidato.types"
-import { SITUACAO_MAPEADA } from "../Vaga/Detalhes/Detalhes.utils"
 import type { Situacao } from "@/lib/dominios/situacao"
-
-const situacao_mapeada = Object.entries(SITUACAO_MAPEADA).map(([situacao, configuracao]) => ({
-    situacao: Number(situacao) as Situacao,
-    ...configuracao,
-}))
 
 const AplicacaoItem = ({ aplicacao }: { aplicacao: AplicacaoVagaCandidato }) => {
     const navigate = useNavigate()
     const { data: avatar } = useObterFotoPerfilEmpresa(aplicacao.idEmpresa)
-    const estilo = SITUACAO_MAPEADA[aplicacao.situacao!]
 
     return (
         <Box
@@ -43,18 +38,14 @@ const AplicacaoItem = ({ aplicacao }: { aplicacao: AplicacaoVagaCandidato }) => 
                     </Box>
 
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 1 }}>
-                        <Chip
-                            label={aplicacao.situacao}
-                            size="small"
-                            sx={{
-                                borderRadius: 999,
-                                backgroundColor: estilo.corFundo,
-                                color: estilo.cor,
-                                fontWeight: 700,
-                            }}
-                        />
+                        {aplicacao.situacao && (
+                            <ChipSituacao
+                                situacao={aplicacao.situacao}
+                                size="small"
+                            />
+                        )}
                         <Typography variant="caption" color="text.secondary">
-                            {aplicacao.dataCadastro ? formatarTempoCadastro(new Date(aplicacao.dataCadastro)) : "-"}
+                            Há {aplicacao.dataCadastro ? formatarTempoCadastro(new Date(aplicacao.dataCadastro)) : "-"}
                         </Typography>
                     </Box>
                 </Box>
@@ -84,38 +75,27 @@ export const Candidaturas = () => {
                 </Typography>
             </Stack>
 
-            <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
+            <Grid container spacing={1}>
                 <Chip
                     label={`Todas (${data?.length ?? 0})`}
                     onClick={() => setFiltroAtivo(undefined)}
-                    sx={(theme) => ({
-                        borderRadius: 999,
-                        border: "1px solid",
-                        borderColor: !filtroAtivo ? theme.palette.primary.main : theme.palette.grey[300],
-                        backgroundColor: !filtroAtivo ? theme.palette.primary.light : theme.palette.background.paper,
-                        fontWeight: 500,
-                    })}
+                    color={!filtroAtivo ? "primary" : "default"}
                 />
-                {situacao_mapeada.map((item) => {
-                    const ativo = filtroAtivo === item.situacao
-                    const total = data?.filter((aplicacao) => aplicacao.situacao === item.situacao).length ?? 0
+                {situacoes.map((situacao) => {
+                    const ativo = filtroAtivo === situacao
+                    const total = data?.filter((aplicacao) => aplicacao.situacao === situacao).length ?? 0
 
                     return (
-                        <Chip
-                            key={item.situacao}
-                            label={`${item.descricao} (${total})`}
-                            onClick={() => setFiltroAtivo(item.situacao)}
-                            sx={(theme) => ({
-                                borderRadius: 999,
-                                border: "1px solid",
-                                borderColor: ativo ? theme.palette.primary.main : theme.palette.grey[300],
-                                backgroundColor: ativo ? theme.palette.primary.light : theme.palette.background.paper,
-                                fontWeight: 500,
-                            })}
+                        <ChipSituacao
+                            key={situacao}
+                            situacao={situacao}
+                            quantidade={total}
+                            selecionado={ativo}
+                            onClick={() => setFiltroAtivo(situacao)}
                         />
                     )
                 })}
-            </Stack>
+            </Grid>
 
             <Stack spacing={1}>
                 {aplicacoes.map((aplicacao) => (

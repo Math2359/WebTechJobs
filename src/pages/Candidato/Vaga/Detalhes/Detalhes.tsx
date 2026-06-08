@@ -14,7 +14,7 @@ import { useObterFotoPerfilEmpresa } from "@/api/empresa/empresa"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
 import { useObterVagaAplicacaoCandidato } from "@/api/candidato/candidato"
-import { SITUACAO_MAPEADA } from "./Detalhes.utils"
+import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 
 type DetalhesProps = {
     id: number
@@ -24,8 +24,6 @@ export const Detalhes = ({ id }: DetalhesProps) => {
     const [modalCandidatura, setModalCandidatura] = useState(false)
     const { data: vaga } = useObterVagaAplicacaoCandidato(id)
     const { data: fotoEmpresa } = useObterFotoPerfilEmpresa(vaga?.idEmpresa)
-
-    const situacao = vaga?.situacao ? SITUACAO_MAPEADA[vaga.situacao] : undefined
 
     return (
         <Grid container spacing={2}>
@@ -115,7 +113,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
             <Grid size={3}>
                 <Card padding={2}>
                     <Stack spacing={2.5}>
-                        {situacao ? (
+                        {vaga?.situacao ? (
                             <Stack spacing={1.5}>
                                 <Box>
                                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
@@ -126,15 +124,10 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                     </Typography>
                                 </Box>
 
-                                <Chip
-                                    label={situacao.descricao}
+                                <ChipSituacao
+                                    situacao={vaga.situacao}
                                     sx={{
                                         width: "fit-content",
-                                        borderRadius: 999,
-                                        backgroundColor: situacao.corFundo,
-                                        color: situacao.cor,
-                                        fontWeight: 700,
-                                        px: 0.5,
                                     }}
                                 />
 
