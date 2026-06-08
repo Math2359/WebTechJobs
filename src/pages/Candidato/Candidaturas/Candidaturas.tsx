@@ -93,7 +93,7 @@ export const Candidaturas = () => {
                 })}
             </Grid>
 
-            <Stack spacing={1}>
+            <Stack spacing={2}>
                 {aplicacoes.map((aplicacao) => (
                     <AplicacaoItem key={aplicacao.id} aplicacao={aplicacao} />
                 ))}

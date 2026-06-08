@@ -115,40 +115,41 @@ export const Aplicacao = ({ idVaga, idAplicacao }: AplicacaoProps) => {
                             <Divider />
 
                             <TabContext value={tabSelecionada}>
-                                <ListaTab
-                                    onChange={setTabSelecionada}
-                                    orientation="horizontal"
-                                    variante="semBorda"
-                                    tabs={[{
-                                        label: "Sobre",
-                                        value: "1",
-                                        selected: {
-                                            corFundo: (theme) => theme.palette.grey[200],
-                                            cor: "#000"
-                                        }
-                                    }, {
-                                        label: "Currículo",
-                                        value: "2",
-                                        selected: {
-                                            corFundo: (theme) => theme.palette.grey[200],
-                                            cor: "#000"
-                                        }
-                                    }, {
-                                        label: "Contato",
-                                        value: "3",
-                                        selected: {
-                                            corFundo: (theme) => theme.palette.grey[200],
-                                            cor: "#000"
-                                        }
-                                    }, {
-                                        label: "Experiências",
-                                        value: "4",
-                                        selected: {
-                                            corFundo: (theme) => theme.palette.grey[200],
-                                            cor: "#000"
-                                        }
-                                    }]}
-                                />
+                                <Grid sx={{ width: 'fit-content' }}>
+                                    <ListaTab
+                                        onChange={setTabSelecionada}
+                                        orientation="horizontal"
+                                        variante="semBorda"
+                                        tabs={[{
+                                            label: "Sobre",
+                                            value: "1",
+                                            selected: {
+                                                corFundo: (theme) => theme.palette.grey[200],
+                                                cor: "#000"
+                                            }
+                                        }, {
+                                            label: "Currículo",
+                                            value: "2",
+                                            selected: {
+                                                corFundo: (theme) => theme.palette.grey[200],
+                                                cor: "#000"
+                                            }
+                                        }, {
+                                            label: "Contato",
+                                            value: "3",
+                                            selected: {
+                                                corFundo: (theme) => theme.palette.grey[200],
+                                                cor: "#000"
+                                            }
+                                        }, {
+                                            label: "Experiências",
+                                            value: "4",
+                                            selected: {
+                                                corFundo: (theme) => theme.palette.grey[200],
+                                                cor: "#000"
+                                            }
+                                        }]}
+                                    /></Grid>
 
                                 <TabPanel value="1">
                                     <Stack spacing={3}>

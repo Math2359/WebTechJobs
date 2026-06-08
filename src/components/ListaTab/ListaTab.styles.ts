@@ -4,7 +4,6 @@ export const EstiloTabList: SxProps<Theme> = (theme) => ({
     minHeight: 42,
     borderRadius: theme.spacing(1),
     border: "1px solid #CFCCCC",
-    width: "fit-content",
 
     "& .MuiTabs-indicator": {
         display: "none",

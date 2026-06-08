@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { deslogarUsuarioTotal } from '@/lib/autenticacao'
 import { useObterFotoPerfil } from '@/api/usuario/usuario'
 import { AvatarPerfil } from '@/components/AvatarPerfil/AvatarPerfil'
-import { Dominios } from '@/lib/dominios'
 import { RotasPerfil } from '@/lib/dominios/perfil'
 
 export const Route = createFileRoute('/_autenticado')({
@@ -36,7 +35,7 @@ function RouteComponent() {
     const { data: urlAssinada } = useObterFotoPerfil()
 
     const navigate = useNavigate()
-    const { perfil } = useAppSelector(state => state.credencial)!
+    const usuario = useAppSelector(state => state.credencial)
 
     return (
         <>
@@ -44,7 +43,7 @@ function RouteComponent() {
                 <Logo />
                 <Grid container spacing={3} sx={{ alignItems: "center" }}>
                     <Grid container spacing={3}>
-                        <NavLink underLineColor='primary' to={RotasPerfil[perfil] + "/vaga"}>Vagas</NavLink>
+                        <NavLink underLineColor='primary' to={RotasPerfil[usuario?.perfil ?? 0] + "/vaga"}>Vagas</NavLink>
                         <NavLink underLineColor='primary' to="/candidato/candidaturas">Candidaturas</NavLink>
                     </Grid>
                     <IconButton onClick={handleAbrirMenu}>
@@ -59,8 +58,8 @@ function RouteComponent() {
                             horizontal: "center"
                         }}
                     >
-                        <MenuItem onClick={() => navigate({
-                            to: RotasPerfil[perfil]
+                        <MenuItem onClick={() => usuario && navigate({
+                            to: RotasPerfil[usuario.perfil]
                         })}>
                             <Typography variant="subtitle2">
                                 Meu perfil

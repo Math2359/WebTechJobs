@@ -6,8 +6,8 @@ export const Perfil = {
 
 export const RotasPerfil = {
     [Perfil.Candidato]: "/candidato",
-    [Perfil.Empresa]: "/candidato",
-    [Perfil.Admin]: "/candidato",
+    [Perfil.Empresa]: "/empresa",
+    [Perfil.Admin]: "/",
 } as const
 
 export type Perfil =

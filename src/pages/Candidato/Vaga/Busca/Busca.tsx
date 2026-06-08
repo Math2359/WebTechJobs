@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Box, Chip, Grid, Stack, Typography } from "@mui/material"
+import { Box, Chip, Grid, IconButton, Stack, Typography } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import ScheduleIcon from "@mui/icons-material/Schedule"
@@ -14,6 +14,7 @@ import { formatarReal, diffDatas } from "@/lib/utils"
 import { SemDados } from "@/components/SemDados/SemDados"
 import { useDebounce } from "@/lib/useDebounce"
 import type { Vaga } from "@/api/vaga/vaga.types"
+import VisibiltyIcon from "@mui/icons-material/Visibility"
 import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
 
 const filtros = ["Todos", "Front-end", "Back-end", "Full Stack", "Mobile", "DevOps"]
@@ -25,7 +26,7 @@ const VagaCard = ({ vaga }: { vaga: Vaga & { nomeEmpresa: string } }) => {
     return (
         <Card padding={2}>
             <Stack spacing={2}>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                <Grid container spacing={2}>
                     <AvatarPerfil src={data} />
                     <Stack spacing={0.25}>
                         <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
@@ -35,7 +36,7 @@ const VagaCard = ({ vaga }: { vaga: Vaga & { nomeEmpresa: string } }) => {
                             {vaga.nomeEmpresa}
                         </Typography>
                     </Stack>
-                </Box>
+                </Grid>
 
                 <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
                     {[vaga.modelo, vaga.nivelExperiencia, ...(vaga.tecnologias?.split(",").filter(Boolean) ?? [])].map((tag) => (
@@ -50,30 +51,21 @@ const VagaCard = ({ vaga }: { vaga: Vaga & { nomeEmpresa: string } }) => {
                     ))}
                 </Stack>
 
-                <Stack spacing={0.75}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Grid container sx={{ justifyContent: "space-between" }}>
+                    <Grid container spacing={1}>
                         <WorkOutlineRoundedIcon fontSize="small" color="action" />
                         <Typography variant="caption">
                             Salário: <b>{vaga.salarioPrevisto ? formatarReal(vaga.salarioPrevisto) : "-"}</b>
                         </Typography>
-                    </Box>
+                    </Grid>
 
-                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
-                        <Botao
-                            variante="outlined"
-                            cor="primary"
-                            onClick={() => navigate({ to: "/candidato/vaga/$id", params: { id: String(vaga.id) } })}
-                        >
-                            Candidatar-se
-                        </Botao>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                            <ScheduleIcon fontSize="small" color="disabled" />
-                            <Typography variant="caption" color="text.secondary">
-                                Há {diffDatas(vaga.dataCadastro)}
-                            </Typography>
-                        </Box>
-                    </Box>
-                </Stack>
+                    <Grid container spacing={1}>
+                        <ScheduleIcon fontSize="small" color="disabled" />
+                        <Typography variant="caption" color="text.secondary">
+                            Há {diffDatas(vaga.dataCadastro)}
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Stack>
         </Card>
     )
