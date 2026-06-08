@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { queryClient } from "@/lib/queryClient";
-import { VagaQueryKeys, type AtualizarVagaEmpresaRequest, type CadastrarVagaRequest, type ObterVagaEmpresaPorIdResponse, type ObterVagaPorIdResponse, type ObterVagasDisponiveisRequest, type ObterVagasDisponiveisResponse, type ObterVagasEmpresaResponse } from "./vaga.types";
+import { VagaQueryKeys, type AtualizarVagaEmpresaRequest, type CadastrarVagaRequest, type ObterAplicacaoEmpresaPorIdResponse, type ObterVagaEmpresaPorIdResponse, type ObterVagaPorIdResponse, type ObterVagasDisponiveisRequest, type ObterVagasDisponiveisResponse, type ObterVagasEmpresaResponse } from "./vaga.types";
 import { api } from "@/lib/axios";
 import type { ErroResponse } from "../types";
 
@@ -19,6 +19,26 @@ export const useObterVagaEmpresaPorId = (id: number | undefined) => useQuery({
     enabled: !!id,
     queryFn: async () => {
         const { data } = await api.get<ObterVagaEmpresaPorIdResponse>(`/vaga/empresa/${id}`)
+
+        return data
+    }
+})
+
+export const useObterAplicacaoEmpresaPorId = (idVaga: number | undefined, idAplicacao: number | undefined) => useQuery({
+    queryKey: [VagaQueryKeys.ObterAplicacaoEmpresaPorId, idVaga, idAplicacao],
+    enabled: !!idVaga && !!idAplicacao,
+    queryFn: async () => {
+        const { data } = await api.get<ObterAplicacaoEmpresaPorIdResponse>(`/vaga/empresa/${idVaga}/aplicacao/${idAplicacao}`)
+
+        return data
+    }
+})
+
+export const useObterCurriculoAplicacaoEmpresa = (idVaga: number | undefined, idAplicacao: number | undefined) => useQuery({
+    queryKey: [VagaQueryKeys.ObterCurriculoAplicacaoEmpresa, idVaga, idAplicacao],
+    enabled: !!idVaga && !!idAplicacao,
+    queryFn: async () => {
+        const { data } = await api.get<string>(`/vaga/empresa/${idVaga}/aplicacao/${idAplicacao}/curriculo`)
 
         return data
     }

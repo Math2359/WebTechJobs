@@ -3,9 +3,6 @@ import { TabContext, TabPanel } from "@mui/lab"
 import { Grid, IconButton, MenuItem, Stack, Tooltip, Typography } from "@mui/material"
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
 import Visibility from "@mui/icons-material/Visibility"
-import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined"
-import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined"
-import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import { useNavigate } from "@tanstack/react-router"
 import { Botao } from "@/components/Botao/Botao"
 import { ListaTab } from "@/components/ListaTab/ListaTab"
@@ -16,12 +13,9 @@ import { useFormCustomizado } from "@/components/Formulario"
 import { useAtualizarVagaEmpresa, useObterVagaEmpresaPorId } from "@/api/vaga/vaga"
 import { MASCARA_CEP, MASCARA_DINHEIRO_REAL } from "@/lib/mascaras"
 import { cadastrarVagaSchema } from "../Busca/modais/ModalNovaVaga/ModalNovaVaga.schema"
-import { ModalAgendarEntrevista } from "./modais/ModalAgendarEntrevista/ModalAgendarEntrevista"
-import { ModalAvaliacaoCandidato } from "./modais/ModalAvaliacaoCandidato/ModalAvaliacaoCandidato"
 import type { Vaga } from "@/api/vaga/vaga.types"
 import type { CadastrarVagaSchema } from "../Busca/modais/ModalNovaVaga/ModalNovaVaga.types"
-import type { CandidatoAplicacao } from "./modais/ModalAgendarEntrevista/ModalAgendarEntrevista.types"
-import type { AcaoAvaliacaoCandidato } from "./modais/ModalAvaliacaoCandidato/ModalAvaliacaoCandidato.types"
+import { formatarData } from "@/lib/data"
 
 type DetalhesProps = {
     id: number
@@ -43,19 +37,14 @@ const obterValoresFormulario = (vaga?: Vaga): CadastrarVagaSchema => ({
 export const Detalhes = ({ id }: DetalhesProps) => {
     const [tab, setTab] = useState("1")
     const [editando, setEditando] = useState(false)
-    const [candidatoEntrevista, setCandidatoEntrevista] = useState<CandidatoAplicacao>()
-    const [avaliacaoCandidato, setAvaliacaoCandidato] = useState<{
-        acao: AcaoAvaliacaoCandidato
-        candidato: CandidatoAplicacao
-    }>()
 
     const navigate = useNavigate()
 
-    const { data, isLoading, isRefetching } = useObterVagaEmpresaPorId(id)
+    const { data: vagaEmpresa, isLoading, isRefetching } = useObterVagaEmpresaPorId(id)
     const { mutateAsync: atualizarVaga, isPending } = useAtualizarVagaEmpresa()
 
     const { AppField, Subscribe, handleSubmit, reset } = useFormCustomizado({
-        defaultValues: obterValoresFormulario(data?.vaga),
+        defaultValues: obterValoresFormulario(vagaEmpresa?.vaga),
         validators: {
             onSubmit: cadastrarVagaSchema,
             onBlur: cadastrarVagaSchema
@@ -70,8 +59,6 @@ export const Detalhes = ({ id }: DetalhesProps) => {
         }
     })
 
-    const aplicacoes = data?.aplicacoes ?? []
-
     const { dadosGrid } = useGerarDadosGrid({
         colunas: [
             {
@@ -80,9 +67,14 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                 renderizarValor: (linha) => linha.nome
             },
             {
-                largura: 220,
+                largura: 120,
                 nomeHeader: "E-mail",
                 renderizarValor: (linha) => linha.email
+            },
+            {
+                largura: 150,
+                nomeHeader: "Data inscrição",
+                renderizarValor: (linha) => formatarData(linha.dataCadastro)
             },
             {
                 largura: 220,
@@ -90,45 +82,25 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                 renderizarValor: (linha) => (
                     <Grid container sx={{ placeItems: "center", height: "100%" }}>
                         <Tooltip title="Visualizar candidato">
-                            <IconButton size="small" aria-label={`Visualizar candidato ${linha.nome}`}>
+                            <IconButton
+                                size="small"
+                                aria-label={`Visualizar candidato ${linha.nome}`}
+                                onClick={() => navigate({
+                                    to: "/empresa/vaga/$id/candidato/$idAplicacao",
+                                    params: {
+                                        id: String(id),
+                                        idAplicacao: String(linha.id)
+                                    }
+                                })}
+                            >
                                 <Visibility fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Agendar entrevista">
-                            <IconButton
-                                size="small"
-                                color="primary"
-                                aria-label={`Agendar entrevista com ${linha.nome}`}
-                                onClick={() => setCandidatoEntrevista(linha)}
-                            >
-                                <EventAvailableOutlinedIcon fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Aprovar">
-                            <IconButton
-                                size="small"
-                                color="success"
-                                aria-label={`Aprovar ${linha.nome}`}
-                                onClick={() => setAvaliacaoCandidato({ acao: "aprovar", candidato: linha })}
-                            >
-                                <CheckCircleOutlinedIcon fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Reprovar">
-                            <IconButton
-                                size="small"
-                                color="error"
-                                aria-label={`Reprovar ${linha.nome}`}
-                                onClick={() => setAvaliacaoCandidato({ acao: "reprovar", candidato: linha })}
-                            >
-                                <HighlightOffIcon fontSize="small" />
                             </IconButton>
                         </Tooltip>
                     </Grid>
                 )
             }
         ],
-        linhas: aplicacoes,
+        linhas: vagaEmpresa?.aplicacoes,
         isLoading: isLoading || isRefetching
     })
 
@@ -260,17 +232,6 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                     </Grid>
                 </Grid>
             </TabContext>
-            <ModalAgendarEntrevista
-                candidato={candidatoEntrevista}
-                open={!!candidatoEntrevista}
-                handleClose={() => setCandidatoEntrevista(undefined)}
-            />
-            <ModalAvaliacaoCandidato
-                acao={avaliacaoCandidato?.acao}
-                candidato={avaliacaoCandidato?.candidato}
-                open={!!avaliacaoCandidato}
-                handleClose={() => setAvaliacaoCandidato(undefined)}
-            />
         </Stack>
     )
 }

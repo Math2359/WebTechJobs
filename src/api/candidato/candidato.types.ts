@@ -51,6 +51,7 @@ export type AplicarVagaRequest = {
 
 export type AplicacaoVagaCandidato = VagaVisualizacaoCandidato & {
     situacao: Situacao | undefined
+    dataAtualizacaoAplicacao: Date | undefined
 }
 
 export type ObterAplicacoesResponse = AplicacaoVagaCandidato[]

@@ -132,7 +132,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                 />
 
                                 <Typography variant="caption" color="text.secondary">
-                                    Atualizado em {new Date(vaga?.dataCadastro ?? "").toLocaleDateString("pt-BR")}
+                                    Atualizado em {new Date(vaga?.dataAtualizacaoAplicacao ?? "").toLocaleDateString("pt-BR")}
                                 </Typography>
                             </Stack>
                         ) : (

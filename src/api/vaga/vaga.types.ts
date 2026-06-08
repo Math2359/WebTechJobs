@@ -1,6 +1,10 @@
+import type { Experiencia } from "@/api/candidato/candidato.types"
+
 export const VagaQueryKeys = {
     ObterVagasEmpresa: "obterVagasEmpresa",
     ObterVagaEmpresaPorId: "obterVagaEmpresaPorId",
+    ObterAplicacaoEmpresaPorId: "obterAplicacaoEmpresaPorId",
+    ObterCurriculoAplicacaoEmpresa: "obterCurriculoAplicacaoEmpresa",
     ObterVagasDisponiveis: "obterVagasDisponiveis",
     ObterVagaPorId: "obterVagaPorId"
 } as const
@@ -48,7 +52,32 @@ export type ObterVagaEmpresaPorIdResponse = {
         id: number
         nome: string
         email: string
+        dataCadastro: Date
     }[]
+}
+
+export type ObterAplicacaoEmpresaPorIdResponse = {
+    id: number
+    idCandidato: number
+    nome: string
+    emailPessoal?: string
+    emailCorporativo?: string
+    telefone?: string
+    linkedin?: string
+    github?: string
+    area?: string
+    anosExperiencia?: number
+    estado?: string
+    cidade?: string
+    descricao?: string
+    habilidades?: string
+    preferencias?: string
+    dataCadastro?: Date
+    experiencias: Experiencia[]
+    curriculo?: {
+        nomeArquivo?: string
+        url?: string
+    }
 }
 
 export type ObterVagasDisponiveisRequest = {
