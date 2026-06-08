@@ -8,7 +8,6 @@ import SearchIcon from "@mui/icons-material/Search"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import { useNavigate } from "@tanstack/react-router"
 import { useObterFotoPerfilEmpresa, useObterInformacoesEmpresaPorId } from "@/api/empresa/empresa"
-import { useObterVagasPorEmpresa } from "@/api/vaga/vaga"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { Botao } from "@/components/Botao/Botao"
 import { Card } from "@/components/Card/Card"
@@ -31,9 +30,11 @@ export const Detalhes = ({ idEmpresa }: DetalhesProps) => {
     const [filtroAtivo, setFiltroAtivo] = useState("Todos")
     const [termoBusca, setTermoBusca] = useState("")
 
-    const { data: informacoesEmpresa } = useObterInformacoesEmpresaPorId(idEmpresa)
+    const { data: informacoesEmpresa, isLoading, isRefetching } = useObterInformacoesEmpresaPorId(idEmpresa)
     const { data: fotoEmpresa } = useObterFotoPerfilEmpresa(idEmpresa)
-    const { data: vagas, isLoading, isRefetching } = useObterVagasPorEmpresa(idEmpresa)
+    const vagas = informacoesEmpresa?.vagas
+
+    const tecnologias = useMemo(() => informacoesEmpresa?.tecnologias?.split(",").filter(Boolean) ?? [], [informacoesEmpresa])
 
     const vagasFiltradas = useMemo(() => {
         const termo = termoBusca.trim().toLowerCase()
@@ -75,6 +76,10 @@ export const Detalhes = ({ idEmpresa }: DetalhesProps) => {
                             </Grid>
 
                             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+                                <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                                    <BusinessOutlinedIcon fontSize="small" color="action" />
+                                    <Typography variant="caption">{informacoesEmpresa?.setor ?? "-"}</Typography>
+                                </Box>
                                 <Typography variant="caption">
                                     <b>{informacoesEmpresa?.vagasDisponiveis ?? vagas?.length ?? 0}</b> vagas ativas
                                 </Typography>
@@ -82,6 +87,24 @@ export const Detalhes = ({ idEmpresa }: DetalhesProps) => {
                                     <b>{informacoesEmpresa?.candidatos ?? 0}</b> candidaturas
                                 </Typography>
                             </Box>
+
+                            <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
+                                {tecnologias.length ? (
+                                    tecnologias.map((item, index) => (
+                                        <Chip
+                                            key={`${item}-${index}`}
+                                            label={item}
+                                            sx={(theme) => ({
+                                                borderRadius: 999,
+                                                fontSize: 12,
+                                                backgroundColor: theme.palette.grey[100],
+                                            })}
+                                        />
+                                    ))
+                                ) : (
+                                    <Typography variant="caption" color="text.secondary">Nenhuma tecnologia cadastrada</Typography>
+                                )}
+                            </Stack>
                         </Stack>
 
                         <Divider />
@@ -111,41 +134,14 @@ export const Detalhes = ({ idEmpresa }: DetalhesProps) => {
                             </Grid>
 
                             <TabPanel value="1">
-                                <Grid container spacing={2}>
-                                    <Grid size={3}>
-                                        <Stack spacing={2}>
-                                            <Card padding={2}>
-                                                <Stack spacing={2}>
-                                                    <Typography variant="overline">Informações</Typography>
-                                                    <Stack spacing={0.5}>
-                                                        <IconeTexto icon={BusinessOutlinedIcon} texto={informacoesEmpresa?.setor} />
-                                                        <IconeTexto link icon={LinkOutlinedIcon} texto={informacoesEmpresa?.linkSite} />
-                                                    </Stack>
-                                                </Stack>
-                                            </Card>
-                                            <Card padding={2}>
-                                                <Stack spacing={2}>
-                                                    <Typography variant="overline">Tecnologias</Typography>
-                                                    <Grid container rowSpacing={1} columnSpacing={2}>
-                                                        {informacoesEmpresa?.tecnologias ? (
-                                                            informacoesEmpresa.tecnologias.split(",").filter(Boolean).map((item, index) => <Chip key={index} color="secondary" label={item} />)
-                                                        ) : (
-                                                            <SemDados titulo="Nenhuma tecnologia cadastrada" descricao="A empresa ainda não informou suas tecnologias." />
-                                                        )}
-                                                    </Grid>
-                                                </Stack>
-                                            </Card>
-                                        </Stack>
-                                    </Grid>
-                                    <Grid size="grow">
-                                        <Card padding={2}>
-                                            <Stack spacing={2}>
-                                                <Typography variant="overline">Sobre a empresa</Typography>
-                                                <RenderizarTexto texto={informacoesEmpresa?.descricao ?? ""} />
-                                            </Stack>
-                                        </Card>
-                                    </Grid>
-                                </Grid>
+                                <Stack spacing={3}>
+                                    <Stack spacing={1.5}>
+                                        <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                            Sobre a empresa
+                                        </Typography>
+                                        <RenderizarTexto texto={informacoesEmpresa?.descricao ?? ""} />
+                                    </Stack>
+                                </Stack>
                             </TabPanel>
 
                             <TabPanel value="2">

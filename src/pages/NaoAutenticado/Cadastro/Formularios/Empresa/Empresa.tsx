@@ -44,23 +44,23 @@ export const EmpresaForm = () => {
                 <Stack spacing={2}>
                     <AppField
                         name="nome"
-                        children={(field) => <field.InputForm placeholder="Digite seu nome" cor="secondary" variante="normal" label="Nome:" />}
+                        children={(field) => <field.InputForm placeholder="Digite seu nome" cor="secondary" variante="normal" label="Nome" />}
                     />
                     <AppField
                         name="email"
-                        children={(field) => <field.InputForm placeholder="Digite seu e-mail" cor="secondary" variante="normal" label="E-mail:" />}
+                        children={(field) => <field.InputForm placeholder="Digite seu e-mail" cor="secondary" variante="normal" label="E-mail" />}
                     />
                     <AppField
                         name="cnpj"
-                        children={(field) => <field.InputForm mask={MASCARA_CNPJ} placeholder="Ex.: 00.000.000/0001-00" cor="secondary" variante="mascara" label="CNPJ:" />}
+                        children={(field) => <field.InputForm mask={MASCARA_CNPJ} placeholder="Ex.: 00.000.000/0001-00" cor="secondary" variante="mascara" label="CNPJ" />}
                     />
                     <AppField
                         name="senha"
-                        children={(field) => <field.InputForm placeholder="Crie uma senha" cor="secondary" variante="senha" label="Senha:" />}
+                        children={(field) => <field.InputForm placeholder="Crie uma senha" cor="secondary" variante="senha" label="Senha" />}
                     />
                     <AppField
                         name="confirmarSenha"
-                        children={(field) => <field.InputForm placeholder="Confirme sua senha" cor="secondary" variante="senha" label="Confirme sua senha:" />}
+                        children={(field) => <field.InputForm placeholder="Confirme sua senha" cor="secondary" variante="senha" label="Confirme sua senha" />}
                     />
                 </Stack>
                     <Subscribe

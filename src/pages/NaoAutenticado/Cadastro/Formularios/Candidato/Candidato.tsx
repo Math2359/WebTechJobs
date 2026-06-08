@@ -44,23 +44,23 @@ export const CandidatoForm = () => {
                 <Stack spacing={2}>
                     <AppField
                         name="nome"
-                        children={(field) => <field.InputForm placeholder="Digite seu nome" cor="primary" variante="normal" label="Nome:" />}
+                        children={(field) => <field.InputForm placeholder="Digite seu nome" cor="primary" variante="normal" label="Nome" />}
                     />
                     <AppField
                         name="email"
-                        children={(field) => <field.InputForm placeholder="Digite seu e-mail" cor="primary" variante="normal" label="E-mail:" />}
+                        children={(field) => <field.InputForm placeholder="Digite seu e-mail" cor="primary" variante="normal" label="E-mail" />}
                     />
                     <AppField
                         name="cpf"
-                        children={(field) => <field.InputForm mask={MASCARA_CPF} placeholder="Ex.: 000.000.000-00" variante="mascara" label="CPF:" />}
+                        children={(field) => <field.InputForm mask={MASCARA_CPF} placeholder="Ex.: 000.000.000-00" variante="mascara" label="CPF" />}
                     />
                     <AppField
                         name="senha"
-                        children={(field) => <field.InputForm placeholder="Crie uma senha" cor="primary" variante="senha" label="Senha:" />}
+                        children={(field) => <field.InputForm placeholder="Crie uma senha" cor="primary" variante="senha" label="Senha" />}
                     />
                     <AppField
                         name="confirmarSenha"
-                        children={(field) => <field.InputForm placeholder="Confirme sua senha" cor="primary" variante="senha" label="Confirme sua senha:" />}
+                        children={(field) => <field.InputForm placeholder="Confirme sua senha" cor="primary" variante="senha" label="Confirme sua senha" />}
                     />
                 </Stack>
                 <Subscribe

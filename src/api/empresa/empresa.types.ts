@@ -1,4 +1,5 @@
 import type { Experiencia, InformacoesCandidato } from "@/api/candidato/candidato.types"
+import type { VagaVisualizacaoCandidato } from "@/api/vaga/vaga.types"
 import type { Situacao } from "@/lib/dominios/situacao"
 
 export const EmpresaQueryKeys = {
@@ -18,13 +19,17 @@ type InformacoesEmpresa = {
 type DadosVagas = {
     vagasDisponiveis: number
     candidatos: number
+    vagas: VagaVisualizacaoCandidato[]
 }
 
-export type ObterInformacoesResponse = InformacoesEmpresa & DadosVagas
-
-export type ObterInformacoesEmpresaPorIdResponse = InformacoesEmpresa & DadosVagas & {
-    nome?: string
+type InformacoesEmpresaResponse = InformacoesEmpresa & DadosVagas & {
+    id: number
+    nome: string
 }
+
+export type ObterInformacoesResponse = InformacoesEmpresaResponse
+
+export type ObterInformacoesEmpresaPorIdResponse = InformacoesEmpresaResponse
 
 export type AtualizarInformacoesRequest = InformacoesEmpresa
 
