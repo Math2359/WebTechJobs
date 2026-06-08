@@ -100,38 +100,36 @@ export function formatarReal(valor: number): string {
     }).format(valor);
 }
 
-export function formatarTempoCadastro(dataCadastro: Date): string {
-    const hoje = new Date()
-
-    const anos = differenceInYears(hoje, dataCadastro)
+export function diffDatas(data1: Date, data2: Date = new Date()): string {
+    const anos = differenceInYears(data2, data1)
 
     if (anos > 1)
         return `${anos} anos`
     if (anos > 0)
         return `${anos} ano`
 
-    const meses = differenceInMonths(hoje, dataCadastro)
+    const meses = differenceInMonths(data2, data1)
 
     if (meses > 1)
         return `${meses} meses`
     if (meses > 0)
         return `${meses} mês`
 
-    const dias = differenceInDays(hoje, dataCadastro)
+    const dias = differenceInDays(data2, data1)
 
     if (dias > 1)
         return `${dias} dias`
     if (dias > 0)
         return `${dias} dia`
 
-    const horas = differenceInHours(hoje, dataCadastro)
+    const horas = differenceInHours(data2, data1)
 
     if (horas > 1)
         return `${horas} horas`
     if (horas > 0)
         return `${horas} hora`
 
-    const minutos = differenceInMinutes(hoje, dataCadastro)
+    const minutos = differenceInMinutes(data2, data1)
 
     if (minutos > 1)
         return `${minutos} minutos`

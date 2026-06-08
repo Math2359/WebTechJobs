@@ -6,7 +6,7 @@ import { SemDados } from "@/components/SemDados/SemDados"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { useObterAplicacoesCandidato } from "@/api/candidato/candidato"
 import { useObterFotoPerfilEmpresa } from "@/api/empresa/empresa"
-import { formatarTempoCadastro } from "@/lib/utils"
+import { diffDatas } from "@/lib/utils"
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 import { situacoes } from "@/components/ChipSituacao/ChipSituacao.utils"
 import type { AplicacaoVagaCandidato } from "@/api/candidato/candidato.types"
@@ -45,7 +45,7 @@ const AplicacaoItem = ({ aplicacao }: { aplicacao: AplicacaoVagaCandidato }) => 
                             />
                         )}
                         <Typography variant="caption" color="text.secondary">
-                            Há {aplicacao.dataCadastro ? formatarTempoCadastro(new Date(aplicacao.dataCadastro)) : "-"}
+                            Há {aplicacao.dataCadastro ? diffDatas(new Date(aplicacao.dataCadastro)) : "-"}
                         </Typography>
                     </Box>
                 </Box>

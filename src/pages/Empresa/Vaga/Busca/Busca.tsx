@@ -39,6 +39,11 @@ export const Busca = () => {
                 renderizarValor: (linha) => linha.nivelExperiencia
             },
             {
+                largura: 180,
+                nomeHeader: "Tecnologias",
+                renderizarValor: (linha) => linha.tecnologias
+            },
+            {
                 largura: 150,
                 nomeHeader: "Fim das Inscrições",
                 renderizarValor: (linha) =>

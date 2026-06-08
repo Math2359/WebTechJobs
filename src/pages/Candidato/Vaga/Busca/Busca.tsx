@@ -10,7 +10,7 @@ import { Card } from "@/components/Card/Card"
 import { useObterVagasDisponiveis } from "@/api/vaga/vaga"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { useObterFotoPerfilEmpresa } from "@/api/empresa/empresa"
-import { formatarReal, formatarTempoCadastro } from "@/lib/utils"
+import { formatarReal, diffDatas } from "@/lib/utils"
 import { SemDados } from "@/components/SemDados/SemDados"
 import { useDebounce } from "@/lib/useDebounce"
 import type { Vaga } from "@/api/vaga/vaga.types"
@@ -37,7 +37,7 @@ const VagaCard = ({ vaga }: { vaga: Vaga & { nomeEmpresa: string } }) => {
                 </Box>
 
                 <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-                    {[vaga.modelo, vaga.interna ? "PJ" : "CLT", vaga.nivelExperiencia].map((tag) => (
+                    {[vaga.modelo, vaga.interna ? "PJ" : "CLT", vaga.nivelExperiencia, ...(vaga.tecnologias?.split(",").filter(Boolean) ?? [])].map((tag) => (
                         <Chip
                             key={tag}
                             label={tag}
@@ -71,7 +71,7 @@ const VagaCard = ({ vaga }: { vaga: Vaga & { nomeEmpresa: string } }) => {
                         <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
                             <ScheduleIcon fontSize="small" color="disabled" />
                             <Typography variant="caption" color="text.secondary">
-                                Há {formatarTempoCadastro(vaga.dataCadastro)}
+                                Há {diffDatas(vaga.dataCadastro)}
                             </Typography>
                         </Box>
                     </Box>
@@ -93,7 +93,7 @@ export const Busca = () => {
     const vagasFiltradas = useMemo(() => {
         return (vagas ?? []).filter((vaga) => {
             if (filtroAtivo === "Todos") return true
-            return [vaga.modelo, vaga.nivelExperiencia, vaga.cargo].some((item) =>
+            return [vaga.modelo, vaga.nivelExperiencia, vaga.cargo, vaga.tecnologias ?? ""].some((item) =>
                 item.toLowerCase().includes(filtroAtivo.toLowerCase())
             )
         })

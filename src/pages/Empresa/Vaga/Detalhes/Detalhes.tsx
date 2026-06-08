@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { TabContext, TabPanel } from "@mui/lab"
-import { Grid, IconButton, MenuItem, Stack, Tooltip, Typography } from "@mui/material"
+import { Chip, Grid, IconButton, MenuItem, Stack, Tooltip, Typography } from "@mui/material"
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
 import Visibility from "@mui/icons-material/Visibility"
 import { useNavigate } from "@tanstack/react-router"
@@ -12,10 +12,13 @@ import { useGerarDadosGrid } from "@/components/GridDados/GridDados.hook"
 import { useFormCustomizado } from "@/components/Formulario"
 import { useAtualizarVagaEmpresa, useObterVagaEmpresaPorId } from "@/api/vaga/vaga"
 import { MASCARA_CEP, MASCARA_DINHEIRO_REAL } from "@/lib/mascaras"
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from "@mui/icons-material/Add"
 import { cadastrarVagaSchema } from "../Busca/modais/ModalNovaVaga/ModalNovaVaga.schema"
 import type { Vaga } from "@/api/vaga/vaga.types"
 import type { CadastrarVagaSchema } from "../Busca/modais/ModalNovaVaga/ModalNovaVaga.types"
 import { formatarData } from "@/lib/data"
+import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
 
 type DetalhesProps = {
     id: number
@@ -26,6 +29,9 @@ const obterValoresFormulario = (vaga?: Vaga): CadastrarVagaSchema => ({
     cargo: vaga?.cargo ?? "",
     modelo: vaga?.modelo ?? "",
     nivelExperiencia: vaga?.nivelExperiencia ?? "",
+    tecnologias: vaga?.tecnologias?.split(",").filter(Boolean) ?? [],
+    requisitos: vaga?.requisitos ?? "",
+    beneficios: vaga?.beneficios ?? "",
     descricao: vaga?.descricao ?? "",
     cep: vaga?.cep ?? "",
     numero: vaga?.numero ?? "",
@@ -38,6 +44,8 @@ export const Detalhes = ({ id }: DetalhesProps) => {
     const [tab, setTab] = useState("1")
     const [editando, setEditando] = useState(false)
 
+    const [tecnologia, setTecnologia] = useState("")
+
     const navigate = useNavigate()
 
     const { data: vagaEmpresa, isLoading, isRefetching } = useObterVagaEmpresaPorId(id)
@@ -49,10 +57,11 @@ export const Detalhes = ({ id }: DetalhesProps) => {
             onSubmit: cadastrarVagaSchema,
             onBlur: cadastrarVagaSchema
         },
-        onSubmit: async ({ value: { salarioPrevisto, ...resto } }) => {
+        onSubmit: async ({ value: { salarioPrevisto, tecnologias, ...resto } }) => {
             await atualizarVaga({
                 id,
                 salarioPrevisto: Number(salarioPrevisto),
+                tecnologias: tecnologias.join(","),
                 ...resto
             })
             setEditando(false)
@@ -182,14 +191,6 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                             )} />
                                         </Grid>
                                         <Grid size={4}>
-                                            <AppField name="interna" children={(field) => (
-                                                <field.InputForm disabled={!editando} label="Vaga interna" variante="select" placeholder="Selecione" cor="secondary" >
-                                                    <MenuItem value={true as unknown as string}>Sim</MenuItem>
-                                                    <MenuItem value={false as unknown as string}>Não</MenuItem>
-                                                </field.InputForm>
-                                            )} />
-                                        </Grid>
-                                        <Grid size={4}>
                                             <AppField name="dataFimInscricoes" children={(field) => (
                                                 <field.InputForm disabled={!editando} label="Fim das inscrições" type="date" variante="data" cor="secondary" />
                                             )} />
@@ -205,8 +206,61 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                             )} />
                                         </Grid>
                                         <Grid size={12}>
+                                            <AppField name="tecnologias" children={(field) => (
+                                                <Stack spacing={2}>
+                                                    <Stack spacing={0.5}>
+                                                        <Typography variant="body2">Tecnologias (máx. 7):</Typography>
+                                                        <Grid container>
+                                                            <Grid size="grow">
+                                                                <InputNormal
+                                                                    sx={{ width: "100%" }}
+                                                                    placeholder="Digite uma tecnologia"
+                                                                    value={tecnologia}
+                                                                    cor="secondary"
+                                                                    onChange={(event) => setTecnologia(event.target.value)}
+                                                                    disabled={!editando}
+                                                                />
+                                                            </Grid>
+
+                                                            <IconButton disabled={field.state.value.length >= 7 || !editando} onClick={() => {
+                                                                if (tecnologia.trim() !== "") {
+                                                                    field.pushValue(tecnologia.trim())
+                                                                    setTecnologia("")
+                                                                }
+                                                            }}>
+                                                                <AddIcon />
+                                                            </IconButton>
+                                                        </Grid>
+                                                        <field.TextoErro />
+                                                    </Stack>
+
+                                                    <Grid spacing={1} container>
+                                                        {field.state.value.map((item, index) => (
+                                                            <Chip
+                                                                key={index}
+                                                                color="secondary"
+                                                                label={item}
+                                                                deleteIcon={<DeleteIcon color="error" fontSize="small" />}
+                                                                onDelete={() => field.removeValue(index)}
+                                                            />
+                                                        ))}
+                                                    </Grid>
+                                                </Stack>
+                                            )} />
+                                        </Grid>
+                                        <Grid size={12}>
                                             <AppField name="descricao" children={(field) => (
                                                 <field.InputForm disabled={!editando} label="Descrição" multiline minRows={4} variante="normal" placeholder="Descreva a vaga" cor="secondary" />
+                                            )} />
+                                        </Grid>
+                                        <Grid size={6}>
+                                            <AppField name="requisitos" children={(field) => (
+                                                <field.InputForm disabled={!editando} label="Requisitos" multiline minRows={4} variante="normal" placeholder="Liste os requisitos da vaga" cor="secondary" />
+                                            )} />
+                                        </Grid>
+                                        <Grid size={6}>
+                                            <AppField name="beneficios" children={(field) => (
+                                                <field.InputForm disabled={!editando} label="Benefícios" multiline minRows={4} variante="normal" placeholder="Liste os benefícios oferecidos" cor="secondary" />
                                             )} />
                                         </Grid>
                                     </Grid>

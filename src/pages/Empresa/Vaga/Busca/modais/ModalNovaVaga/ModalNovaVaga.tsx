@@ -1,4 +1,4 @@
-import { Grid, MenuItem, Stack } from "@mui/material"
+import { Chip, Grid, IconButton, Stack, Typography } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
 import { MASCARA_CEP, MASCARA_DINHEIRO_REAL } from "@/lib/mascaras"
 import { useFormCustomizado } from "@/components/Formulario"
@@ -7,7 +7,10 @@ import { ModalBase } from "@/components/ModalBase/ModalBase"
 import { useCadastrarVagaEmpresa } from "@/api/vaga/vaga"
 import { defaultvalues } from "./ModalNovaVaga.utils"
 import { cadastrarVagaSchema } from "./ModalNovaVaga.schema"
+import DeleteIcon from '@mui/icons-material/Delete';
 import type { ModalBaseGenericaProps } from "@/components/ModalBase/ModalBase.types"
+import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
+import { useState } from "react"
 
 export const ModalNovaVaga = ({ open, handleClose }: ModalBaseGenericaProps) => {
     const { mutateAsync, isPending } = useCadastrarVagaEmpresa()
@@ -18,9 +21,10 @@ export const ModalNovaVaga = ({ open, handleClose }: ModalBaseGenericaProps) => 
             onSubmit: cadastrarVagaSchema,
             onBlur: cadastrarVagaSchema
         },
-        onSubmit: async ({ value: { salarioPrevisto, ...resto } }) => {
+        onSubmit: async ({ value: { salarioPrevisto, tecnologias, ...resto } }) => {
             await mutateAsync({
                 salarioPrevisto: Number(salarioPrevisto),
+                tecnologias: tecnologias.join(","),
                 ...resto
             })
             onClose()
@@ -31,6 +35,8 @@ export const ModalNovaVaga = ({ open, handleClose }: ModalBaseGenericaProps) => 
         reset()
         handleClose()
     }
+
+    const [tecnologia, setTecnologia] = useState("")
 
     return (
         <ModalBase
@@ -71,14 +77,6 @@ export const ModalNovaVaga = ({ open, handleClose }: ModalBaseGenericaProps) => 
                             )} />
                         </Grid>
                         <Grid size={4}>
-                            <AppField name="interna" children={(field) => (
-                                <field.InputForm label="Vaga interna" variante="select" placeholder="Selecione" cor="secondary" >
-                                    <MenuItem value={true as unknown as string}>Sim</MenuItem>
-                                    <MenuItem value={false as unknown as string}>Não</MenuItem>
-                                </field.InputForm>
-                            )} />
-                        </Grid>
-                        <Grid size={4}>
                             <AppField name="dataFimInscricoes" children={(field) => (
                                 <field.InputForm label="Fim das inscrições" type="date" variante="data" cor="secondary" />
                             )} />
@@ -94,8 +92,52 @@ export const ModalNovaVaga = ({ open, handleClose }: ModalBaseGenericaProps) => 
                             )} />
                         </Grid>
                         <Grid size={12}>
+                            <AppField name="tecnologias" children={(field) => (
+                                <Stack spacing={0.5}>
+                                    <Typography variant="body2">Tecnologias (máx. 7):</Typography>
+                                    <Grid container>
+                                        <Grid size="grow">
+                                            <InputNormal
+                                                sx={{ width: "100%" }}
+                                                placeholder="Digite uma tecnologia"
+                                                value={tecnologia}
+                                                onChange={(event) => setTecnologia(event.target.value)}
+                                            />
+                                        </Grid>
+
+                                        <IconButton disabled={field.state.value.length >= 7} onClick={() => field.pushValue(tecnologia)}>
+                                            <AddIcon />
+                                        </IconButton>
+                                    </Grid>
+                                    <field.TextoErro />
+
+                                    <Grid spacing={1} container>
+                                        {field.state.value.map((item, index) => (
+                                            <Chip
+                                                key={index}
+                                                color="secondary"
+                                                label={item}
+                                                deleteIcon={<DeleteIcon color="error" fontSize="small" />}
+                                                onDelete={() => field.removeValue(index)}
+                                            />
+                                        ))}
+                                    </Grid>
+                                </Stack>
+                            )} />
+                        </Grid>
+                        <Grid size={12}>
                             <AppField name="descricao" children={(field) => (
                                 <field.InputForm label="Descrição" multiline minRows={4} variante="normal" placeholder="Descreva a vaga" cor="secondary" />
+                            )} />
+                        </Grid>
+                        <Grid size={6}>
+                            <AppField name="requisitos" children={(field) => (
+                                <field.InputForm label="Requisitos" multiline minRows={4} variante="normal" placeholder="Liste os requisitos da vaga" cor="secondary" />
+                            )} />
+                        </Grid>
+                        <Grid size={6}>
+                            <AppField name="beneficios" children={(field) => (
+                                <field.InputForm label="Benefícios" multiline minRows={4} variante="normal" placeholder="Liste os benefícios oferecidos" cor="secondary" />
                             )} />
                         </Grid>
                     </Grid>

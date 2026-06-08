@@ -18,14 +18,14 @@ export const ModalBase = ({ handleClose, open, children, tamanho = "medium", ico
                                     alignItems: "center",
                                     backgroundColor: theme.palette[corIcone].light,
                                     borderRadius: 2,
-                                    width: theme.spacing(6),
-                                    height: theme.spacing(6)
+                                    width: theme.spacing(5),
+                                    height: theme.spacing(5)
                                 })}>
-                                    <Icone fontSize="large" sx={(theme: Theme) => ({ color: theme.palette[corIcone].contrastText })} />
+                                    <Icone fontSize="medium" sx={(theme: Theme) => ({ color: theme.palette[corIcone].contrastText })} />
                                 </Box>
                             )}
 
-                            <Stack spacing={0.5}>
+                            <Stack>
                                 {titulo && (
                                     <Typography variant="body1" sx={{ fontWeight: 700 }}>
                                         {titulo}

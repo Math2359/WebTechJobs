@@ -16,6 +16,9 @@ export type Vaga = {
     cargo: string;
     modelo: string;
     nivelExperiencia: string;
+    tecnologias: string;
+    requisitos: string;
+    beneficios: string;
     cep?: string;
     numero?: string;
     descricao: string;
@@ -34,6 +37,9 @@ export type CadastrarVagaRequest = {
     cargo: string;
     modelo: string;
     nivelExperiencia: string;
+    tecnologias: string;
+    requisitos: string;
+    beneficios: string;
     cep?: string;
     numero?: string;
     descricao: string;
