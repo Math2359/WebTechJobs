@@ -21,6 +21,7 @@ export const GerarEstiloBotaoGhost = (cor: CorBotao): SxProps<Theme> => {
         border: "none",
         background: "transparent",
         color: theme.palette[cor].main,
+        padding: 0
     })
 }
 

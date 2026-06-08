@@ -5,7 +5,6 @@ import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined"
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined"
-import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import { Botao } from "@/components/Botao/Botao"
 import { Card } from "@/components/Card/Card"
 import { formatarReal, diffDatas } from "@/lib/utils"
@@ -15,6 +14,7 @@ import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
 import { useObterVagaAplicacaoCandidato } from "@/api/candidato/candidato"
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 type DetalhesProps = {
     id: number
@@ -54,13 +54,13 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                     <Typography variant="caption">{vaga?.modelo}</Typography>
                                 </Box>
                                 <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-                                    <BusinessOutlinedIcon fontSize="small" color="action" />
+                                    <WorkOutlineRoundedIcon fontSize="small" color="action" />
                                     <Typography variant="caption">
                                         {vaga?.cargo}
                                     </Typography>
                                 </Box>
                                 <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-                                    <WorkOutlineRoundedIcon fontSize="small" color="action" />
+                                    <AttachMoneyIcon fontSize="small" color="action" />
                                     <Typography variant="caption">
                                         Salário: <b>{vaga?.salarioPrevisto ? formatarReal(vaga.salarioPrevisto) : "-"}</b>
                                     </Typography>
@@ -91,19 +91,23 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                             <RenderizarTexto texto={vaga?.descricao} />
                         </Stack>
 
-                        <Stack spacing={1.5}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                                Requisitos
-                            </Typography>
-                            <RenderizarTexto texto={vaga?.requisitos} />
-                        </Stack>
+                        {vaga?.requisitos &&
+                            <Stack spacing={1.5}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                    Requisitos
+                                </Typography>
+                                <RenderizarTexto texto={vaga.requisitos} />
+                            </Stack>
+                        }
 
-                        <Stack spacing={1.5}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                                Benefícios
-                            </Typography>
-                            <RenderizarTexto texto={vaga?.beneficios} />
-                        </Stack>
+                        {vaga?.beneficios &&
+                            <Stack spacing={1.5}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                    Benefícios
+                                </Typography>
+                                <RenderizarTexto texto={vaga?.beneficios} />
+                            </Stack>
+                        }
                     </Stack>
                 </Card>
             </Grid>
@@ -160,10 +164,10 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                 <AccessTimeOutlinedIcon fontSize="small" color="action" />
                                 <Typography variant="caption">Encerra em {diffDatas(new Date(), vaga?.dataFimInscricoes!)}</Typography>
                             </Box>
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-                                <BookmarkBorderOutlinedIcon fontSize="small" color="action" />
-                                <Typography variant="caption" color="primary.main">Ver perfil da empresa</Typography>
-                            </Box>
+                            <Botao to={`/candidato/empresa/${vaga?.idEmpresa}`} sx={{ width: "fit-content" }} variante="ghost" cor="info">
+                                <BusinessOutlinedIcon fontSize="small" />
+                                <Typography variant="caption">Ver perfil da empresa</Typography>
+                            </Botao>
                         </Stack>
 
                         <Divider />

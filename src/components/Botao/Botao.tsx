@@ -22,7 +22,7 @@ const AnimacaoLoading = () => {
     )
 }
 
-export const Botao = ({ cor = "primary", loading = false, variante = "contained", fullWidth, children, to, ...props }: BotaoProps) => {
+export const Botao = ({ cor = "primary", loading = false, sx, variante = "contained", fullWidth, children, to, ...props }: BotaoProps) => {
     const linkProps = {
         LinkComponent: Link,
         to
@@ -32,7 +32,8 @@ export const Botao = ({ cor = "primary", loading = false, variante = "contained"
         <ButtonBase disabled={loading} sx={[
             styles.EstiloPadrao,
             (loading || props.disabled) ? styles.EstiloDesabilitado : EstilosBotao[variante](cor),
-            fullWidth && { width: "100%" }
+            fullWidth && { width: "100%" },
+            sx
         ] as SxProps<Theme>} {...props} {...linkProps}>
             {loading ? <AnimacaoLoading />
                 : children

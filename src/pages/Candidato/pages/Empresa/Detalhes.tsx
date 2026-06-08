@@ -87,26 +87,28 @@ export const Detalhes = ({ idEmpresa }: DetalhesProps) => {
                         <Divider />
 
                         <TabContext value={tabSelecionada}>
-                            <ListaTab
-                                onChange={setTabSelecionada}
-                                orientation="horizontal"
-                                variante="semBorda"
-                                tabs={[{
-                                    label: "Informações",
-                                    value: "1",
-                                    selected: {
-                                        corFundo: (theme) => theme.palette.grey[200],
-                                        cor: "#000"
-                                    }
-                                }, {
-                                    label: "Vagas",
-                                    value: "2",
-                                    selected: {
-                                        corFundo: (theme) => theme.palette.grey[200],
-                                        cor: "#000"
-                                    }
-                                }]}
-                            />
+                            <Grid sx={{ width: "fit-content" }}>
+                                <ListaTab
+                                    onChange={setTabSelecionada}
+                                    orientation="horizontal"
+                                    variante="semBorda"
+                                    tabs={[{
+                                        label: "Informações",
+                                        value: "1",
+                                        selected: {
+                                            corFundo: (theme) => theme.palette.grey[200],
+                                            cor: "#000"
+                                        }
+                                    }, {
+                                        label: "Vagas",
+                                        value: "2",
+                                        selected: {
+                                            corFundo: (theme) => theme.palette.grey[200],
+                                            cor: "#000"
+                                        }
+                                    }]}
+                                />
+                            </Grid>
 
                             <TabPanel value="1">
                                 <Grid container spacing={2}>
