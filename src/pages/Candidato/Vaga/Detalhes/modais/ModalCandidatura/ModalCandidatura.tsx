@@ -1,5 +1,5 @@
 import { ModalBase } from "@/components/ModalBase/ModalBase"
-import { Box, Divider, Grid, Stack, Typography } from "@mui/material"
+import { Box, Grid, Stack, Typography } from "@mui/material"
 import type { ModalCandidaturaProps } from "./ModalCandidatura.types"
 import { useRef, useState } from "react"
 import { useAplicarVaga } from "@/api/candidato/candidato"
@@ -28,22 +28,15 @@ export const ModalCandidatura = ({ handleClose, vaga: { nomeEmpresa, id }, open 
     }
 
     return (
-        <ModalBase open={open} handleClose={onClose} tamanho="medium">
+        <ModalBase
+            open={open}
+            handleClose={onClose}
+            tamanho="medium"
+            icone={AddIcon}
+            titulo="Candidatar-se"
+            subtitulo={`Adicione um CV adicional antes de enviar sua candidatura para ${nomeEmpresa}.`}
+        >
             <Stack spacing={4}>
-                <Stack spacing={1}>
-                    <Stack>
-                        <Grid container sx={{ placeItems: "center" }} spacing={0.5}>
-                            <AddIcon fontSize="medium" color="action" />
-                            <Typography color="textDisabled" variant="subtitle1" sx={{ fontWeight: 600 }}>
-                                Candidatar-se
-                            </Typography>
-
-                        </Grid>
-                        <Typography variant="subtitle2" sx={{ fontSize: 12 }}>Adicione um CV adicional antes de enviar sua candidatura para {nomeEmpresa}.</Typography>
-                    </Stack>
-                    <Divider variant="fullWidth" />
-                </Stack>
-
                 <Box
                     onClick={() => inputFileRef.current?.click()}
                     sx={(theme) => ({

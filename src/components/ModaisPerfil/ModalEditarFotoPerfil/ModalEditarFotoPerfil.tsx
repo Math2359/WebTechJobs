@@ -2,10 +2,11 @@ import { ModalBase } from "@/components/ModalBase/ModalBase"
 import type { ModaleditarFotoPerfil } from "./ModalEditarFotoPerfil.types"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { useMemo } from "react"
-import { Grid, Stack, Typography } from "@mui/material"
+import { Grid, Stack } from "@mui/material"
 import { Botao } from "@/components/Botao/Botao"
 import { useEditarFotoPerfil } from "@/api/usuario/usuario"
 import { toast } from "sonner"
+import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined"
 
 export const ModalEditarFotoPerfil = ({ arquivo, handleClose, open }: ModaleditarFotoPerfil) => {
     const url = useMemo(() => arquivo && URL.createObjectURL(arquivo), [arquivo])
@@ -33,10 +34,16 @@ export const ModalEditarFotoPerfil = ({ arquivo, handleClose, open }: Modaledita
     }
 
     return (
-        <ModalBase tamanho="small" handleClose={onClose} open={open}>
+        <ModalBase
+            tamanho="small"
+            handleClose={onClose}
+            open={open}
+            icone={AddPhotoAlternateOutlinedIcon}
+            titulo="Nova foto de perfil"
+            subtitulo="Revise a imagem selecionada antes de salvar."
+        >
             <Stack spacing={4}>
                 <Stack spacing={1} sx={{ placeItems: "center" }}>
-                    <Typography variant="h6">Nova foto de perfil:</Typography>
                     <AvatarPerfil tamanho={80} src={url} />
                 </Stack>
                 

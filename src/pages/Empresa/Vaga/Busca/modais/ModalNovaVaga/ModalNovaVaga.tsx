@@ -1,5 +1,5 @@
-import { Divider, Grid, MenuItem, Stack, Typography } from "@mui/material"
-import AddIcon from "@mui/icons-material/AddBoxOutlined"
+import { Grid, MenuItem, Stack } from "@mui/material"
+import AddIcon from "@mui/icons-material/Add"
 import { MASCARA_CEP, MASCARA_DINHEIRO_REAL } from "@/lib/mascaras"
 import { useFormCustomizado } from "@/components/Formulario"
 import { Botao } from "@/components/Botao/Botao"
@@ -33,19 +33,17 @@ export const ModalNovaVaga = ({ open, handleClose }: ModalBaseGenericaProps) => 
     }
 
     return (
-        <ModalBase handleClose={onClose} tamanho="large" open={open}>
+        <ModalBase
+            handleClose={onClose}
+            tamanho="large"
+            open={open}
+            icone={AddIcon}
+            titulo="Nova vaga"
+            subtitulo="Preencha os dados para cadastrar uma nova vaga."
+            corIcone="secondary"
+        >
             <Stack spacing={4}>
                 <Stack spacing={2}>
-                    <Stack spacing={1}>
-                        <Grid container sx={{ placeItems: "center" }} spacing={0.5}>
-                            <AddIcon fontSize="medium" color="action" />
-                            <Typography color="textDisabled" variant="subtitle1" sx={{ fontWeight: 600 }}>
-                                Nova vaga
-                            </Typography>
-                        </Grid>
-                        <Divider variant="fullWidth" />
-                    </Stack>
-
                     <Grid container spacing={2}>
                         <Grid size={4}>
                             <AppField name="nome" children={(field) => (

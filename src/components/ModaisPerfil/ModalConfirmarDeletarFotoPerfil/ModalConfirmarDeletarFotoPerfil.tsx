@@ -1,4 +1,4 @@
-import { Stack, Typography, Grid, Box } from "@mui/material"
+import { Stack, Grid } from "@mui/material"
 import { useDeletarFotoPerfil } from "@/api/usuario/usuario"
 import { ModalBase } from "@/components/ModalBase/ModalBase"
 import { Botao } from "@/components/Botao/Botao"
@@ -14,15 +14,16 @@ export const ModalConfirmarDeletarFotoPerfil = ({ open, handleClose }: ModalBase
     }
 
     return (
-        <ModalBase open={open} handleClose={handleClose} tamanho="small">
+        <ModalBase
+            open={open}
+            handleClose={handleClose}
+            tamanho="small"
+            icone={DeleteOutlinedIcon}
+            titulo="Deletar foto de perfil"
+            subtitulo="Tem certeza que deseja deletar sua foto de perfil?"
+            corIcone="error"
+        >
             <Stack spacing={4}>
-                <Stack sx={{ placeItems: "center" }} spacing={1}>
-                    <Box sx={(theme) => ({ display: "flex", justifyContent: "center", alignItems: "center", background: theme.palette.error.light, padding: theme.spacing(1), borderRadius: theme.spacing(1), width: theme.spacing(7), height: theme.spacing(7) })}>
-                        <DeleteOutlinedIcon fontSize="large" sx={{ color: (theme) => theme.palette.error.contrastText }} />
-                    </Box>
-                    <Typography variant="body1">Tem certeza que deseja deletar sua foto de perfil?</Typography>
-                </Stack>
-
                 <Grid container spacing={2}>
                     <Grid size="grow">
                         <Botao fullWidth cor="cinza" onClick={handleClose} variante="ghost">Cancelar</Botao>

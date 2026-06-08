@@ -1,4 +1,4 @@
-import { Alert, Box, Divider, Grid, Stack, Typography } from "@mui/material"
+import { Box, Grid, Stack, Typography } from "@mui/material"
 import { Botao } from "@/components/Botao/Botao"
 import { useFormCustomizado } from "@/components/Formulario"
 import { ModalBase } from "@/components/ModalBase/ModalBase"
@@ -35,35 +35,16 @@ export const ModalAvaliacaoCandidato = ({ open, handleClose, situacao, candidato
     }
 
     return (
-        <ModalBase open={open} handleClose={onClose} tamanho="small">
+        <ModalBase
+            open={open}
+            handleClose={onClose}
+            tamanho="small"
+            icone={Icone}
+            titulo={avaliacao.titulo}
+            subtitulo={<>{avaliacao.descricao} <b>{candidato?.nome ?? "este candidato"}</b>?</>}
+            corIcone={avaliacao.cor}
+        >
             <Stack spacing={4}>
-                <Stack spacing={2}>
-                    <Grid spacing={2} container>
-                        <Box sx={(theme) => ({
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            backgroundColor: theme.palette[avaliacao.cor].light,
-                            borderRadius: 2,
-                            width: theme.spacing(6),
-                            height: theme.spacing(6)
-                        })}>
-                            <Icone fontSize="large" sx={(theme) => ({ color: theme.palette[avaliacao.cor].contrastText })} />
-                        </Box>
-
-                        <Stack spacing={0.5}>
-                            <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                                {avaliacao.titulo}
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                                {avaliacao.descricao} <b>{candidato?.nome ?? "este candidato"}</b>?
-                            </Typography>
-                        </Stack>
-                    </Grid>
-
-                    <Divider />
-                </Stack>
-
                 <Box sx={(theme) => ({
                     border: "1px solid",
                     borderColor: theme.palette.grey[200],
@@ -75,6 +56,10 @@ export const ModalAvaliacaoCandidato = ({ open, handleClose, situacao, candidato
                         {avaliacao.detalhe}
                     </Typography>
                 </Box>
+
+                <AppField name="observacao" children={(field) => (
+                    <field.InputForm label="Observação" multiline minRows={3} variante="normal" placeholder="Adicione uma observação interna" cor="secondary" />
+                )} />
 
                 <Grid container spacing={2}>
                     <Grid size="grow">

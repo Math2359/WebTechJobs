@@ -1,4 +1,4 @@
-import { Divider, Grid, Stack, Typography } from "@mui/material"
+import { Grid, Stack } from "@mui/material"
 import AddIcon from "@mui/icons-material/AddBoxOutlined"
 import type { ModalNovaExperienciaProps } from "./ModalNovaExperiencia.types"
 import { experienciaSchema } from "../../../FormularioEditar.schema"
@@ -32,17 +32,15 @@ export const ModalNovaExperiencia = ({ handleClose, open, tipoExperiencia, salva
     }
 
     return (
-        <ModalBase handleClose={onClose} open={open}>
+        <ModalBase
+            handleClose={onClose}
+            open={open}
+            icone={AddIcon}
+            titulo="Nova experiência"
+            subtitulo="Informe os dados para adicionar uma experiência ao perfil."
+        >
             <Stack spacing={4}>
                 <Stack spacing={2}>
-                    <Stack spacing={1}>
-                        <Grid container sx={{ placeItems: "center" }} spacing={0.5}>
-                            <AddIcon fontSize="medium" color="action" />
-                            <Typography color="textDisabled" variant="subtitle1" sx={{ fontWeight: 600 }}>Nova experiência</Typography>
-                        </Grid>
-                        <Divider variant="fullWidth" />
-                    </Stack>
-
                     <Grid container spacing={2}>
                         <Grid size={6}>
                             <AppField children={(field) => (
@@ -78,7 +76,6 @@ export const ModalNovaExperiencia = ({ handleClose, open, tipoExperiencia, salva
                         )}
                     />
                 </Grid>
-
             </Stack>
         </ModalBase>
     )

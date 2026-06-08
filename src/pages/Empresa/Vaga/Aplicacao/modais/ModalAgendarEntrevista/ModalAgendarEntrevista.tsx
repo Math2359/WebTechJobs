@@ -1,4 +1,4 @@
-import { Divider, Grid, Stack, Typography } from "@mui/material"
+import { Grid, Stack } from "@mui/material"
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined"
 import { toast } from "sonner"
 import { Botao } from "@/components/Botao/Botao"
@@ -27,23 +27,16 @@ export const ModalAgendarEntrevista = ({ open, handleClose, candidato }: ModalAg
     }
 
     return (
-        <ModalBase handleClose={onClose} tamanho="medium" open={open}>
+        <ModalBase
+            handleClose={onClose}
+            tamanho="medium"
+            open={open}
+            icone={EventAvailableOutlinedIcon}
+            titulo="Agendar entrevista"
+            subtitulo={`Defina a entrevista com ${candidato?.nome ?? "o candidato"}.`}
+            corIcone="secondary"
+        >
             <Stack spacing={4}>
-                <Stack spacing={1}>
-                    <Stack>
-                        <Grid container sx={{ placeItems: "center" }} spacing={0.5}>
-                            <EventAvailableOutlinedIcon fontSize="medium" color="action" />
-                            <Typography color="textDisabled" variant="subtitle1" sx={{ fontWeight: 600 }}>
-                                Agendar entrevista
-                            </Typography>
-                        </Grid>
-                        <Typography variant="subtitle2" sx={{ fontSize: 12 }}>
-                            Defina a entrevista com {candidato?.nome ?? "o candidato"}.
-                        </Typography>
-                    </Stack>
-                    <Divider variant="fullWidth" />
-                </Stack>
-
                 <Grid container spacing={2}>
                     <Grid size={6}>
                         <AppField name="data" children={(field) => (
