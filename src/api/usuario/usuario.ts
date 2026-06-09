@@ -14,6 +14,24 @@ export const useObterFotoPerfil = () => useQuery({
     },
 })
 
+export const useObterValidacaoEmail = (emailValidado: boolean | undefined) => useQuery({
+    queryKey: [UsuarioQueryKeys.ObterValidacaoEmail, emailValidado],
+    queryFn: async () => emailValidado ?? false,
+    initialData: emailValidado ?? false,
+})
+
+export const useEnviarValidacaoEmail = () => useMutation({
+    mutationFn: async () => {
+        await api.post("/usuario/email/validacao")
+    },
+    onSuccess: () => {
+        toast.success("E-mail de validação enviado com sucesso!")
+    },
+    onError: (erro: ErroResponse) => {
+        toast.error(erro.response?.data.mensagem)
+    }
+})
+
 export const useCriarUsuario = () => useMutation({
     mutationFn: async (request: CriarUsuarioRequest) => {
         const { data } = await api.post("/usuario", request);

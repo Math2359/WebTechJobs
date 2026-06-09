@@ -4,7 +4,8 @@ import type { TipoNotificacao } from "@/lib/dominios/tipoNotificacao";
 export const UsuarioQueryKeys = {
     ObterFotoPerfil: "obterFotoPerfil",
     ObterNotificacoes: "obterNotificacoesUsuario",
-    ObterQuantidadeNotificacoesNaoLidas: "obterQuantidadeNotificacoesNaoLidasUsuario"
+    ObterQuantidadeNotificacoesNaoLidas: "obterQuantidadeNotificacoesNaoLidasUsuario",
+    ObterValidacaoEmail: "obterValidacaoEmailUsuario"
 } as const
 
 export type NotificacaoUsuario = {
@@ -42,6 +43,7 @@ export type GerarTokenResponse = {
     nomeUsuario: string
     email: string
     perfil: Perfil
+    emailValidado: boolean
 }
 
 export type EditarFotoPerfilRequest = {

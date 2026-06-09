@@ -1,4 +1,4 @@
-import { useObterFotoPerfil } from "@/api/usuario/usuario";
+import { useObterFotoPerfil, useObterValidacaoEmail } from "@/api/usuario/usuario";
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil";
 import { Card } from "@/components/Card/Card";
 import { Box, Chip, Grid, IconButton, ListItemIcon, Menu, MenuItem, Stack, Typography } from "@mui/material"
@@ -16,9 +16,11 @@ import { IconeTexto } from "@/components/IconeTexto/IconeTexto";
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto";
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
+import { AlertaValidacaoEmail, IconeEmailValidado } from "@/components/ValidacaoEmail/ValidacaoEmail";
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
+    const { data: emailValidado = false } = useObterValidacaoEmail(usuario?.emailValidado)
 
     const { data: informacoesEmpresa } = useObterInformacoesEmpresa()
 
@@ -59,6 +61,7 @@ export const Dashboard = () => {
 
     return (
         <Stack spacing={4}>
+            {!emailValidado && <AlertaValidacaoEmail cor="secondary" />}
             <Card>
                 <Box sx={{ background: theme => theme.palette.secondary.main, height: "70px" }} />
                 <Grid sx={{ padding: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -94,7 +97,10 @@ export const Dashboard = () => {
 
                         <Stack spacing={1}>
                             <Stack>
-                                <Typography variant="h6">{usuario?.nomeUsuario}</Typography>
+                                <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
+                                    <Typography variant="h6">{usuario?.nomeUsuario}</Typography>
+                                    {emailValidado && <IconeEmailValidado />}
+                                </Stack>
                                 <Typography variant="caption">{informacoesEmpresa?.setor ?? "-"}</Typography>
                             </Stack>
                             <Grid container spacing={3}>

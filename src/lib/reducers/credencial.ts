@@ -7,6 +7,7 @@ export type CredencialState = {
     nomeUsuario: string
     email: string
     perfil: Perfil
+    emailValidado: boolean
 } | null
 
 const INITIAL_STATE: CredencialState = obterCookie<CredencialState>(CookiesDisponiveis.Credenciais)
