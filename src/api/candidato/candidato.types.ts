@@ -18,8 +18,6 @@ export type Experiencia = {
 }
 
 export type InformacoesCandidato = {
-    id: number
-    idCandidato: number
     descricao: string | undefined
     habilidades: string | undefined
     preferencias: string | undefined
