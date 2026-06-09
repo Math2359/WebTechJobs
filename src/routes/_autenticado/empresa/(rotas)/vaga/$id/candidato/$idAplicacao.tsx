@@ -6,7 +6,7 @@ export const Route = createFileRoute('/_autenticado/empresa/(rotas)/vaga/$id/can
 })
 
 function RouteComponent() {
-  const { id, idAplicacao } = Route.useParams()
+  const { idAplicacao } = Route.useParams()
 
-  return <Pages.Empresa.Vaga.Aplicacao idVaga={Number(id)} idAplicacao={Number(idAplicacao)} />
+  return <Pages.Empresa.Vaga.Aplicacao idAplicacao={Number(idAplicacao)} />
 }
