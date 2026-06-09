@@ -8,5 +8,5 @@ export const Route = createFileRoute('/_autenticado/candidato/(rotas)/empresa/$i
 function RouteComponent() {
     const { idEmpresa } = Route.useParams()
 
-    return <Pages.Candidato.Empresa.Detalhes idEmpresa={Number(idEmpresa)} />
+    return <Pages.Candidato.Empresa idEmpresa={Number(idEmpresa)} />
 }

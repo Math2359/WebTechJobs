@@ -1,8 +1,26 @@
 import type { Perfil } from "@/lib/dominios/perfil";
+import type { TipoNotificacao } from "@/lib/dominios/tipoNotificacao";
 
 export const UsuarioQueryKeys = {
-    ObterFotoPerfil: "obterFotoPerfil"
+    ObterFotoPerfil: "obterFotoPerfil",
+    ObterNotificacoes: "obterNotificacoesUsuario",
+    ObterQuantidadeNotificacoesNaoLidas: "obterQuantidadeNotificacoesNaoLidasUsuario"
 } as const
+
+export type NotificacaoUsuario = {
+    id: number
+    idAcao: number
+    idUsuario: number
+    tipo: TipoNotificacao
+    titulo: string
+    mensagem: string
+    lida: boolean
+    dataCadastro: Date
+}
+
+export type ObterNotificacoesResponse = NotificacaoUsuario[]
+
+export type ObterQuantidadeNotificacoesNaoLidasResponse = number
 
 export type CriarUsuarioRequest = {
     senha: string;

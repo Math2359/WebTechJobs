@@ -3,15 +3,12 @@ import { TabContext, TabPanel } from "@mui/lab"
 import { Box, Chip, Divider, Grid, IconButton, Stack, Typography } from "@mui/material"
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
-import LinkOutlinedIcon from "@mui/icons-material/LinkOutlined"
 import SearchIcon from "@mui/icons-material/Search"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import { useNavigate } from "@tanstack/react-router"
 import { useObterFotoPerfilEmpresa, useObterInformacoesEmpresaPorId } from "@/api/empresa/empresa"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
-import { Botao } from "@/components/Botao/Botao"
 import { Card } from "@/components/Card/Card"
-import { IconeTexto } from "@/components/IconeTexto/IconeTexto"
 import { ListaTab } from "@/components/ListaTab/ListaTab"
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
 import { SemDados } from "@/components/SemDados/SemDados"
@@ -24,7 +21,7 @@ type DetalhesProps = {
 
 const filtros = ["Todos", "Front-end", "Back-end", "Full Stack", "Mobile", "DevOps"]
 
-export const Detalhes = ({ idEmpresa }: DetalhesProps) => {
+export const Empresa = ({ idEmpresa }: DetalhesProps) => {
     const navigate = useNavigate()
     const [tabSelecionada, setTabSelecionada] = useState("1")
     const [filtroAtivo, setFiltroAtivo] = useState("Todos")
@@ -82,9 +79,6 @@ export const Detalhes = ({ idEmpresa }: DetalhesProps) => {
                                 </Box>
                                 <Typography variant="caption">
                                     <b>{informacoesEmpresa?.vagasDisponiveis ?? vagas?.length ?? 0}</b> vagas ativas
-                                </Typography>
-                                <Typography variant="caption">
-                                    <b>{informacoesEmpresa?.candidatos ?? 0}</b> candidaturas
                                 </Typography>
                             </Box>
 
@@ -150,9 +144,6 @@ export const Detalhes = ({ idEmpresa }: DetalhesProps) => {
                                         <Grid size={4}>
                                             <InputNormal fullWidth endAdornment={<SearchIcon color="disabled" />} value={termoBusca} onChange={(e) => setTermoBusca(e.target.value)} placeholder="Busca vagas por nome, cargo..." />
                                         </Grid>
-                                        <Botao cor="secondary">
-                                            Buscar
-                                        </Botao>
                                     </Grid>
 
                                     <Stack direction="row" spacing={1.25} sx={{ flexWrap: "wrap" }}>

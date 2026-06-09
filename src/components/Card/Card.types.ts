@@ -1,5 +1,4 @@
-import type { Theme } from "@emotion/react";
-import type { SxProps } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material";
 import type { PropsWithChildren } from "react";
 
 export type CardProps = PropsWithChildren<{

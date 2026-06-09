@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as NaoAutenticadoRouteRouteImport } from './routes/_naoAutenticado/route'
 import { Route as AutenticadoRouteRouteImport } from './routes/_autenticado/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AutenticadoNotificacoesRouteImport } from './routes/_autenticado/notificacoes'
 import { Route as AutenticadoEmpresaRouteRouteImport } from './routes/_autenticado/empresa/route'
 import { Route as AutenticadoCandidatoRouteRouteImport } from './routes/_autenticado/candidato/route'
 import { Route as NaoAutenticadorotasLoginRouteImport } from './routes/_naoAutenticado/(rotas)/login'
@@ -41,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AutenticadoNotificacoesRoute = AutenticadoNotificacoesRouteImport.update({
+  id: '/notificacoes',
+  path: '/notificacoes',
+  getParentRoute: () => AutenticadoRouteRoute,
 } as any)
 const AutenticadoEmpresaRouteRoute = AutenticadoEmpresaRouteRouteImport.update({
   id: '/empresa',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/candidato': typeof AutenticadoCandidatoRouteRouteWithChildren
   '/empresa': typeof AutenticadoEmpresaRouteRouteWithChildren
+  '/notificacoes': typeof AutenticadoNotificacoesRoute
   '/cadastro': typeof NaoAutenticadorotasCadastroRoute
   '/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/login': typeof NaoAutenticadorotasLoginRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/notificacoes': typeof AutenticadoNotificacoesRoute
   '/cadastro': typeof NaoAutenticadorotasCadastroRoute
   '/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/login': typeof NaoAutenticadorotasLoginRoute
@@ -181,6 +189,7 @@ export interface FileRoutesById {
   '/_naoAutenticado': typeof NaoAutenticadoRouteRouteWithChildren
   '/_autenticado/candidato': typeof AutenticadoCandidatoRouteRouteWithChildren
   '/_autenticado/empresa': typeof AutenticadoEmpresaRouteRouteWithChildren
+  '/_autenticado/notificacoes': typeof AutenticadoNotificacoesRoute
   '/_naoAutenticado/(rotas)/cadastro': typeof NaoAutenticadorotasCadastroRoute
   '/_naoAutenticado/(rotas)/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/_naoAutenticado/(rotas)/login': typeof NaoAutenticadorotasLoginRoute
@@ -202,6 +211,7 @@ export interface FileRouteTypes {
     | '/'
     | '/candidato'
     | '/empresa'
+    | '/notificacoes'
     | '/cadastro'
     | '/esqueci-minha-senha'
     | '/login'
@@ -219,6 +229,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/notificacoes'
     | '/cadastro'
     | '/esqueci-minha-senha'
     | '/login'
@@ -240,6 +251,7 @@ export interface FileRouteTypes {
     | '/_naoAutenticado'
     | '/_autenticado/candidato'
     | '/_autenticado/empresa'
+    | '/_autenticado/notificacoes'
     | '/_naoAutenticado/(rotas)/cadastro'
     | '/_naoAutenticado/(rotas)/esqueci-minha-senha'
     | '/_naoAutenticado/(rotas)/login'
@@ -284,6 +296,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_autenticado/notificacoes': {
+      id: '/_autenticado/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/notificacoes'
+      preLoaderRoute: typeof AutenticadoNotificacoesRouteImport
+      parentRoute: typeof AutenticadoRouteRoute
     }
     '/_autenticado/empresa': {
       id: '/_autenticado/empresa'
@@ -455,11 +474,13 @@ const AutenticadoEmpresaRouteRouteWithChildren =
 interface AutenticadoRouteRouteChildren {
   AutenticadoCandidatoRouteRoute: typeof AutenticadoCandidatoRouteRouteWithChildren
   AutenticadoEmpresaRouteRoute: typeof AutenticadoEmpresaRouteRouteWithChildren
+  AutenticadoNotificacoesRoute: typeof AutenticadoNotificacoesRoute
 }
 
 const AutenticadoRouteRouteChildren: AutenticadoRouteRouteChildren = {
   AutenticadoCandidatoRouteRoute: AutenticadoCandidatoRouteRouteWithChildren,
   AutenticadoEmpresaRouteRoute: AutenticadoEmpresaRouteRouteWithChildren,
+  AutenticadoNotificacoesRoute: AutenticadoNotificacoesRoute,
 }
 
 const AutenticadoRouteRouteWithChildren =

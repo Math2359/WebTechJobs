@@ -7,7 +7,7 @@ export const cadastrarVagaSchema = z.object({
     nivelExperiencia: z.string().min(1, "Nível de experiência é obrigatório"),
     tecnologias: z.array(z.string()).min(1, "Adicione pelo menos uma tecnologia").max(7, "Máximo de 7 tecnologias"),
     requisitos: z.string().min(1, "Requisitos são obrigatórios"),
-    beneficios: z.string().min(1, "Benefícios são obrigatórios"),
+    beneficios: z.string().optional(),
     descricao: z.string().min(1, "Descrição é obrigatória"),
     cep: z.string().optional(),
     numero: z.string().optional(),

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { UsuarioQueryKeys, type CriarUsuarioRequest, type EditarFotoPerfilRequest, type GerarTokenRequest, type GerarTokenResponse } from "./usuario.types";
+import { UsuarioQueryKeys, type CriarUsuarioRequest, type EditarFotoPerfilRequest, type GerarTokenRequest, type GerarTokenResponse, type ObterNotificacoesResponse, type ObterQuantidadeNotificacoesNaoLidasResponse } from "./usuario.types";
 import { toast } from "sonner";
 import { api } from "@/lib/axios";
 import type { ErroResponse } from "../types";
@@ -70,6 +70,51 @@ export const useDeletarFotoPerfil = () => useMutation({
     onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [UsuarioQueryKeys.ObterFotoPerfil] })
         toast.success("Foto de perfil deletada com sucesso!")
+    },
+    onError: (erro: ErroResponse) => {
+        toast.error(erro.response?.data.mensagem)
+    }
+})
+
+export const useObterNotificacoesUsuario = () => useQuery({
+    queryKey: [UsuarioQueryKeys.ObterNotificacoes],
+    queryFn: async () => {
+        const { data } = await api.get<ObterNotificacoesResponse>("/usuario/notificacao")
+
+        return data
+    },
+})
+
+export const useObterQuantidadeNotificacoesNaoLidasUsuario = () => useQuery({
+    queryKey: [UsuarioQueryKeys.ObterQuantidadeNotificacoesNaoLidas],
+    queryFn: async () => {
+        const { data } = await api.get<ObterQuantidadeNotificacoesNaoLidasResponse>("/usuario/notificacao/nao-lidas")
+
+        return data
+    },
+})
+
+export const useMarcarNotificacaoComoLida = () => useMutation({
+    mutationFn: async (idNotificacao: number) => {
+        await api.put(`/usuario/notificacao/${idNotificacao}/lida`)
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [UsuarioQueryKeys.ObterNotificacoes] })
+        queryClient.invalidateQueries({ queryKey: [UsuarioQueryKeys.ObterQuantidadeNotificacoesNaoLidas] })
+    },
+    onError: (erro: ErroResponse) => {
+        toast.error(erro.response?.data.mensagem)
+    }
+})
+
+export const useMarcarTodasNotificacoesComoLidas = () => useMutation({
+    mutationFn: async () => {
+        await api.put("/usuario/notificacao/lidas")
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [UsuarioQueryKeys.ObterNotificacoes] })
+        queryClient.invalidateQueries({ queryKey: [UsuarioQueryKeys.ObterQuantidadeNotificacoesNaoLidas] })
+        toast.success("Notificações marcadas como lidas.")
     },
     onError: (erro: ErroResponse) => {
         toast.error(erro.response?.data.mensagem)

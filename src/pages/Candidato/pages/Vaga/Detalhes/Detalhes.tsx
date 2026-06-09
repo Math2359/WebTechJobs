@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
+import { Box, Breadcrumbs, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined"
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
@@ -15,6 +15,10 @@ import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
 import { useObterVagaAplicacaoCandidato } from "@/api/candidato/candidato"
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { NavLink } from "@/components/NavLink/NavLink"
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import { Link } from "@tanstack/react-router"
+import { LinkCustomizado } from "@/components/LinkCustomizado/LinkCustomizado"
 
 type DetalhesProps = {
     id: number
@@ -31,166 +35,170 @@ export const Detalhes = ({ id }: DetalhesProps) => {
     ].filter(Boolean)
 
     return (
-        <Grid container spacing={2}>
-            <Grid size="grow">
-                <Card padding={2}>
-                    <Stack spacing={3}>
-                        <Stack spacing={2}>
-                            <Grid container spacing={1} sx={{ placeItems: "center" }}>
-                                <AvatarPerfil src={fotoEmpresa} />
-                                <Box>
-                                    <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
-                                        {vaga?.nome}
-                                    </Typography>
-                                    <Typography variant="subtitle2" color="primary.main">
-                                        {vaga?.nomeEmpresa}
-                                    </Typography>
-                                </Box>
-                            </Grid>
+        <Stack spacing={4}>
+            <Breadcrumbs>
+                <HomeRoundedIcon fontSize="small" />
+                <LinkCustomizado to="/candidato/vaga">Vagas</LinkCustomizado>
+                <Typography variant="body2">Detalhes</Typography>
+            </Breadcrumbs>
 
-                            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-                                <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-                                    <LocationOnOutlinedIcon fontSize="small" color="primary" />
-                                    <Typography variant="caption">{vaga?.modelo}</Typography>
-                                </Box>
-                                <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-                                    <WorkOutlineRoundedIcon fontSize="small" color="action" />
-                                    <Typography variant="caption">
-                                        {vaga?.cargo}
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-                                    <AttachMoneyIcon fontSize="small" color="action" />
-                                    <Typography variant="caption">
-                                        Salário: <b>{vaga?.salarioPrevisto ? formatarReal(vaga.salarioPrevisto) : "-"}</b>
-                                    </Typography>
-                                </Box>
-                            </Box>
+            <Grid container spacing={2}>
+                <Grid size="grow">
+                    <Card padding={2}>
+                        <Stack spacing={3}>
+                            <Stack spacing={2}>
+                                <Grid container spacing={1} sx={{ placeItems: "center" }}>
+                                    <AvatarPerfil src={fotoEmpresa} />
+                                    <Box>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
+                                            {vaga?.nome}
+                                        </Typography>
+                                        <Typography variant="subtitle2" color="primary.main">
+                                            {vaga?.nomeEmpresa}
+                                        </Typography>
+                                    </Box>
+                                </Grid>
 
-                            <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-                                {tags.map((tag) => (
-                                    <Chip
-                                        key={tag}
-                                        label={tag}
-                                        sx={(theme) => ({
-                                            borderRadius: 999,
-                                            fontSize: 12,
-                                            backgroundColor: theme.palette.grey[100],
-                                        })}
-                                    />
-                                ))}
-                            </Stack>
-                        </Stack>
-
-                        <Divider />
-
-                        <Stack spacing={1.5}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                                Sobre a vaga
-                            </Typography>
-                            <RenderizarTexto texto={vaga?.descricao} />
-                        </Stack>
-
-                        {vaga?.requisitos &&
-                            <Stack spacing={1.5}>
-                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                                    Requisitos
-                                </Typography>
-                                <RenderizarTexto texto={vaga.requisitos} />
-                            </Stack>
-                        }
-
-                        {vaga?.beneficios &&
-                            <Stack spacing={1.5}>
-                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                                    Benefícios
-                                </Typography>
-                                <RenderizarTexto texto={vaga?.beneficios} />
-                            </Stack>
-                        }
-                    </Stack>
-                </Card>
-            </Grid>
-            <Grid size={3}>
-                <Card padding={2}>
-                    <Stack spacing={2.5}>
-                        {vaga?.situacao ? (
-                            <Stack spacing={1.5}>
-                                <Box>
-                                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                                        Status da candidatura
-                                    </Typography>
-                                    <Typography variant="caption" color="text.secondary">
-                                        Você já se candidatou para esta vaga.
-                                    </Typography>
+                                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                                        <LocationOnOutlinedIcon fontSize="small" color="primary" />
+                                        <Typography variant="caption">{vaga?.modelo}</Typography>
+                                    </Box>
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                                        <WorkOutlineRoundedIcon fontSize="small" color="action" />
+                                        <Typography variant="caption">
+                                            {vaga?.cargo}
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                                        <AttachMoneyIcon fontSize="small" color="action" />
+                                        <Typography variant="caption">
+                                            Salário: <b>{vaga?.salarioPrevisto ? formatarReal(vaga.salarioPrevisto) : "-"}</b>
+                                        </Typography>
+                                    </Box>
                                 </Box>
 
-                                <ChipSituacao
-                                    situacao={vaga.situacao}
-                                    sx={{
-                                        width: "fit-content",
-                                    }}
-                                />
-
-                                <Typography variant="caption" color="text.secondary">
-                                    Atualizado em {new Date(vaga?.dataAtualizacaoAplicacao ?? "").toLocaleDateString("pt-BR")}
-                                </Typography>
-                            </Stack>
-                        ) : (
-                            <>
-                                <Box>
-                                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                                        Candidatar-se
-                                    </Typography>
-                                    <Typography variant="caption" color="text.secondary">
-                                        Seu perfil será enviado ao recrutador da {vaga?.nomeEmpresa}.
-                                    </Typography>
-                                </Box>
-
-                                <Stack spacing={1}>
-                                    <Botao fullWidth onClick={() => setModalCandidatura(true)}>
-                                        Candidatar-se agora
-                                    </Botao>
+                                <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
+                                    {tags.map((tag) => (
+                                        <Chip
+                                            key={tag}
+                                            label={tag}
+                                            sx={(theme) => ({
+                                                borderRadius: 999,
+                                                fontSize: 12,
+                                                backgroundColor: theme.palette.grey[100],
+                                            })}
+                                        />
+                                    ))}
                                 </Stack>
-                            </>
-                        )}
+                            </Stack>
 
-                        <Stack spacing={0.75} sx={{ pt: 2 }}>
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-                                <GroupsOutlinedIcon fontSize="small" color="action" />
-                                <Typography variant="caption">{142} candidatos</Typography>
-                            </Box>
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-                                <AccessTimeOutlinedIcon fontSize="small" color="action" />
-                                <Typography variant="caption">Encerra em {diffDatas(new Date(), vaga?.dataFimInscricoes!)}</Typography>
-                            </Box>
-                            <Botao to={`/candidato/empresa/${vaga?.idEmpresa}`} sx={{ width: "fit-content" }} variante="ghost" cor="info">
-                                <BusinessOutlinedIcon fontSize="small" />
-                                <Typography variant="caption">Ver perfil da empresa</Typography>
-                            </Botao>
+                            <Divider />
+
+                            <Stack spacing={1.5}>
+                                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                    Sobre a vaga
+                                </Typography>
+                                <RenderizarTexto texto={vaga?.descricao} />
+                            </Stack>
+
+                            {vaga?.requisitos &&
+                                <Stack spacing={1.5}>
+                                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                        Requisitos
+                                    </Typography>
+                                    <RenderizarTexto texto={vaga.requisitos} />
+                                </Stack>
+                            }
+
+                            {vaga?.beneficios &&
+                                <Stack spacing={1.5}>
+                                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                        Benefícios
+                                    </Typography>
+                                    <RenderizarTexto texto={vaga?.beneficios} />
+                                </Stack>
+                            }
                         </Stack>
+                    </Card>
+                </Grid>
+                <Grid size={3}>
+                    <Card padding={2}>
+                        <Stack spacing={2.5}>
+                            {vaga?.situacao ? (
+                                <Stack spacing={1.5}>
+                                    <Box>
+                                        <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                            Status da candidatura
+                                        </Typography>
+                                        <Typography variant="caption" color="text.secondary">
+                                            Você já se candidatou para esta vaga.
+                                        </Typography>
+                                    </Box>
 
-                        <Divider />
+                                    <ChipSituacao
+                                        situacao={vaga.situacao}
+                                        sx={{
+                                            width: "fit-content",
+                                        }}
+                                    />
 
-                        <Stack spacing={1}>
-                            <Typography variant="caption" color="text.secondary">
-                                Publicada há <b>{vaga?.dataCadastro && diffDatas(vaga.dataCadastro)}</b>
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary">
-                                Fim das inscrições: <b>{new Date(vaga?.dataFimInscricoes ?? "").toLocaleDateString("pt-BR")}</b>
-                            </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                        Atualizado em {new Date(vaga?.dataAtualizacaoAplicacao ?? "").toLocaleDateString("pt-BR")}
+                                    </Typography>
+                                </Stack>
+                            ) : (
+                                <>
+                                    <Box>
+                                        <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                                            Candidatar-se
+                                        </Typography>
+                                        <Typography variant="caption" color="text.secondary">
+                                            Seu perfil será enviado ao recrutador da {vaga?.nomeEmpresa}.
+                                        </Typography>
+                                    </Box>
+
+                                    <Stack spacing={1}>
+                                        <Botao fullWidth onClick={() => setModalCandidatura(true)}>
+                                            Candidatar-se agora
+                                        </Botao>
+                                    </Stack>
+                                </>
+                            )}
+
+                            <Stack spacing={0.75} sx={{ pt: 2 }}>
+                                <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+                                    <AccessTimeOutlinedIcon fontSize="small" color="action" />
+                                    <Typography variant="caption">Encerra em {diffDatas(new Date(), vaga?.dataFimInscricoes!)}</Typography>
+                                </Box>
+                                <Botao to={`/candidato/empresa/${vaga?.idEmpresa}`} sx={{ width: "fit-content" }} variante="ghost" cor="info">
+                                    <BusinessOutlinedIcon fontSize="small" />
+                                    <Typography variant="caption">Ver perfil da empresa</Typography>
+                                </Botao>
+                            </Stack>
+
+                            <Divider />
+
+                            <Stack spacing={1}>
+                                <Typography variant="caption" color="text.secondary">
+                                    Publicada há <b>{vaga?.dataCadastro && diffDatas(vaga.dataCadastro)}</b>
+                                </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                    Fim das inscrições: <b>{new Date(vaga?.dataFimInscricoes ?? "").toLocaleDateString("pt-BR")}</b>
+                                </Typography>
+                            </Stack>
                         </Stack>
-                    </Stack>
-                </Card>
+                    </Card>
+                </Grid>
+                <ModalCandidatura
+                    handleClose={() => setModalCandidatura(false)}
+                    open={modalCandidatura}
+                    vaga={{
+                        id: vaga?.id ?? 0,
+                        nomeEmpresa: vaga?.nomeEmpresa ?? ""
+                    }}
+                />
             </Grid>
-            <ModalCandidatura
-                handleClose={() => setModalCandidatura(false)}
-                open={modalCandidatura}
-                vaga={{
-                    id: vaga?.id ?? 0,
-                    nomeEmpresa: vaga?.nomeEmpresa ?? ""
-                }}
-            />
-        </Grid>
+        </Stack>
     )
 }

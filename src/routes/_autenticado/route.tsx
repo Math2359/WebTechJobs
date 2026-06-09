@@ -1,11 +1,12 @@
 import { createFileRoute, Outlet, redirect, useNavigate } from '@tanstack/react-router'
 import { Logo } from '@/assets'
 import { NavLink } from '@/components/NavLink/NavLink'
-import { Box, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material'
+import { Badge, Box, Grid, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
 import { store, useAppSelector } from '@/lib/reducers'
 import { useState } from 'react'
 import { deslogarUsuarioTotal } from '@/lib/autenticacao'
-import { useObterFotoPerfil } from '@/api/usuario/usuario'
+import { useObterFotoPerfil, useObterQuantidadeNotificacoesNaoLidasUsuario } from '@/api/usuario/usuario'
 import { AvatarPerfil } from '@/components/AvatarPerfil/AvatarPerfil'
 import { RotasPerfil } from '@/lib/dominios/perfil'
 
@@ -33,6 +34,7 @@ function RouteComponent() {
     };
 
     const { data: urlAssinada } = useObterFotoPerfil()
+    const { data: quantidadeNotificacoesNaoLidas = 0 } = useObterQuantidadeNotificacoesNaoLidasUsuario()
 
     const navigate = useNavigate()
     const usuario = useAppSelector(state => state.credencial)
@@ -46,6 +48,17 @@ function RouteComponent() {
                         <NavLink underLineColor='primary' to={RotasPerfil[usuario?.perfil ?? 0] + "/vaga"}>Vagas</NavLink>
                         <NavLink underLineColor='primary' to="/candidato/candidaturas">Candidaturas</NavLink>
                     </Grid>
+                    <Tooltip title="Notificações">
+                        <IconButton
+                            color="primary"
+                            aria-label={`${quantidadeNotificacoesNaoLidas} notificações não lidas`}
+                            onClick={() => navigate({ to: "/notificacoes" })}
+                        >
+                            <Badge badgeContent={quantidadeNotificacoesNaoLidas} color="secondary" max={99}>
+                                <NotificationsNoneOutlinedIcon />
+                            </Badge>
+                        </IconButton>
+                    </Tooltip>
                     <IconButton onClick={handleAbrirMenu}>
                         <AvatarPerfil src={urlAssinada} />
                     </IconButton>

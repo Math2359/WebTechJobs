@@ -18,7 +18,7 @@ export type Vaga = {
     nivelExperiencia: string;
     tecnologias: string;
     requisitos: string;
-    beneficios: string;
+    beneficios?: string;
     cep?: string;
     numero?: string;
     descricao: string;
@@ -39,7 +39,7 @@ export type CadastrarVagaRequest = {
     nivelExperiencia: string;
     tecnologias: string;
     requisitos: string;
-    beneficios: string;
+    beneficios?: string;
     cep?: string;
     numero?: string;
     descricao: string;
