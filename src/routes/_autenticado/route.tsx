@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect, useNavigate } from '@tanstack/react-router'
 import { Logo } from '@/assets'
 import { NavLink } from '@/components/NavLink/NavLink'
-import { Badge, Box, Grid, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
+import { Badge, Box, Grid, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
 import { store, useAppSelector } from '@/lib/reducers'
 import { useState } from 'react'
@@ -9,6 +9,7 @@ import { deslogarUsuarioTotal } from '@/lib/autenticacao'
 import { useObterFotoPerfil, useObterQuantidadeNotificacoesNaoLidasUsuario } from '@/api/usuario/usuario'
 import { AvatarPerfil } from '@/components/AvatarPerfil/AvatarPerfil'
 import { RotasPerfil } from '@/lib/dominios/perfil'
+import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb'
 
 export const Route = createFileRoute('/_autenticado')({
     component: RouteComponent,
@@ -86,7 +87,10 @@ function RouteComponent() {
                     </Menu>
                 </Grid>
             </Box>
-            <Outlet />
+            <Stack spacing={4}>
+                <Breadcrumb rotaInicial={RotasPerfil[usuario?.perfil ?? 0]} />
+                <Outlet />
+            </Stack>
         </>
     )
 }

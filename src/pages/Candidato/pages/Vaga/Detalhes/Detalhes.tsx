@@ -1,10 +1,9 @@
 import { useState } from "react"
-import { Box, Breadcrumbs, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
+import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined"
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined"
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined"
 import { Botao } from "@/components/Botao/Botao"
 import { Card } from "@/components/Card/Card"
 import { formatarReal, diffDatas } from "@/lib/utils"
@@ -15,10 +14,6 @@ import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
 import { useObterVagaAplicacaoCandidato } from "@/api/candidato/candidato"
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { NavLink } from "@/components/NavLink/NavLink"
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import { Link } from "@tanstack/react-router"
-import { LinkCustomizado } from "@/components/LinkCustomizado/LinkCustomizado"
 
 type DetalhesProps = {
     id: number
@@ -35,14 +30,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
     ].filter(Boolean)
 
     return (
-        <Stack spacing={4}>
-            <Breadcrumbs>
-                <HomeRoundedIcon fontSize="small" />
-                <LinkCustomizado to="/candidato/vaga">Vagas</LinkCustomizado>
-                <Typography variant="body2">Detalhes</Typography>
-            </Breadcrumbs>
-
-            <Grid container spacing={2}>
+        <Grid container spacing={2}>
                 <Grid size="grow">
                     <Card padding={2}>
                         <Stack spacing={3}>
@@ -198,7 +186,6 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                         nomeEmpresa: vaga?.nomeEmpresa ?? ""
                     }}
                 />
-            </Grid>
-        </Stack>
+        </Grid>
     )
 }

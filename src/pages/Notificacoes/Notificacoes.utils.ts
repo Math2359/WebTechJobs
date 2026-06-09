@@ -4,14 +4,13 @@ import type { SvgIconProps } from "@mui/material"
 import type { ComponentType } from "react"
 import { Dominios } from "@/lib/dominios"
 import type { TipoNotificacao } from "@/lib/dominios/tipoNotificacao"
+import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
 
 type ConfiguracaoNotificacao = {
     Icone: ComponentType<SvgIconProps>
     obterDestino?: (idAcao: number) => {
-        to: "/candidato/vaga/$id"
-        params: {
-            id: string
-        }
+        to: string
+        params: object
     }
 }
 
@@ -27,6 +26,15 @@ const CONFIGURACOES_NOTIFICACAO: Partial<Record<TipoNotificacao, ConfiguracaoNot
             params: { id: String(idAcao) },
         }),
     },
+    [Dominios.TipoNotificacao.Aplicacao]: {
+        Icone: GroupAddRoundedIcon,
+        obterDestino: (idAcao) => ({
+            to: "/empresa/vaga/$id",
+            params: {
+                id: String(idAcao)
+            }
+        })
+    }
 }
 
 export const obterConfiguracaoNotificacao = (tipo: TipoNotificacao) =>

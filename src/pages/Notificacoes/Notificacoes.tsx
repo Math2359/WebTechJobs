@@ -14,6 +14,7 @@ import { Botao } from "@/components/Botao/Botao"
 import { Card } from "@/components/Card/Card"
 import { SemDados } from "@/components/SemDados/SemDados"
 import { obterConfiguracaoNotificacao } from "./Notificacoes.utils"
+import { useAppSelector } from "@/lib/reducers"
 
 export const Notificacoes = () => {
     const navigate = useNavigate()
@@ -22,6 +23,8 @@ export const Notificacoes = () => {
     const { mutateAsync: marcarTodasComoLidas, isPending: marcandoTodasComoLidas } = useMarcarTodasNotificacoesComoLidas()
 
     const possuiNotificacoesNaoLidas = notificacoes?.some((notificacao) => !notificacao.lida) ?? false
+
+    // const { perfil } = useAppSelector(state => state.credencial)
 
     return (
         <Stack spacing={3}>

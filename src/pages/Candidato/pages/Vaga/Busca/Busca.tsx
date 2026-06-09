@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Box, Breadcrumbs, Chip, Grid, Stack, Typography } from "@mui/material"
+import { Box, Chip, Grid, Stack, Typography } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
 import { Card } from "@/components/Card/Card"
@@ -8,7 +8,6 @@ import { SemDados } from "@/components/SemDados/SemDados"
 import { useObterVagasDisponiveis } from "@/api/vaga/vaga"
 import { useDebounce } from "@/lib/useDebounce"
 import { VagaCard } from "@/pages/Candidato/components/VagaCard"
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
 const filtros = ["Todos", "Front-end", "Back-end", "Full Stack", "Mobile", "DevOps"]
 
@@ -34,10 +33,6 @@ export const Busca = () => {
 
     return (
         <Stack spacing={4}>
-            <Breadcrumbs>
-                <HomeRoundedIcon fontSize="small" />
-                <Typography variant="body2">Vagas</Typography>
-            </Breadcrumbs>
             <Stack>
                 <Typography variant="h6">Vagas</Typography>
                 <Typography variant="caption">Encontre a sua próxima oportunidade aqui.</Typography>

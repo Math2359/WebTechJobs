@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { TabContext, TabPanel } from "@mui/lab"
 import { Chip, Grid, IconButton, Stack, Tooltip, Typography } from "@mui/material"
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
 import Visibility from "@mui/icons-material/Visibility"
 import { useNavigate } from "@tanstack/react-router"
 import { Botao } from "@/components/Botao/Botao"
@@ -121,12 +120,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
     return (
         <Stack spacing={4}>
             <Stack>
-                <Grid container sx={{ placeItems: "center" }}>
-                    <IconButton color="secondary" onClick={() => navigate({ to: "/empresa/vaga" })}>
-                        <KeyboardBackspaceIcon />
-                    </IconButton>
-                    <Typography variant="h6">Detalhes da vaga</Typography>
-                </Grid>
+                <Typography variant="h6">Detalhes da vaga</Typography>
                 <Typography variant="caption">Visualize os dados da vaga e acompanhe suas aplicações.</Typography>
             </Stack>
 

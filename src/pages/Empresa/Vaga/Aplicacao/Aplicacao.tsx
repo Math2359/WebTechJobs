@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react"
 import { TabContext, TabPanel } from "@mui/lab"
-import { Box, Chip, Divider, Grid, IconButton, Stack, Typography } from "@mui/material"
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
+import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
 import EmailIcon from "@mui/icons-material/Email"
 import ContactMailIcon from "@mui/icons-material/ContactMail"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
@@ -10,7 +9,6 @@ import GitHubIcon from "@mui/icons-material/GitHub"
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined"
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
-import { useNavigate } from "@tanstack/react-router"
 import { Card } from "@/components/Card/Card"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
@@ -25,14 +23,13 @@ import { useObterFotoPerfilCandidato } from "@/api/candidato/candidato"
 import { Dominios } from "@/lib/dominios"
 import { formatarTelefone } from "@/lib/utils"
 import type { Situacao } from "@/lib/dominios/situacao"
+import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 
 type AplicacaoProps = {
-    idVaga: number
     idAplicacao: number
 }
 
-export const Aplicacao = ({ idVaga, idAplicacao }: AplicacaoProps) => {
-    const navigate = useNavigate()
+export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
     const [modalEntrevista, setModalEntrevista] = useState(false)
     const [modalSituacao, setModalSituacao] = useState(false)
     const [tabSelecionada, setTabSelecionada] = useState("1")
@@ -68,19 +65,19 @@ export const Aplicacao = ({ idVaga, idAplicacao }: AplicacaoProps) => {
                     <Card padding={2}>
                         <Stack spacing={3}>
                             <Stack spacing={2}>
-                                <Grid container spacing={1} sx={{ placeItems: "center" }}>
-                                    <IconButton color="secondary" onClick={() => navigate({ to: "/empresa/vaga/$id", params: { id: String(idVaga) } })}>
-                                        <KeyboardBackspaceIcon />
-                                    </IconButton>
-                                    <AvatarPerfil src={fotoCandidato} />
-                                    <Box>
-                                        <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
-                                            {informacaoCandidato?.nome ?? "Candidato"}
-                                        </Typography>
-                                        <Typography variant="subtitle2" color="primary.main">
-                                            {informacaoCandidato?.area ?? "-"} {localizacao ? `- ${localizacao}` : ""}
-                                        </Typography>
-                                    </Box>
+                                <Grid container sx={{ justifyContent: "space-between" }}>
+                                    <Grid container spacing={1} sx={{ placeItems: "center" }}>
+                                        <AvatarPerfil src={fotoCandidato} />
+                                        <Box>
+                                            <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
+                                                {informacaoCandidato?.nome ?? "Candidato"}
+                                            </Typography>
+                                            <Typography variant="subtitle2" color="primary.main">
+                                                {informacaoCandidato?.area ?? "-"} {localizacao ? `- ${localizacao}` : ""}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                    <ChipSituacao situacao={aplicacao?.situacao ?? 1} />
                                 </Grid>
 
                                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>

@@ -1,11 +1,10 @@
-import { Grid, IconButton, Stack, Typography } from "@mui/material"
+import { Grid, Stack, Typography } from "@mui/material"
 import { Card } from "@/components/Card/Card"
 import { Botao } from "@/components/Botao/Botao"
 import { useFormCustomizado } from "@/components/Formulario"
 import { useAtualizarInformacoesCandidato, useObterInformacoesCandidato } from "@/api/candidato/candidato"
 import { useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { TabContext, TabPanel } from "@mui/lab"
 import { ListaTab } from "@/components/ListaTab/ListaTab"
 import { FormularioEditar } from "./FormularioEditar"
@@ -49,11 +48,11 @@ export const Editar = () => {
                         dataInicio: x.dataInicio ? new Date(x.dataInicio) : new Date(),
                         dataFim: x.dataFim ? new Date(x.dataFim) : undefined,
                     })) ?? [],
-                formacao: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Formacao) .map(x => ({
-                        ...x,
-                        dataInicio: x.dataInicio ? new Date(x.dataInicio) : new Date(),
-                        dataFim: x.dataFim ? new Date(x.dataFim) : undefined,
-                    })) ?? [],
+                formacao: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Formacao).map(x => ({
+                    ...x,
+                    dataInicio: x.dataInicio ? new Date(x.dataInicio) : new Date(),
+                    dataFim: x.dataFim ? new Date(x.dataFim) : undefined,
+                })) ?? [],
             }
         },
         onSubmit: async ({ value }) => {
@@ -100,12 +99,7 @@ export const Editar = () => {
     return (
         <Stack spacing={4}>
             <Stack>
-                <Grid container sx={{ placeItems: "center" }}>
-                    <IconButton color="primary" onClick={() => navigate({ to: "/candidato" })}>
-                        <KeyboardBackspaceIcon />
-                    </IconButton>
-                    <Typography variant="h6">Editar perfil</Typography>
-                </Grid>
+                <Typography variant="h6">Editar perfil</Typography>
                 <Typography variant="caption">Atualize suas informações de contato, habilidades e apresentação.</Typography>
             </Stack>
 

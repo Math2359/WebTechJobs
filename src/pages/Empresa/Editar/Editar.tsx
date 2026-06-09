@@ -1,6 +1,5 @@
-import { Grid, IconButton, Stack, Typography } from "@mui/material"
+import { Grid, Stack, Typography } from "@mui/material"
 import { useNavigate } from "@tanstack/react-router"
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useAtualizarInformacoesEmpresa, useObterInformacoesEmpresa } from "@/api/empresa/empresa";
 import { useFormCustomizado } from "@/components/Formulario";
 import { editarFormOptions } from "./FormularioEditar/FormularioEditar.utils";
@@ -66,12 +65,7 @@ export const Editar = () => {
     return (
         <Stack spacing={4}>
             <Stack>
-                <Grid container sx={{ placeItems: "center" }}>
-                    <IconButton color="secondary" onClick={() => navigate({ to: "/empresa" })}>
-                        <KeyboardBackspaceIcon />
-                    </IconButton>
-                    <Typography variant="h6">Editar perfil</Typography>
-                </Grid>
+                <Typography variant="h6">Editar perfil</Typography>
                 <Typography variant="caption">Atualize suas informações de contato e apresentação.</Typography>
             </Stack>
 

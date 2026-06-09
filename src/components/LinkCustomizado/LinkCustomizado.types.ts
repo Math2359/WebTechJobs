@@ -4,4 +4,4 @@ export type LinkCustomizadoProps = LinkBaseProps & {
     cor?: CoresLinkCustomizado
 }
 
-export type CoresLinkCustomizado = "primary" | "secondary"
+export type CoresLinkCustomizado = "primary" | "secondary" | "cinza"

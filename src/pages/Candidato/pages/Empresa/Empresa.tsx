@@ -1,11 +1,9 @@
 import { useMemo, useState } from "react"
 import { TabContext, TabPanel } from "@mui/lab"
-import { Box, Chip, Divider, Grid, IconButton, Stack, Typography } from "@mui/material"
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
+import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
 import SearchIcon from "@mui/icons-material/Search"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
-import { useNavigate } from "@tanstack/react-router"
 import { useObterFotoPerfilEmpresa, useObterInformacoesEmpresaPorId } from "@/api/empresa/empresa"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { Card } from "@/components/Card/Card"
@@ -22,7 +20,6 @@ type DetalhesProps = {
 const filtros = ["Todos", "Front-end", "Back-end", "Full Stack", "Mobile", "DevOps"]
 
 export const Empresa = ({ idEmpresa }: DetalhesProps) => {
-    const navigate = useNavigate()
     const [tabSelecionada, setTabSelecionada] = useState("1")
     const [filtroAtivo, setFiltroAtivo] = useState("Todos")
     const [termoBusca, setTermoBusca] = useState("")
@@ -58,9 +55,6 @@ export const Empresa = ({ idEmpresa }: DetalhesProps) => {
                     <Stack spacing={3}>
                         <Stack spacing={2}>
                             <Grid container spacing={1} sx={{ placeItems: "center" }}>
-                                <IconButton color="secondary" onClick={() => navigate({ to: "/candidato/vaga" })}>
-                                    <KeyboardBackspaceIcon />
-                                </IconButton>
                                 <AvatarPerfil src={fotoEmpresa} />
                                 <Box>
                                     <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
