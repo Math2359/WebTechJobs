@@ -129,26 +129,6 @@ export const Dashboard = () => {
                                 </Grid>
                             </Stack>
                         </Card>
-                        {/* <Card padding={2}>
-                            <Stack spacing={2}>
-                                <Typography variant="overline">Preferências</Typography>
-                                <Stack spacing={0.5}>
-                                    {informacoesCandidato?.preferencias?.length ? (
-                                        informacoesCandidato.preferencias.split(",").map((item, index) =>
-                                            <Grid container spacing={1} sx={{ placeItems: "center" }} key={index}>
-                                                <CircleIcon sx={{ fontSize: 7 }} />
-                                                <Typography variant="body2">
-                                                    {item}
-                                                </Typography>
-
-                                            </Grid>
-                                        )
-                                    ) : (
-                                        <SemDados titulo="Nenhuma preferência cadastrada" descricao="Edite seu perfil para adicionar suas preferências" />
-                                    )}
-                                </Stack>
-                            </Stack>
-                        </Card> */}
                     </Stack>
                 </Grid>
                 <Grid size="grow">

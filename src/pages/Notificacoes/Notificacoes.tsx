@@ -13,7 +13,7 @@ import {
 import { Botao } from "@/components/Botao/Botao"
 import { Card } from "@/components/Card/Card"
 import { SemDados } from "@/components/SemDados/SemDados"
-import { obterConfiguracaoNotificacao } from "./Notificacoes.utils"
+import { COR_ITEM, obterConfiguracaoNotificacao } from "./Notificacoes.utils"
 import { useAppSelector } from "@/lib/reducers"
 
 export const Notificacoes = () => {
@@ -24,7 +24,9 @@ export const Notificacoes = () => {
 
     const possuiNotificacoesNaoLidas = notificacoes?.some((notificacao) => !notificacao.lida) ?? false
 
-    // const { perfil } = useAppSelector(state => state.credencial)
+    const usuario = useAppSelector(state => state.credencial)
+
+    const perfil = usuario?.perfil ?? 1
 
     return (
         <Stack spacing={3}>
@@ -36,7 +38,7 @@ export const Notificacoes = () => {
 
                 {possuiNotificacoesNaoLidas && (
                     <Botao
-                        cor="secondary"
+                        cor={COR_ITEM[perfil][1]}
                         variante="outlined"
                         loading={marcandoTodasComoLidas}
                         onClick={async () => await marcarTodasComoLidas()}
@@ -85,7 +87,7 @@ export const Notificacoes = () => {
                                                     display: "flex",
                                                     justifyContent: "center",
                                                     alignItems: "center",
-                                                    backgroundColor: !notificacao.lida ? theme.palette.primary.light : theme.palette.grey[500],
+                                                    backgroundColor: !notificacao.lida ? theme.palette[COR_ITEM[perfil][1]].light : theme.palette.grey[500],
                                                     borderRadius: 2,
                                                     width: theme.spacing(5),
                                                     height: theme.spacing(5)
@@ -111,7 +113,7 @@ export const Notificacoes = () => {
 
                                         {!notificacao.lida && (
                                             <IconButton
-                                                color="primary"
+                                                color={COR_ITEM[perfil][1]}
                                                 disabled={marcandoComoLida}
                                                 onClick={async (event) => {
                                                     event.stopPropagation()

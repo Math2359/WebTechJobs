@@ -39,3 +39,14 @@ const CONFIGURACOES_NOTIFICACAO: Partial<Record<TipoNotificacao, ConfiguracaoNot
 
 export const obterConfiguracaoNotificacao = (tipo: TipoNotificacao) =>
     CONFIGURACOES_NOTIFICACAO[tipo] ?? CONFIGURACAO_PADRAO
+
+export const COR_ITEM = {
+    [Dominios.Perfil.Candidato]: {
+        1: "primary",
+        2: "secondary"
+    },
+    [Dominios.Perfil.Empresa]: {
+        2: "primary",
+        1: "secondary"
+    },
+} as const

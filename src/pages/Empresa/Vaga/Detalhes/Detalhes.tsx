@@ -18,6 +18,7 @@ import type { Vaga } from "@/api/vaga/vaga.types"
 import type { CadastrarVagaSchema } from "../Busca/modais/ModalNovaVaga/ModalNovaVaga.types"
 import { formatarData } from "@/lib/data"
 import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 type DetalhesProps = {
     id: number
@@ -154,6 +155,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                         <Typography variant="overline">Dados</Typography>
                                         <Botao cor="secondary" disabled={isLoading || editando} onClick={() => setEditando(true)}>
                                             Editar
+                                            <EditOutlinedIcon fontSize="small" />
                                         </Botao>
                                     </Grid>
                                     <Grid container spacing={2}>

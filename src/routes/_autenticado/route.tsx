@@ -10,6 +10,7 @@ import { useObterFotoPerfil, useObterQuantidadeNotificacoesNaoLidasUsuario } fro
 import { AvatarPerfil } from '@/components/AvatarPerfil/AvatarPerfil'
 import { RotasPerfil } from '@/lib/dominios/perfil'
 import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb'
+import { COR_ITEM } from '@/pages/Notificacoes/Notificacoes.utils'
 
 export const Route = createFileRoute('/_autenticado')({
     component: RouteComponent,
@@ -39,6 +40,8 @@ function RouteComponent() {
 
     const navigate = useNavigate()
     const usuario = useAppSelector(state => state.credencial)
+    
+    const perfil = usuario?.perfil ?? 1
 
     return (
         <>
@@ -46,16 +49,16 @@ function RouteComponent() {
                 <Logo />
                 <Grid container spacing={3} sx={{ alignItems: "center" }}>
                     <Grid container spacing={3}>
-                        <NavLink underLineColor='primary' to={RotasPerfil[usuario?.perfil ?? 0] + "/vaga"}>Vagas</NavLink>
+                        <NavLink underLineColor='primary' to={RotasPerfil[perfil] + "/vaga"}>Vagas</NavLink>
                         <NavLink underLineColor='primary' to="/candidato/candidaturas">Candidaturas</NavLink>
                     </Grid>
                     <Tooltip title="Notificações">
                         <IconButton
-                            color="primary"
+                            color={COR_ITEM[perfil][1]}
                             aria-label={`${quantidadeNotificacoesNaoLidas} notificações não lidas`}
                             onClick={() => navigate({ to: "/notificacoes" })}
                         >
-                            <Badge badgeContent={quantidadeNotificacoesNaoLidas} color="secondary" max={99}>
+                            <Badge badgeContent={quantidadeNotificacoesNaoLidas} color={COR_ITEM[perfil][2]} max={99}>
                                 <NotificationsNoneOutlinedIcon />
                             </Badge>
                         </IconButton>
@@ -88,7 +91,7 @@ function RouteComponent() {
                 </Grid>
             </Box>
             <Stack spacing={4}>
-                <Breadcrumb rotaInicial={RotasPerfil[usuario?.perfil ?? 0]} />
+                <Breadcrumb rotaInicial={RotasPerfil[perfil]} />
                 <Outlet />
             </Stack>
         </>
