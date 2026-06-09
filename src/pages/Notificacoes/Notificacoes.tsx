@@ -67,7 +67,7 @@ export const Notificacoes = () => {
                                 await marcarComoLida(notificacao.id).catch(() => undefined)
                             }
 
-                            navigate(obterDestino(notificacao.idAcao))
+                            navigate(obterDestino(notificacao.propsAdicionais))
                         }
 
                         return (

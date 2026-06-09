@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { UsuarioQueryKeys, type CriarUsuarioRequest, type EditarFotoPerfilRequest, type GerarTokenRequest, type GerarTokenResponse, type ObterNotificacoesResponse, type ObterQuantidadeNotificacoesNaoLidasResponse } from "./usuario.types";
+import { UsuarioQueryKeys, type CriarUsuarioRequest, type EditarFotoPerfilRequest, type GerarTokenRequest, type GerarTokenResponse, type ObterNotificacoesResponse, type ObterQuantidadeNotificacoesNaoLidasResponse, type ValidarEmailRequest } from "./usuario.types";
 import { toast } from "sonner";
 import { api } from "@/lib/axios";
 import type { ErroResponse } from "../types";
@@ -14,10 +14,13 @@ export const useObterFotoPerfil = () => useQuery({
     },
 })
 
-export const useObterValidacaoEmail = (emailValidado: boolean | undefined) => useQuery({
-    queryKey: [UsuarioQueryKeys.ObterValidacaoEmail, emailValidado],
-    queryFn: async () => emailValidado ?? false,
-    initialData: emailValidado ?? false,
+export const useObterValidacaoEmail = () => useQuery({
+    queryKey: [UsuarioQueryKeys.ObterValidacaoEmail],
+    queryFn: async () => {
+        const { data } = await api.get<boolean>("/usuario/email/validado")
+
+        return data
+    },
 })
 
 export const useEnviarValidacaoEmail = () => useMutation({
@@ -29,6 +32,17 @@ export const useEnviarValidacaoEmail = () => useMutation({
     },
     onError: (erro: ErroResponse) => {
         toast.error(erro.response?.data.mensagem)
+    }
+})
+
+export const useValidarEmail = () => useMutation({
+    mutationFn: async ({ codigo }: ValidarEmailRequest) => {
+        await api.get("/usuario/email/validar", {
+            params: { codigo }
+        })
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [UsuarioQueryKeys.ObterValidacaoEmail] })
     }
 })
 

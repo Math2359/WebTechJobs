@@ -1,4 +1,5 @@
 import type { Experiencia } from "@/api/candidato/candidato.types"
+import type { Situacao } from "@/lib/dominios/situacao";
 
 export const VagaQueryKeys = {
     ObterVagasEmpresa: "obterVagasEmpresa",
@@ -59,6 +60,7 @@ export type ObterVagaEmpresaPorIdResponse = {
         nome: string
         email: string
         dataCadastro: Date
+        situacao: Situacao
     }[]
 }
 

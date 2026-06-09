@@ -1,18 +1,9 @@
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined"
-import type { SvgIconProps } from "@mui/material"
-import type { ComponentType } from "react"
 import { Dominios } from "@/lib/dominios"
 import type { TipoNotificacao } from "@/lib/dominios/tipoNotificacao"
 import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
-
-type ConfiguracaoNotificacao = {
-    Icone: ComponentType<SvgIconProps>
-    obterDestino?: (idAcao: number) => {
-        to: string
-        params: object
-    }
-}
+import type { ConfiguracaoNotificacao } from "./Notificacoes.types"
 
 const CONFIGURACAO_PADRAO: ConfiguracaoNotificacao = {
     Icone: NotificationsNoneOutlinedIcon,
@@ -21,19 +12,24 @@ const CONFIGURACAO_PADRAO: ConfiguracaoNotificacao = {
 const CONFIGURACOES_NOTIFICACAO: Partial<Record<TipoNotificacao, ConfiguracaoNotificacao>> = {
     [Dominios.TipoNotificacao.RespostaVaga]: {
         Icone: WorkOutlineRoundedIcon,
-        obterDestino: (idAcao) => ({
+        obterDestino: (idVaga) => ({
             to: "/candidato/vaga/$id",
-            params: { id: String(idAcao) },
+            params: { id: idVaga },
         }),
     },
     [Dominios.TipoNotificacao.Aplicacao]: {
         Icone: GroupAddRoundedIcon,
-        obterDestino: (idAcao) => ({
-            to: "/empresa/vaga/$id",
-            params: {
-                id: String(idAcao)
+        obterDestino: (propsAdicionais) => {
+            const props = JSON.parse(propsAdicionais) as { idVaga: number, idAplicacao: number }
+
+            return {
+                to: "/empresa/vaga/$id/candidato/$idAplicacao",
+                params: {
+                    id: String(props.idVaga),
+                    idAplicacao: String(props.idAplicacao)
+                }
             }
-        })
+        }
     }
 }
 

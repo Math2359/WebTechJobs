@@ -6,7 +6,7 @@ import type { SxProps } from "@mui/material";
 import { format, parse, isValid } from 'date-fns';
 
 export const Normal = ({ placeholder, error, cor = "primary", ...props }: InputPadraoProps) => {
-    const field = useFieldContext<string>()
+    const field = useFieldContext<string | number>()
 
     return (
         <InputBase
@@ -14,7 +14,7 @@ export const Normal = ({ placeholder, error, cor = "primary", ...props }: InputP
             value={field.state.value}
             placeholder={placeholder}
             onBlur={field.handleBlur}
-            onChange={(e) => field.handleChange(e.target.value)}
+            onChange={(e) => field.handleChange(props.type === "number" ? Number(e.target.value) : e.target.value)}
             {...props}
         />
     )

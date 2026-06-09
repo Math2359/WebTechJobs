@@ -1,27 +1,24 @@
 import { useEnviarValidacaoEmail } from "@/api/usuario/usuario";
 import { Botao } from "@/components/Botao/Botao";
-import type { CorBotao } from "@/components/Botao/Botao.types";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Alert, AlertTitle, Tooltip } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
 
-type AlertaValidacaoEmailProps = {
-    cor?: CorBotao
-}
-
-export const AlertaValidacaoEmail = ({ cor = "primary" }: AlertaValidacaoEmailProps) => {
+export const AlertaValidacaoEmail = () => {
     const { mutate: enviarValidacaoEmail, isPending } = useEnviarValidacaoEmail()
 
     return (
         <Alert
-            severity="info"
+            severity="warning"
             action={
                 <Botao
-                    cor={cor}
+                    cor="cinza"
                     variante="outlined"
                     loading={isPending}
                     onClick={() => enviarValidacaoEmail()}
                 >
                     Enviar e-mail
+                    <SendIcon fontSize="small" />
                 </Botao>
             }
         >

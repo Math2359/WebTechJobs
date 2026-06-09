@@ -39,7 +39,6 @@ export type AtualizarSituacaoAplicacaoVagaRequest = {
 }
 
 export type InformacaoCandidatoAplicacao = InformacoesCandidato & {
-    id?: number
     nome?: string
 }
 

@@ -45,7 +45,7 @@ const AplicacaoItem = ({ aplicacao }: { aplicacao: AplicacaoVagaCandidato }) => 
                             />
                         )}
                         <Typography variant="caption" color="text.secondary">
-                            Há {aplicacao.dataCadastro ? diffDatas(new Date(aplicacao.dataCadastro)) : "-"}
+                            Há {aplicacao.dataAtualizacaoAplicacao ? diffDatas(new Date(aplicacao.dataAtualizacaoAplicacao)) : "-"}
                         </Typography>
                     </Box>
                 </Box>

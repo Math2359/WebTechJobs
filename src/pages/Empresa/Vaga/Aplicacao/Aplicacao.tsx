@@ -41,11 +41,13 @@ export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
     }
 
     const { data: aplicacao } = useObterAplicacaoVagaEmpresa(idAplicacao)
+
     const informacaoCandidato = aplicacao?.informacaoCandidato
-    const { data: fotoCandidato } = useObterFotoPerfilCandidato(informacaoCandidato?.id)
+
+    const { data: fotoCandidato } = useObterFotoPerfilCandidato(informacaoCandidato?.idCandidato)
 
     const candidato = informacaoCandidato ? {
-        id: informacaoCandidato.id ?? idAplicacao,
+        id: informacaoCandidato.id,
         nome: informacaoCandidato.nome ?? "Candidato",
         email: informacaoCandidato.emailPessoal ?? informacaoCandidato.emailCorporativo ?? ""
     } : undefined

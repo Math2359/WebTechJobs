@@ -27,7 +27,7 @@ import { AlertaValidacaoEmail, IconeEmailValidado } from "@/components/Validacao
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
-    const { data: emailValidado = false } = useObterValidacaoEmail(usuario?.emailValidado)
+    const { data: emailValidado = false } = useObterValidacaoEmail()
 
     const { data: informacoesCandidato } = useObterInformacoesCandidato()
 

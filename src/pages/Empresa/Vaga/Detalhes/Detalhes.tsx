@@ -19,6 +19,7 @@ import type { CadastrarVagaSchema } from "../Busca/modais/ModalNovaVaga/ModalNov
 import { formatarData } from "@/lib/data"
 import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 
 type DetalhesProps = {
     id: number
@@ -84,6 +85,11 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                 largura: 150,
                 nomeHeader: "Data inscrição",
                 renderizarValor: (linha) => formatarData(linha.dataCadastro)
+            },
+            {
+                largura: 150,
+                nomeHeader: "Status aplicação",
+                renderizarValor: (linha) => <ChipSituacao situacao={linha.situacao ?? 1} />
             },
             {
                 largura: 220,
@@ -260,7 +266,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                         </Grid>
                                     </Grid>
                                     {editando &&
-                                        <Grid container spacing={1} sx={{ justifyContent: "end" }}>
+                                        <Grid container spacing={2} sx={{ justifyContent: "end" }}>
                                             <Botao variante="ghost" cor="cinza" disabled={isPending} onClick={cancelarEdicao}>
                                                 Cancelar
                                             </Botao>
@@ -275,7 +281,10 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                             </TabPanel>
 
                             <TabPanel value="2">
-                                <GridDados {...dadosGrid} />
+                                <Stack spacing={4}>
+                                    <Typography variant="overline">APLICAÇÕES</Typography>
+                                    <GridDados {...dadosGrid} />
+                                </Stack>
                             </TabPanel>
                         </Card>
                     </Grid>

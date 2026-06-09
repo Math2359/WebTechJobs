@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ValidacaoEmailRouteImport } from './routes/validacao-email'
 import { Route as NaoAutenticadoRouteRouteImport } from './routes/_naoAutenticado/route'
 import { Route as AutenticadoRouteRouteImport } from './routes/_autenticado/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -30,6 +31,11 @@ import { Route as AutenticadoCandidatorotasEmpresaIdEmpresaRouteImport } from '.
 import { Route as AutenticadoEmpresarotasVagaIdIndexRouteImport } from './routes/_autenticado/empresa/(rotas)/vaga/$id/index'
 import { Route as AutenticadoEmpresarotasVagaIdCandidatoIdAplicacaoRouteImport } from './routes/_autenticado/empresa/(rotas)/vaga/$id/candidato/$idAplicacao'
 
+const ValidacaoEmailRoute = ValidacaoEmailRouteImport.update({
+  id: '/validacao-email',
+  path: '/validacao-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NaoAutenticadoRouteRoute = NaoAutenticadoRouteRouteImport.update({
   id: '/_naoAutenticado',
   getParentRoute: () => rootRouteImport,
@@ -146,6 +152,7 @@ const AutenticadoEmpresarotasVagaIdCandidatoIdAplicacaoRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/validacao-email': typeof ValidacaoEmailRoute
   '/candidato': typeof AutenticadoCandidatoRouteRouteWithChildren
   '/empresa': typeof AutenticadoEmpresaRouteRouteWithChildren
   '/notificacoes': typeof AutenticadoNotificacoesRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/validacao-email': typeof ValidacaoEmailRoute
   '/notificacoes': typeof AutenticadoNotificacoesRoute
   '/cadastro': typeof NaoAutenticadorotasCadastroRoute
   '/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_autenticado': typeof AutenticadoRouteRouteWithChildren
   '/_naoAutenticado': typeof NaoAutenticadoRouteRouteWithChildren
+  '/validacao-email': typeof ValidacaoEmailRoute
   '/_autenticado/candidato': typeof AutenticadoCandidatoRouteRouteWithChildren
   '/_autenticado/empresa': typeof AutenticadoEmpresaRouteRouteWithChildren
   '/_autenticado/notificacoes': typeof AutenticadoNotificacoesRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/validacao-email'
     | '/candidato'
     | '/empresa'
     | '/notificacoes'
@@ -229,6 +239,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/validacao-email'
     | '/notificacoes'
     | '/cadastro'
     | '/esqueci-minha-senha'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_autenticado'
     | '/_naoAutenticado'
+    | '/validacao-email'
     | '/_autenticado/candidato'
     | '/_autenticado/empresa'
     | '/_autenticado/notificacoes'
@@ -272,10 +284,18 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AutenticadoRouteRoute: typeof AutenticadoRouteRouteWithChildren
   NaoAutenticadoRouteRoute: typeof NaoAutenticadoRouteRouteWithChildren
+  ValidacaoEmailRoute: typeof ValidacaoEmailRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/validacao-email': {
+      id: '/validacao-email'
+      path: '/validacao-email'
+      fullPath: '/validacao-email'
+      preLoaderRoute: typeof ValidacaoEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_naoAutenticado': {
       id: '/_naoAutenticado'
       path: ''
@@ -506,6 +526,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AutenticadoRouteRoute: AutenticadoRouteRouteWithChildren,
   NaoAutenticadoRouteRoute: NaoAutenticadoRouteRouteWithChildren,
+  ValidacaoEmailRoute: ValidacaoEmailRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

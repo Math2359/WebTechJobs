@@ -10,13 +10,13 @@ export const UsuarioQueryKeys = {
 
 export type NotificacaoUsuario = {
     id: number
-    idAcao: number
     idUsuario: number
     tipo: TipoNotificacao
     titulo: string
     mensagem: string
     lida: boolean
     dataCadastro: Date
+    propsAdicionais: string
 }
 
 export type ObterNotificacoesResponse = NotificacaoUsuario[]
@@ -48,4 +48,8 @@ export type GerarTokenResponse = {
 
 export type EditarFotoPerfilRequest = {
     file: File
+}
+
+export type ValidarEmailRequest = {
+    codigo: string
 }
