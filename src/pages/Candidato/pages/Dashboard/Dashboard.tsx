@@ -27,7 +27,7 @@ import { AlertaValidacaoEmail, IconeEmailValidado } from "@/components/Validacao
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
-    const { data: emailValidado = false } = useObterValidacaoEmail()
+    const { data: emailValidado = false, isLoading: isLoadingEmailValidado } = useObterValidacaoEmail()
 
     const { data: informacoesCandidato } = useObterInformacoesCandidato()
 
@@ -75,7 +75,7 @@ export const Dashboard = () => {
 
     return (
         <Stack spacing={4}>
-            {!emailValidado && <AlertaValidacaoEmail />}
+            {!isLoadingEmailValidado && !emailValidado && <AlertaValidacaoEmail />}
             <Card>
                 <Box sx={{ background: theme => theme.palette.primary.main, height: "70px" }} />
                 <Grid sx={{ padding: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
