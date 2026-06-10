@@ -11,10 +11,28 @@ import { FormularioEditar } from "./FormularioEditar"
 import { toast } from "sonner"
 import { editarFormOptions } from "./FormularioEditar/FormularioEditar.utils"
 import { Dominios } from "@/lib/dominios"
+import { SkeletonFormulario } from "@/components/Carregamento/Carregamento"
+import type { ObterInformacoesResponse } from "@/api/candidato/candidato.types"
 
 export const Editar = () => {
-    const { data: informacoesCandidato } = useObterInformacoesCandidato()
+    const { data: informacoesCandidato, isLoading, isRefetching } = useObterInformacoesCandidato()
 
+    if ((isLoading || isRefetching) && !informacoesCandidato) {
+        return (
+            <Stack spacing={4}>
+                <Stack>
+                    <Typography variant="h6">Editar perfil</Typography>
+                    <Typography variant="caption">Atualize suas informaÃ§Ãµes de contato, habilidades e apresentaÃ§Ã£o.</Typography>
+                </Stack>
+                <SkeletonFormulario />
+            </Stack>
+        )
+    }
+
+    return <FormularioEdicao informacoesCandidato={informacoesCandidato} />
+}
+
+const FormularioEdicao = ({ informacoesCandidato }: { informacoesCandidato?: ObterInformacoesResponse }) => {
     const { mutateAsync: atualizarInformacoes } = useAtualizarInformacoesCandidato()
 
     const navigate = useNavigate()

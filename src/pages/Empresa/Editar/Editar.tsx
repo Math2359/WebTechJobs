@@ -10,10 +10,28 @@ import { ListaTab } from "@/components/ListaTab/ListaTab";
 import { Botao } from "@/components/Botao/Botao";
 import { Card } from "@/components/Card/Card";
 import { FormularioEditar } from "./FormularioEditar";
+import { SkeletonFormulario } from "@/components/Carregamento/Carregamento";
+import type { ObterInformacoesResponse } from "@/api/empresa/empresa.types";
 
 export const Editar = () => {
-    const { data: informacoesEmpresa } = useObterInformacoesEmpresa()
+    const { data: informacoesEmpresa, isLoading, isRefetching } = useObterInformacoesEmpresa()
 
+    if ((isLoading || isRefetching) && !informacoesEmpresa) {
+        return (
+            <Stack spacing={4}>
+                <Stack>
+                    <Typography variant="h6">Editar perfil</Typography>
+                    <Typography variant="caption">Atualize suas informaÃ§Ãµes de contato e apresentaÃ§Ã£o.</Typography>
+                </Stack>
+                <SkeletonFormulario />
+            </Stack>
+        )
+    }
+
+    return <FormularioEdicao informacoesEmpresa={informacoesEmpresa} />
+}
+
+const FormularioEdicao = ({ informacoesEmpresa }: { informacoesEmpresa?: ObterInformacoesResponse }) => {
     const { mutateAsync: atualizarInformacoes } = useAtualizarInformacoesEmpresa()
 
     const navigate = useNavigate()

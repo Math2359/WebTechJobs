@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Box, Chip, Grid, Stack, Typography } from "@mui/material"
+import { Box, Chip, Grid, Skeleton, Stack, Typography } from "@mui/material"
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
 import { useNavigate } from "@tanstack/react-router"
 import { Card } from "@/components/Card/Card"
@@ -14,10 +14,11 @@ import type { AplicacaoVagaCandidato } from "@/api/candidato/candidato.types"
 import type { Situacao } from "@/lib/dominios/situacao"
 import { Dominios } from "@/lib/dominios"
 import { formatarDataHoraEntrevista } from "@/lib/data"
+import { SkeletonListaCards } from "@/components/Carregamento/Carregamento"
 
 const AplicacaoItem = ({ aplicacao }: { aplicacao: AplicacaoVagaCandidato }) => {
     const navigate = useNavigate()
-    const { data: avatar } = useObterFotoPerfilEmpresa(aplicacao.idEmpresa)
+    const { data: avatar, isLoading } = useObterFotoPerfilEmpresa(aplicacao.idEmpresa)
 
     return (
         <Box
@@ -29,7 +30,7 @@ const AplicacaoItem = ({ aplicacao }: { aplicacao: AplicacaoVagaCandidato }) => 
             <Card padding={1.5}>
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                        <AvatarPerfil src={avatar} tamanho={40} />
+                        {isLoading ? <Skeleton variant="circular" width={40} height={40} /> : <AvatarPerfil src={avatar} tamanho={40} />}
                         <Box>
                             <Typography variant="subtitle2" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
                                 {aplicacao.nome}
@@ -120,10 +121,12 @@ export const Candidaturas = () => {
             </Grid>
 
             <Stack spacing={2}>
-                {aplicacoes.map((aplicacao) => (
+                {!carregando && aplicacoes.map((aplicacao) => (
                     <AplicacaoItem key={aplicacao.id} aplicacao={aplicacao} />
                 ))}
             </Stack>
+
+            {carregando && <SkeletonListaCards quantidade={4} />}
 
             {!carregando && !aplicacoes.length && (
                 <Card padding={3}>

@@ -24,12 +24,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import { ModalEditarFotoPerfil } from "../../../../components/ModaisPerfil/ModalEditarFotoPerfil/ModalEditarFotoPerfil";
 import { ModalConfirmarDeletarFotoPerfil } from "../../../../components/ModaisPerfil/ModalConfirmarDeletarFotoPerfil/ModalConfirmarDeletarFotoPerfil";
 import { AlertaValidacaoEmail, IconeEmailValidado } from "@/components/ValidacaoEmail/ValidacaoEmail";
+import { SkeletonCard } from "@/components/Carregamento/Carregamento";
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
     const { data: emailValidado = false, isLoading: isLoadingEmailValidado } = useObterValidacaoEmail()
 
-    const { data: informacoesCandidato } = useObterInformacoesCandidato()
+    const { data: informacoesCandidato, isLoading: carregandoInformacoes, isRefetching: recarregandoInformacoes } = useObterInformacoesCandidato()
 
     const [arquivo, setArquivo] = useState<File>();
     const [modalEditarFotoPerfil, setModalEditarFotoPerfil] = useState(false)
@@ -64,7 +65,7 @@ export const Dashboard = () => {
 
     const inputFileRef = useRef<HTMLInputElement>(null)
 
-    const { data: urlAssinada } = useObterFotoPerfil()
+    const { data: urlAssinada, isLoading: carregandoFoto } = useObterFotoPerfil()
 
     const experiencias = useMemo(() => ({
         trabalho: informacoesCandidato?.experiencias.filter(x => x.tipoExperiencia === Dominios.TipoExperiencia.Trabalho) ?? [],
@@ -72,6 +73,29 @@ export const Dashboard = () => {
     }), [informacoesCandidato])
 
     const localizacao = (informacoesCandidato?.cidade ? informacoesCandidato.cidade + ", " : "") + (informacoesCandidato?.estado ?? "")
+
+    if (isLoadingEmailValidado || carregandoInformacoes || recarregandoInformacoes || carregandoFoto) {
+        return (
+            <Stack spacing={4}>
+                <SkeletonCard avatar quantidadeLinhas={2} />
+                <Grid container spacing={2}>
+                    <Grid size={3}>
+                        <Stack spacing={2}>
+                            <SkeletonCard quantidadeLinhas={4} />
+                            <SkeletonCard quantidadeLinhas={5} />
+                            <SkeletonCard quantidadeLinhas={4} />
+                        </Stack>
+                    </Grid>
+                    <Grid size="grow">
+                        <Stack spacing={2}>
+                            <SkeletonCard quantidadeLinhas={5} />
+                            <SkeletonCard quantidadeLinhas={7} />
+                        </Stack>
+                    </Grid>
+                </Grid>
+            </Stack>
+        )
+    }
 
     return (
         <Stack spacing={4}>

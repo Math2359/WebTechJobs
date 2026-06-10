@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect, useNavigate } from '@tanstack/react-router'
 import { Logo } from '@/assets'
 import { NavLink } from '@/components/NavLink/NavLink'
-import { Badge, Box, Grid, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material'
+import { Badge, Box, Grid, IconButton, Menu, MenuItem, Skeleton, Stack, Tooltip, Typography } from '@mui/material'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
 import { store, useAppSelector } from '@/lib/reducers'
 import { useState } from 'react'
@@ -36,8 +36,8 @@ function RouteComponent() {
         setAnchorEl(null);
     };
 
-    const { data: urlAssinada } = useObterFotoPerfil()
-    const { data: quantidadeNotificacoesNaoLidas = 0 } = useObterQuantidadeNotificacoesNaoLidasUsuario()
+    const { data: urlAssinada, isLoading: carregandoFoto } = useObterFotoPerfil()
+    const { data: quantidadeNotificacoesNaoLidas = 0, isLoading: carregandoNotificacoes } = useObterQuantidadeNotificacoesNaoLidasUsuario()
 
     const navigate = useNavigate()
     const usuario = useAppSelector(state => state.credencial)
@@ -56,16 +56,17 @@ function RouteComponent() {
                     <Tooltip title="Notificações">
                         <IconButton
                             color={COR_ITEM[perfil][1]}
+                            disabled={carregandoNotificacoes}
                             aria-label={`${quantidadeNotificacoesNaoLidas} notificações não lidas`}
                             onClick={() => navigate({ to: "/notificacoes" })}
                         >
-                            <Badge badgeContent={quantidadeNotificacoesNaoLidas} color={COR_ITEM[perfil][2]} max={99}>
+                            {carregandoNotificacoes ? <Skeleton variant="circular" width={24} height={24} /> : <Badge badgeContent={quantidadeNotificacoesNaoLidas} color={COR_ITEM[perfil][2]} max={99}>
                                 <NotificationsNoneOutlinedIcon />
-                            </Badge>
+                            </Badge>}
                         </IconButton>
                     </Tooltip>
-                    <IconButton onClick={handleAbrirMenu}>
-                        <AvatarPerfil src={urlAssinada} />
+                    <IconButton disabled={carregandoFoto} onClick={handleAbrirMenu}>
+                        {carregandoFoto ? <Skeleton variant="circular" width={50} height={50} /> : <AvatarPerfil src={urlAssinada} />}
                     </IconButton>
                     <Menu
                         anchorEl={anchorEl}

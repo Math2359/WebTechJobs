@@ -8,6 +8,7 @@ import { SemDados } from "@/components/SemDados/SemDados"
 import { useObterVagasDisponiveis } from "@/api/vaga/vaga"
 import { useDebounce } from "@/lib/useDebounce"
 import { VagaCard } from "@/pages/Candidato/components/VagaCard"
+import { SkeletonListaCards } from "@/components/Carregamento/Carregamento"
 
 const filtros = ["Todos", "Front-end", "Back-end", "Full Stack", "Mobile", "DevOps"]
 
@@ -61,10 +62,12 @@ export const Busca = () => {
             </Stack>
 
             <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, gap: 2 }}>
-                {vagasFiltradas.map((vaga) => (
+                {!carregando && vagasFiltradas.map((vaga) => (
                     <VagaCard key={vaga.id} vaga={vaga} />
                 ))}
             </Box>
+
+            {carregando && <SkeletonListaCards colunas={3} />}
 
             {!carregando && !vagasFiltradas.length && (
                 <Card padding={3}>

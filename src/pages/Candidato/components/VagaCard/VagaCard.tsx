@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, Stack, Typography } from "@mui/material"
+import { Box, Chip, Grid, Skeleton, Stack, Typography } from "@mui/material"
 import { motion } from "motion/react"
 import ScheduleIcon from "@mui/icons-material/Schedule"
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
@@ -12,7 +12,7 @@ import type { VagaCardProps } from "./VagaCard.types"
 
 export const VagaCard = ({ vaga, fotoEmpresa }: VagaCardProps) => {
     const navigate = useNavigate()
-    const { data: fotoEmpresaBuscada } = useObterFotoPerfilEmpresa(fotoEmpresa ? undefined : vaga.idEmpresa)
+    const { data: fotoEmpresaBuscada, isLoading } = useObterFotoPerfilEmpresa(fotoEmpresa ? undefined : vaga.idEmpresa)
 
     const visualizarVaga = () => navigate({ to: "/candidato/vaga/$id", params: { id: String(vaga.id) } })
 
@@ -27,7 +27,7 @@ export const VagaCard = ({ vaga, fotoEmpresa }: VagaCardProps) => {
             <Card padding={2}>
                 <Stack spacing={2}>
                     <Grid container spacing={2}>
-                        <AvatarPerfil src={fotoEmpresa ?? fotoEmpresaBuscada} />
+                        {isLoading ? <Skeleton variant="circular" width={50} height={50} /> : <AvatarPerfil src={fotoEmpresa ?? fotoEmpresaBuscada} />}
                         <Stack spacing={0.25}>
                             <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
                                 {vaga.nome}

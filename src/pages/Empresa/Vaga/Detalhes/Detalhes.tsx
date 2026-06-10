@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TabContext, TabPanel } from "@mui/lab"
 import { Chip, Grid, IconButton, Stack, Tooltip, Typography } from "@mui/material"
 import Visibility from "@mui/icons-material/Visibility"
@@ -20,6 +20,7 @@ import { formatarData } from "@/lib/data"
 import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
+import { SkeletonFormulario } from "@/components/Carregamento/Carregamento"
 
 type DetalhesProps = {
     id: number
@@ -119,9 +120,27 @@ export const Detalhes = ({ id }: DetalhesProps) => {
         isLoading: isLoading || isRefetching
     })
 
+    useEffect(() => {
+        if (vagaEmpresa?.vaga) {
+            reset(obterValoresFormulario(vagaEmpresa.vaga))
+        }
+    }, [reset, vagaEmpresa?.vaga])
+
     const cancelarEdicao = () => {
         reset()
         setEditando(false)
+    }
+
+    if ((isLoading || isRefetching) && !vagaEmpresa) {
+        return (
+            <Stack spacing={4}>
+                <Stack>
+                    <Typography variant="h6">Detalhes da vaga</Typography>
+                    <Typography variant="caption">Visualize os dados da vaga e acompanhe suas aplicaÃ§Ãµes.</Typography>
+                </Stack>
+                <SkeletonFormulario />
+            </Stack>
+        )
     }
 
     return (
@@ -159,7 +178,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                 <Stack spacing={4}>
                                     <Grid spacing={2} container sx={{ placeItems: "center", justifyContent: "space-between" }}>
                                         <Typography variant="overline">Dados</Typography>
-                                        <Botao cor="secondary" disabled={isLoading || editando} onClick={() => setEditando(true)}>
+                                        <Botao cor="secondary" disabled={isLoading || isRefetching || editando} onClick={() => setEditando(true)}>
                                             Editar
                                             <EditOutlinedIcon fontSize="small" />
                                         </Botao>

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { TabContext, TabPanel } from "@mui/lab"
-import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
+import { Box, Chip, Divider, Grid, Skeleton, Stack, Typography } from "@mui/material"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
 import SearchIcon from "@mui/icons-material/Search"
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
@@ -13,6 +13,7 @@ import { SemDados } from "@/components/SemDados/SemDados"
 import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
 import { VagaCard } from "@/pages/Candidato/components/VagaCard"
 import { IconeEmailValidado } from "@/components/ValidacaoEmail/ValidacaoEmail"
+import { SkeletonCard, SkeletonListaCards } from "@/components/Carregamento/Carregamento"
 
 type DetalhesProps = {
     idEmpresa: number
@@ -26,7 +27,7 @@ export const Empresa = ({ idEmpresa }: DetalhesProps) => {
     const [termoBusca, setTermoBusca] = useState("")
 
     const { data: informacoesEmpresa, isLoading, isRefetching } = useObterInformacoesEmpresaPorId(idEmpresa)
-    const { data: fotoEmpresa } = useObterFotoPerfilEmpresa(idEmpresa)
+    const { data: fotoEmpresa, isLoading: carregandoFoto } = useObterFotoPerfilEmpresa(idEmpresa)
     const vagas = informacoesEmpresa?.vagas
 
     const tecnologias = useMemo(() => informacoesEmpresa?.tecnologias?.split(",").filter(Boolean) ?? [], [informacoesEmpresa])
@@ -49,6 +50,16 @@ export const Empresa = ({ idEmpresa }: DetalhesProps) => {
 
     const carregando = isLoading || isRefetching
 
+    if (carregando && !informacoesEmpresa) {
+        return (
+            <Grid container spacing={2}>
+                <Grid size="grow">
+                    <SkeletonCard avatar quantidadeLinhas={8} />
+                </Grid>
+            </Grid>
+        )
+    }
+
     return (
         <Grid container spacing={2}>
             <Grid size="grow">
@@ -56,7 +67,7 @@ export const Empresa = ({ idEmpresa }: DetalhesProps) => {
                     <Stack spacing={3}>
                         <Stack spacing={2}>
                             <Grid container spacing={1} sx={{ placeItems: "center" }}>
-                                <AvatarPerfil src={fotoEmpresa} />
+                                {carregandoFoto ? <Skeleton variant="circular" width={50} height={50} /> : <AvatarPerfil src={fotoEmpresa} />}
                                 <Box>
                                     <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
                                         <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -161,10 +172,12 @@ export const Empresa = ({ idEmpresa }: DetalhesProps) => {
                                     </Stack>
 
                                     <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, gap: 2 }}>
-                                        {vagasFiltradas.map((vaga) => (
+                                        {!carregando && vagasFiltradas.map((vaga) => (
                                             <VagaCard key={vaga.id} vaga={vaga} fotoEmpresa={fotoEmpresa} />
                                         ))}
                                     </Box>
+
+                                    {carregando && <SkeletonListaCards colunas={3} />}
 
                                     {!carregando && !vagasFiltradas.length && (
                                         <Card padding={3}>

@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Divider, Grid, IconButton, Stack, Typography } from "@mui/material"
+import { Box, Divider, Grid, IconButton, Stack, Typography } from "@mui/material"
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined"
 import DoneAllIcon from "@mui/icons-material/DoneAll"
 import { motion } from "motion/react"
@@ -15,6 +15,7 @@ import { Card } from "@/components/Card/Card"
 import { SemDados } from "@/components/SemDados/SemDados"
 import { COR_ITEM, obterConfiguracaoNotificacao } from "./Notificacoes.utils"
 import { useAppSelector } from "@/lib/reducers"
+import { SkeletonListaCards } from "@/components/Carregamento/Carregamento"
 
 export const Notificacoes = () => {
     const navigate = useNavigate()
@@ -52,9 +53,7 @@ export const Notificacoes = () => {
             <Divider />
 
             {(isLoading || isRefetching) && !notificacoes ? (
-                <Box sx={{ display: "flex", justifyContent: "center", py: 6 }}>
-                    <CircularProgress size={28} />
-                </Box>
+                <SkeletonListaCards quantidade={4} />
             ) : notificacoes?.length ? (
                 <Stack spacing={2}>
                     {notificacoes.map((notificacao) => {

@@ -11,7 +11,7 @@ const SemDadosOverlay = () => {
     )
 }
 
-export const GridDados = <T extends GridValidRowModel,>({ colunas, linhas }: GridDadosProps<T>) => {
+export const GridDados = <T extends GridValidRowModel,>({ colunas, linhas, isLoading }: GridDadosProps<T>) => {
     return (
         <DataGrid
             sx={{
@@ -26,6 +26,7 @@ export const GridDados = <T extends GridValidRowModel,>({ colunas, linhas }: Gri
             disableColumnSorting
             disableDensitySelector
             disableRowSelectionOnClick
+            loading={isLoading}
             rows={linhas}
             columns={colunas}
             slots={{

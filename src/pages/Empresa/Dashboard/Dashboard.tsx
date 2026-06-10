@@ -17,12 +17,13 @@ import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto";
 import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import { AlertaValidacaoEmail, IconeEmailValidado } from "@/components/ValidacaoEmail/ValidacaoEmail";
+import { SkeletonCard } from "@/components/Carregamento/Carregamento";
 
 export const Dashboard = () => {
     const usuario = useAppSelector(state => state.credencial)
     const { data: emailValidado = false, isLoading: isLoadingEmailValidado } = useObterValidacaoEmail()
 
-    const { data: informacoesEmpresa } = useObterInformacoesEmpresa()
+    const { data: informacoesEmpresa, isLoading: carregandoInformacoes, isRefetching: recarregandoInformacoes } = useObterInformacoesEmpresa()
 
     const [arquivo, setArquivo] = useState<File>();
     const [modalEditarFotoPerfil, setModalEditarFotoPerfil] = useState(false)
@@ -57,7 +58,26 @@ export const Dashboard = () => {
 
     const inputFileRef = useRef<HTMLInputElement>(null)
 
-    const { data: urlAssinada } = useObterFotoPerfil()
+    const { data: urlAssinada, isLoading: carregandoFoto } = useObterFotoPerfil()
+
+    if (isLoadingEmailValidado || carregandoInformacoes || recarregandoInformacoes || carregandoFoto) {
+        return (
+            <Stack spacing={4}>
+                <SkeletonCard avatar quantidadeLinhas={2} />
+                <Grid container spacing={2}>
+                    <Grid size={3}>
+                        <Stack spacing={2}>
+                            <SkeletonCard quantidadeLinhas={3} />
+                            <SkeletonCard quantidadeLinhas={4} />
+                        </Stack>
+                    </Grid>
+                    <Grid size="grow">
+                        <SkeletonCard quantidadeLinhas={6} />
+                    </Grid>
+                </Grid>
+            </Stack>
+        )
+    }
 
     return (
         <Stack spacing={4}>

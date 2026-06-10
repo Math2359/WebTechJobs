@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
+import { Box, Chip, Divider, Grid, Skeleton, Stack, Typography } from "@mui/material"
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined"
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
@@ -17,6 +17,7 @@ import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Dominios } from "@/lib/dominios"
 import { formatarDataHoraEntrevista } from "@/lib/data"
+import { SkeletonCard } from "@/components/Carregamento/Carregamento"
 
 type DetalhesProps = {
     id: number
@@ -24,13 +25,28 @@ type DetalhesProps = {
 
 export const Detalhes = ({ id }: DetalhesProps) => {
     const [modalCandidatura, setModalCandidatura] = useState(false)
-    const { data: vaga } = useObterVagaAplicacaoCandidato(id)
-    const { data: fotoEmpresa } = useObterFotoPerfilEmpresa(vaga?.idEmpresa)
+    const { data: vaga, isLoading, isRefetching } = useObterVagaAplicacaoCandidato(id)
+    const { data: fotoEmpresa, isLoading: carregandoFoto } = useObterFotoPerfilEmpresa(vaga?.idEmpresa)
+
+    const carregando = isLoading || isRefetching
 
     const tags = [
         vaga?.nivelExperiencia,
         ...(vaga?.tecnologias?.split(",").filter(Boolean) ?? [])
     ].filter(Boolean)
+
+    if (carregando && !vaga) {
+        return (
+            <Grid container spacing={2}>
+                <Grid size="grow">
+                    <SkeletonCard avatar quantidadeLinhas={8} />
+                </Grid>
+                <Grid size={3}>
+                    <SkeletonCard quantidadeLinhas={6} />
+                </Grid>
+            </Grid>
+        )
+    }
 
     return (
         <Grid container spacing={2}>
@@ -39,7 +55,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                         <Stack spacing={3}>
                             <Stack spacing={2}>
                                 <Grid container spacing={1} sx={{ placeItems: "center" }}>
-                                    <AvatarPerfil src={fotoEmpresa} />
+                                    {carregandoFoto ? <Skeleton variant="circular" width={50} height={50} /> : <AvatarPerfil src={fotoEmpresa} />}
                                     <Box>
                                         <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
                                             {vaga?.nome}
@@ -175,7 +191,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                     </Box>
 
                                     <Stack spacing={1}>
-                                        <Botao fullWidth onClick={() => setModalCandidatura(true)}>
+                                        <Botao fullWidth disabled={!vaga} onClick={() => setModalCandidatura(true)}>
                                             Candidatar-se agora
                                         </Botao>
                                     </Stack>
@@ -189,7 +205,7 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                         Encerra em {vaga?.dataFimInscricoes ? diffDatas(new Date(), vaga.dataFimInscricoes) : "-"}
                                     </Typography>
                                 </Box>
-                                <Botao to={`/candidato/empresa/${vaga?.idEmpresa}`} sx={{ width: "fit-content" }} variante="ghost" cor="info">
+                                <Botao disabled={!vaga?.idEmpresa} to={`/candidato/empresa/${vaga?.idEmpresa}`} sx={{ width: "fit-content" }} variante="ghost" cor="info">
                                     <BusinessOutlinedIcon fontSize="small" />
                                     <Typography variant="caption">Ver perfil da empresa</Typography>
                                 </Botao>

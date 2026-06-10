@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { TabContext, TabPanel } from "@mui/lab"
-import { Box, Chip, Divider, Grid, Stack, Typography } from "@mui/material"
+import { Box, Chip, Divider, Grid, Skeleton, Stack, Typography } from "@mui/material"
 import EmailIcon from "@mui/icons-material/Email"
 import ContactMailIcon from "@mui/icons-material/ContactMail"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
@@ -27,6 +27,7 @@ import type { Situacao } from "@/lib/dominios/situacao"
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 import { IconeEmailValidado } from "@/components/ValidacaoEmail/ValidacaoEmail"
 import { formatarDataHoraEntrevista } from "@/lib/data"
+import { SkeletonCard } from "@/components/Carregamento/Carregamento"
 
 type AplicacaoProps = {
     idAplicacao: number
@@ -43,11 +44,11 @@ export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
         setSituacaoAvaliacao(situacao)
     }
 
-    const { data: aplicacao } = useObterAplicacaoVagaEmpresa(idAplicacao)
+    const { data: aplicacao, isLoading, isRefetching } = useObterAplicacaoVagaEmpresa(idAplicacao)
 
     const informacaoCandidato = aplicacao?.informacaoCandidato
 
-    const { data: fotoCandidato } = useObterFotoPerfilCandidato(informacaoCandidato?.idCandidato)
+    const { data: fotoCandidato, isLoading: carregandoFoto } = useObterFotoPerfilCandidato(informacaoCandidato?.idCandidato)
 
     const candidato = informacaoCandidato ? {
         id: informacaoCandidato.id,
@@ -63,6 +64,19 @@ export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
     const localizacao = [informacaoCandidato?.cidade, informacaoCandidato?.estado].filter(Boolean).join(", ")
     const curriculoUrl = aplicacao?.urlCv
 
+    if ((isLoading || isRefetching) && !aplicacao) {
+        return (
+            <Grid container spacing={2}>
+                <Grid size="grow">
+                    <SkeletonCard avatar quantidadeLinhas={8} />
+                </Grid>
+                <Grid size={3}>
+                    <SkeletonCard quantidadeLinhas={6} />
+                </Grid>
+            </Grid>
+        )
+    }
+
     return (
         <>
             <Grid container spacing={2}>
@@ -72,7 +86,7 @@ export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
                             <Stack spacing={2}>
                                 <Grid container sx={{ justifyContent: "space-between" }}>
                                     <Grid container spacing={1} sx={{ placeItems: "center" }}>
-                                        <AvatarPerfil src={fotoCandidato} />
+                                        {carregandoFoto ? <Skeleton variant="circular" width={50} height={50} /> : <AvatarPerfil src={fotoCandidato} />}
                                         <Box>
                                             <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
                                                 <Typography variant="h6" sx={{ fontWeight: 700 }}>{informacaoCandidato?.nome}</Typography>
@@ -249,13 +263,13 @@ export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
                                 </Box>
 
                                 <Stack spacing={2}>
-                                    <Botao fullWidth cor="secondary" onClick={() => setModalEntrevista(true)}>
+                                    <Botao fullWidth cor="secondary" disabled={!aplicacao} onClick={() => setModalEntrevista(true)}>
                                         Agendar entrevista <EventAvailableOutlinedIcon fontSize="small" />
                                     </Botao>
-                                    <Botao fullWidth variante="outlined" cor="success" onClick={() => abrirModalSituacao(Dominios.Situacao.Aprovado)}>
+                                    <Botao fullWidth variante="outlined" cor="success" disabled={!aplicacao} onClick={() => abrirModalSituacao(Dominios.Situacao.Aprovado)}>
                                         Aprovar <CheckCircleOutlinedIcon fontSize="small" />
                                     </Botao>
-                                    <Botao fullWidth variante="outlined" cor="error" onClick={() => abrirModalSituacao(Dominios.Situacao.Reprovado)}>
+                                    <Botao fullWidth variante="outlined" cor="error" disabled={!aplicacao} onClick={() => abrirModalSituacao(Dominios.Situacao.Reprovado)}>
                                         Reprovar <HighlightOffIcon fontSize="small" />
                                     </Botao>
                                 </Stack>
