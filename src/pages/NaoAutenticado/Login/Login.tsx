@@ -72,7 +72,7 @@ export const Login = () => {
                                     name="senha"
                                     children={(field) => <field.InputForm variante='senha' label="Senha" placeholder='Digite sua senha' />}
                                 />
-                                <LinkCustomizado to='/esqueci-minha-senha' cor='secondary'>Esqueci minha senha</LinkCustomizado>
+                                <LinkCustomizado to='/recuperar-senha' cor='secondary'>Esqueci minha senha</LinkCustomizado>
                             </Stack>
                         </Stack>
                         <Stack sx={{ alignItems: "center" }}>

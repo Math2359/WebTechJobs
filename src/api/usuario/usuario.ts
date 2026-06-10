@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { UsuarioQueryKeys, type CriarUsuarioRequest, type EditarFotoPerfilRequest, type GerarTokenRequest, type GerarTokenResponse, type ObterNotificacoesResponse, type ObterQuantidadeNotificacoesNaoLidasResponse, type ValidarEmailRequest } from "./usuario.types";
+import { UsuarioQueryKeys, type CriarUsuarioRequest, type EditarFotoPerfilRequest, type GerarTokenRequest, type GerarTokenResponse, type ObterNotificacoesResponse, type ObterQuantidadeNotificacoesNaoLidasResponse, type RecuperarSenhaRequest, type RedefinirSenhaRequest, type ValidarEmailRequest } from "./usuario.types";
 import { toast } from "sonner";
 import { api } from "@/lib/axios";
 import type { ErroResponse } from "../types";
@@ -68,6 +68,30 @@ export const useGerarToken = () => useMutation({
     },
     onSuccess: () => {
         toast.success("Login realizado com sucesso!")
+    },
+    onError: (erro: ErroResponse) => {
+        toast.error(erro.response?.data.mensagem)
+    }
+})
+
+export const useRecuperarSenha = () => useMutation({
+    mutationFn: async (request: RecuperarSenhaRequest) => {
+        await api.post("/usuario/senha/recuperacao", request)
+    },
+    onSuccess: () => {
+        toast.success("Link de recuperação enviado com sucesso!")
+    },
+    onError: (erro: ErroResponse) => {
+        toast.error(erro.response?.data.mensagem)
+    }
+})
+
+export const useRedefinirSenha = () => useMutation({
+    mutationFn: async (request: RedefinirSenhaRequest) => {
+        await api.post("/usuario/senha/redefinir", request)
+    },
+    onSuccess: () => {
+        toast.success("Senha redefinida com sucesso!")
     },
     onError: (erro: ErroResponse) => {
         toast.error(erro.response?.data.mensagem)

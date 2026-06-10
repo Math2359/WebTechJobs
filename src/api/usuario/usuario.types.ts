@@ -38,6 +38,15 @@ export type GerarTokenRequest = {
     senha: string
 }
 
+export type RecuperarSenhaRequest = {
+    login: string
+}
+
+export type RedefinirSenhaRequest = {
+    codigo: string
+    novaSenha: string
+}
+
 export type GerarTokenResponse = {
     token: string
     nomeUsuario: string

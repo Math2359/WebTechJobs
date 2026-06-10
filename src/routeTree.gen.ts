@@ -16,8 +16,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AutenticadoNotificacoesRouteImport } from './routes/_autenticado/notificacoes'
 import { Route as AutenticadoEmpresaRouteRouteImport } from './routes/_autenticado/empresa/route'
 import { Route as AutenticadoCandidatoRouteRouteImport } from './routes/_autenticado/candidato/route'
+import { Route as NaoAutenticadorotasRedefinirSenhaRouteImport } from './routes/_naoAutenticado/(rotas)/redefinir-senha'
+import { Route as NaoAutenticadorotasRecuperarSenhaRouteImport } from './routes/_naoAutenticado/(rotas)/recuperar-senha'
 import { Route as NaoAutenticadorotasLoginRouteImport } from './routes/_naoAutenticado/(rotas)/login'
-import { Route as NaoAutenticadorotasEsqueciMinhaSenhaRouteImport } from './routes/_naoAutenticado/(rotas)/esqueci-minha-senha'
 import { Route as NaoAutenticadorotasCadastroRouteImport } from './routes/_naoAutenticado/(rotas)/cadastro'
 import { Route as AutenticadoEmpresarotasIndexRouteImport } from './routes/_autenticado/empresa/(rotas)/index'
 import { Route as AutenticadoCandidatorotasIndexRouteImport } from './routes/_autenticado/candidato/(rotas)/index'
@@ -65,16 +66,22 @@ const AutenticadoCandidatoRouteRoute =
     path: '/candidato',
     getParentRoute: () => AutenticadoRouteRoute,
   } as any)
+const NaoAutenticadorotasRedefinirSenhaRoute =
+  NaoAutenticadorotasRedefinirSenhaRouteImport.update({
+    id: '/(rotas)/redefinir-senha',
+    path: '/redefinir-senha',
+    getParentRoute: () => NaoAutenticadoRouteRoute,
+  } as any)
+const NaoAutenticadorotasRecuperarSenhaRoute =
+  NaoAutenticadorotasRecuperarSenhaRouteImport.update({
+    id: '/(rotas)/recuperar-senha',
+    path: '/recuperar-senha',
+    getParentRoute: () => NaoAutenticadoRouteRoute,
+  } as any)
 const NaoAutenticadorotasLoginRoute =
   NaoAutenticadorotasLoginRouteImport.update({
     id: '/(rotas)/login',
     path: '/login',
-    getParentRoute: () => NaoAutenticadoRouteRoute,
-  } as any)
-const NaoAutenticadorotasEsqueciMinhaSenhaRoute =
-  NaoAutenticadorotasEsqueciMinhaSenhaRouteImport.update({
-    id: '/(rotas)/esqueci-minha-senha',
-    path: '/esqueci-minha-senha',
     getParentRoute: () => NaoAutenticadoRouteRoute,
   } as any)
 const NaoAutenticadorotasCadastroRoute =
@@ -157,8 +164,9 @@ export interface FileRoutesByFullPath {
   '/empresa': typeof AutenticadoEmpresaRouteRouteWithChildren
   '/notificacoes': typeof AutenticadoNotificacoesRoute
   '/cadastro': typeof NaoAutenticadorotasCadastroRoute
-  '/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/login': typeof NaoAutenticadorotasLoginRoute
+  '/recuperar-senha': typeof NaoAutenticadorotasRecuperarSenhaRoute
+  '/redefinir-senha': typeof NaoAutenticadorotasRedefinirSenhaRoute
   '/candidato/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
   '/candidato/editar': typeof AutenticadoCandidatorotasEditarRoute
   '/empresa/editar': typeof AutenticadoEmpresarotasEditarRoute
@@ -176,8 +184,9 @@ export interface FileRoutesByTo {
   '/validacao-email': typeof ValidacaoEmailRoute
   '/notificacoes': typeof AutenticadoNotificacoesRoute
   '/cadastro': typeof NaoAutenticadorotasCadastroRoute
-  '/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/login': typeof NaoAutenticadorotasLoginRoute
+  '/recuperar-senha': typeof NaoAutenticadorotasRecuperarSenhaRoute
+  '/redefinir-senha': typeof NaoAutenticadorotasRedefinirSenhaRoute
   '/candidato/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
   '/candidato/editar': typeof AutenticadoCandidatorotasEditarRoute
   '/empresa/editar': typeof AutenticadoEmpresarotasEditarRoute
@@ -200,8 +209,9 @@ export interface FileRoutesById {
   '/_autenticado/empresa': typeof AutenticadoEmpresaRouteRouteWithChildren
   '/_autenticado/notificacoes': typeof AutenticadoNotificacoesRoute
   '/_naoAutenticado/(rotas)/cadastro': typeof NaoAutenticadorotasCadastroRoute
-  '/_naoAutenticado/(rotas)/esqueci-minha-senha': typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   '/_naoAutenticado/(rotas)/login': typeof NaoAutenticadorotasLoginRoute
+  '/_naoAutenticado/(rotas)/recuperar-senha': typeof NaoAutenticadorotasRecuperarSenhaRoute
+  '/_naoAutenticado/(rotas)/redefinir-senha': typeof NaoAutenticadorotasRedefinirSenhaRoute
   '/_autenticado/candidato/(rotas)/candidaturas': typeof AutenticadoCandidatorotasCandidaturasRoute
   '/_autenticado/candidato/(rotas)/editar': typeof AutenticadoCandidatorotasEditarRoute
   '/_autenticado/empresa/(rotas)/editar': typeof AutenticadoEmpresarotasEditarRoute
@@ -223,8 +233,9 @@ export interface FileRouteTypes {
     | '/empresa'
     | '/notificacoes'
     | '/cadastro'
-    | '/esqueci-minha-senha'
     | '/login'
+    | '/recuperar-senha'
+    | '/redefinir-senha'
     | '/candidato/candidaturas'
     | '/candidato/editar'
     | '/empresa/editar'
@@ -242,8 +253,9 @@ export interface FileRouteTypes {
     | '/validacao-email'
     | '/notificacoes'
     | '/cadastro'
-    | '/esqueci-minha-senha'
     | '/login'
+    | '/recuperar-senha'
+    | '/redefinir-senha'
     | '/candidato/candidaturas'
     | '/candidato/editar'
     | '/empresa/editar'
@@ -265,8 +277,9 @@ export interface FileRouteTypes {
     | '/_autenticado/empresa'
     | '/_autenticado/notificacoes'
     | '/_naoAutenticado/(rotas)/cadastro'
-    | '/_naoAutenticado/(rotas)/esqueci-minha-senha'
     | '/_naoAutenticado/(rotas)/login'
+    | '/_naoAutenticado/(rotas)/recuperar-senha'
+    | '/_naoAutenticado/(rotas)/redefinir-senha'
     | '/_autenticado/candidato/(rotas)/candidaturas'
     | '/_autenticado/candidato/(rotas)/editar'
     | '/_autenticado/empresa/(rotas)/editar'
@@ -338,18 +351,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AutenticadoCandidatoRouteRouteImport
       parentRoute: typeof AutenticadoRouteRoute
     }
+    '/_naoAutenticado/(rotas)/redefinir-senha': {
+      id: '/_naoAutenticado/(rotas)/redefinir-senha'
+      path: '/redefinir-senha'
+      fullPath: '/redefinir-senha'
+      preLoaderRoute: typeof NaoAutenticadorotasRedefinirSenhaRouteImport
+      parentRoute: typeof NaoAutenticadoRouteRoute
+    }
+    '/_naoAutenticado/(rotas)/recuperar-senha': {
+      id: '/_naoAutenticado/(rotas)/recuperar-senha'
+      path: '/recuperar-senha'
+      fullPath: '/recuperar-senha'
+      preLoaderRoute: typeof NaoAutenticadorotasRecuperarSenhaRouteImport
+      parentRoute: typeof NaoAutenticadoRouteRoute
+    }
     '/_naoAutenticado/(rotas)/login': {
       id: '/_naoAutenticado/(rotas)/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof NaoAutenticadorotasLoginRouteImport
-      parentRoute: typeof NaoAutenticadoRouteRoute
-    }
-    '/_naoAutenticado/(rotas)/esqueci-minha-senha': {
-      id: '/_naoAutenticado/(rotas)/esqueci-minha-senha'
-      path: '/esqueci-minha-senha'
-      fullPath: '/esqueci-minha-senha'
-      preLoaderRoute: typeof NaoAutenticadorotasEsqueciMinhaSenhaRouteImport
       parentRoute: typeof NaoAutenticadoRouteRoute
     }
     '/_naoAutenticado/(rotas)/cadastro': {
@@ -508,15 +528,18 @@ const AutenticadoRouteRouteWithChildren =
 
 interface NaoAutenticadoRouteRouteChildren {
   NaoAutenticadorotasCadastroRoute: typeof NaoAutenticadorotasCadastroRoute
-  NaoAutenticadorotasEsqueciMinhaSenhaRoute: typeof NaoAutenticadorotasEsqueciMinhaSenhaRoute
   NaoAutenticadorotasLoginRoute: typeof NaoAutenticadorotasLoginRoute
+  NaoAutenticadorotasRecuperarSenhaRoute: typeof NaoAutenticadorotasRecuperarSenhaRoute
+  NaoAutenticadorotasRedefinirSenhaRoute: typeof NaoAutenticadorotasRedefinirSenhaRoute
 }
 
 const NaoAutenticadoRouteRouteChildren: NaoAutenticadoRouteRouteChildren = {
   NaoAutenticadorotasCadastroRoute: NaoAutenticadorotasCadastroRoute,
-  NaoAutenticadorotasEsqueciMinhaSenhaRoute:
-    NaoAutenticadorotasEsqueciMinhaSenhaRoute,
   NaoAutenticadorotasLoginRoute: NaoAutenticadorotasLoginRoute,
+  NaoAutenticadorotasRecuperarSenhaRoute:
+    NaoAutenticadorotasRecuperarSenhaRoute,
+  NaoAutenticadorotasRedefinirSenhaRoute:
+    NaoAutenticadorotasRedefinirSenhaRoute,
 }
 
 const NaoAutenticadoRouteRouteWithChildren =
