@@ -2,11 +2,6 @@ import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import { Dominios } from "@/lib/dominios"
 import type { Situacao } from "@/lib/dominios/situacao"
-import type { AvaliacaoCandidatoSchema } from "./ModalAvaliacaoCandidato.types"
-
-export const valoresIniciaisAvaliacaoCandidato: AvaliacaoCandidatoSchema = {
-    observacao: ""
-}
 
 export const AVALIACAO_CANDIDATO_MAPEADA = {
     [Dominios.Situacao.Aprovado]: {

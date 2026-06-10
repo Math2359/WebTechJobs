@@ -60,7 +60,7 @@ export const ModalAgendarEntrevista = ({ open, handleClose, candidato }: ModalAg
                     </Grid>
                 </Grid>
 
-                <Grid container spacing={1} sx={{ placeContent: "end" }}>
+                <Grid container spacing={2} sx={{ placeContent: "end" }}>
                     <Botao onClick={onClose} variante="ghost" cor="cinza">Cancelar</Botao>
                     <Subscribe selector={(selector) => [selector.isSubmitting]} children={([isSubmitting]) => (
                         <Botao cor="secondary" loading={isSubmitting} type="submit" onClick={handleSubmit}>

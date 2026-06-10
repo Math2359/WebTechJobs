@@ -7,7 +7,3 @@ export type ModalAvaliacaoCandidatoProps = ModalBaseGenericaProps<{
     situacao: Situacao
     candidato?: CandidatoAplicacao
 }>
-
-export type AvaliacaoCandidatoSchema = {
-    observacao: string
-}

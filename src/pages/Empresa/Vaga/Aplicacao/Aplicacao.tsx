@@ -24,6 +24,7 @@ import { Dominios } from "@/lib/dominios"
 import { formatarTelefone } from "@/lib/utils"
 import type { Situacao } from "@/lib/dominios/situacao"
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
+import { IconeEmailValidado } from "@/components/ValidacaoEmail/ValidacaoEmail"
 
 type AplicacaoProps = {
     idAplicacao: number
@@ -71,9 +72,10 @@ export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
                                     <Grid container spacing={1} sx={{ placeItems: "center" }}>
                                         <AvatarPerfil src={fotoCandidato} />
                                         <Box>
-                                            <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
-                                                {informacaoCandidato?.nome ?? "Candidato"}
-                                            </Typography>
+                                            <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
+                                                <Typography variant="h6" sx={{ fontWeight: 700 }}>{informacaoCandidato?.nome}</Typography>
+                                                {informacaoCandidato?.emailValidado && <IconeEmailValidado />}
+                                            </Stack>
                                             <Typography variant="subtitle2" color="primary.main">
                                                 {informacaoCandidato?.area ?? "-"} {localizacao ? `- ${localizacao}` : ""}
                                             </Typography>

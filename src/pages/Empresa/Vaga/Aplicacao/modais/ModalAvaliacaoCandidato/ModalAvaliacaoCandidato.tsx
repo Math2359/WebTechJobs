@@ -1,10 +1,8 @@
 import { Box, Grid, Stack, Typography } from "@mui/material"
 import { Botao } from "@/components/Botao/Botao"
-import { useFormCustomizado } from "@/components/Formulario"
 import { ModalBase } from "@/components/ModalBase/ModalBase"
 import { useAtualizarSituacaoAplicacaoVaga } from "@/api/empresa/empresa"
-import { avaliacaoCandidatoSchema } from "./ModalAvaliacaoCandidato.schema"
-import { obterAvaliacaoCandidato, valoresIniciaisAvaliacaoCandidato } from "./ModalAvaliacaoCandidato.utils"
+import { obterAvaliacaoCandidato } from "./ModalAvaliacaoCandidato.utils"
 import type { ModalAvaliacaoCandidatoProps } from "./ModalAvaliacaoCandidato.types"
 
 export const ModalAvaliacaoCandidato = ({ open, handleClose, situacao, candidato, idAplicacao }: ModalAvaliacaoCandidatoProps) => {
@@ -12,25 +10,17 @@ export const ModalAvaliacaoCandidato = ({ open, handleClose, situacao, candidato
     const { mutateAsync, isPending } = useAtualizarSituacaoAplicacaoVaga()
     const { Icone } = avaliacao
 
-    const { AppField, Subscribe, handleSubmit, reset } = useFormCustomizado({
-        defaultValues: valoresIniciaisAvaliacaoCandidato,
-        validators: {
-            onSubmit: avaliacaoCandidatoSchema,
-            onBlur: avaliacaoCandidatoSchema
-        },
-        onSubmit: async () => {
-            if (!situacao) return
+    const handleSubmit = async () => {
+        if (!situacao) return
 
-            await mutateAsync({
-                idAplicacao,
-                situacao
-            })
-            onClose()
-        }
-    })
+        await mutateAsync({
+            idAplicacao,
+            situacao
+        })
+        onClose()
+    }
 
     const onClose = () => {
-        reset()
         handleClose()
     }
 
@@ -57,20 +47,14 @@ export const ModalAvaliacaoCandidato = ({ open, handleClose, situacao, candidato
                     </Typography>
                 </Box>
 
-                <AppField name="observacao" children={(field) => (
-                    <field.InputForm label="Observação" multiline minRows={3} variante="normal" placeholder="Adicione uma observação interna" cor="secondary" />
-                )} />
-
                 <Grid container spacing={2}>
                     <Grid size="grow">
                         <Botao fullWidth cor="cinza" onClick={onClose} variante="ghost" disabled={isPending}>Cancelar</Botao>
                     </Grid>
                     <Grid size="grow">
-                        <Subscribe selector={(selector) => [selector.isSubmitting]} children={([isSubmitting]) => (
-                            <Botao fullWidth variante="outlined" cor={avaliacao.cor} onClick={handleSubmit} loading={isPending || isSubmitting}>
+                            <Botao fullWidth variante="outlined" cor={avaliacao.cor} onClick={handleSubmit} loading={isPending}>
                                 {avaliacao.botao}
                             </Botao>
-                        )} />
                     </Grid>
                 </Grid>
             </Stack>

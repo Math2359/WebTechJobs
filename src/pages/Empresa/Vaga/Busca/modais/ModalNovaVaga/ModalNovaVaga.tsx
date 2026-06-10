@@ -98,6 +98,7 @@ export const ModalNovaVaga = ({ open, handleClose }: ModalBaseGenericaProps) => 
                                     <Grid container>
                                         <Grid size="grow">
                                             <InputNormal
+                                                cor="secondary"
                                                 sx={{ width: "100%" }}
                                                 placeholder="Digite uma tecnologia"
                                                 value={tecnologia}
@@ -143,7 +144,7 @@ export const ModalNovaVaga = ({ open, handleClose }: ModalBaseGenericaProps) => 
                     </Grid>
                 </Stack>
 
-                <Grid container spacing={1} sx={{ placeContent: "end" }}>
+                <Grid container spacing={2} sx={{ placeContent: "end" }}>
                     <Botao onClick={onClose} variante="ghost" cor="cinza">Cancelar</Botao>
                     <Subscribe selector={(selector) => [selector.isSubmitting]} children={([isSubmitting]) => (
                         <Botao cor="secondary" loading={isPending || isSubmitting} type="submit" onClick={handleSubmit}>

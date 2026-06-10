@@ -25,6 +25,7 @@ type DadosVagas = {
 type InformacoesEmpresaResponse = InformacoesEmpresa & DadosVagas & {
     id: number
     nome: string
+    emailValidado: boolean
 }
 
 export type ObterInformacoesResponse = InformacoesEmpresaResponse
@@ -42,6 +43,7 @@ export type InformacaoCandidatoAplicacao = InformacoesCandidato & {
     id: number
     idCandidato: number
     nome?: string
+    emailValidado: boolean
 }
 
 export type ObterAplicacaoVagaEmpresaResponse = {

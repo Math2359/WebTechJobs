@@ -12,6 +12,7 @@ import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
 import { SemDados } from "@/components/SemDados/SemDados"
 import { InputNormal } from "@/components/Formulario/InputForm/variantes/Normal/Normal"
 import { VagaCard } from "@/pages/Candidato/components/VagaCard"
+import { IconeEmailValidado } from "@/components/ValidacaoEmail/ValidacaoEmail"
 
 type DetalhesProps = {
     idEmpresa: number
@@ -57,9 +58,12 @@ export const Empresa = ({ idEmpresa }: DetalhesProps) => {
                             <Grid container spacing={1} sx={{ placeItems: "center" }}>
                                 <AvatarPerfil src={fotoEmpresa} />
                                 <Box>
-                                    <Typography variant="h6" sx={{ fontWeight: 700, lineHeight: 1.1 }}>
-                                        {informacoesEmpresa?.nome ?? "Empresa"}
-                                    </Typography>
+                                    <Stack direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
+                                        <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                            {informacoesEmpresa?.nome ?? "Empresa"}
+                                        </Typography>
+                                        {informacoesEmpresa?.emailValidado && <IconeEmailValidado />}
+                                    </Stack>
                                     <Typography variant="subtitle2" color="primary.main">
                                         {informacoesEmpresa?.setor ?? "-"}
                                     </Typography>

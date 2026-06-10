@@ -36,6 +36,7 @@ export const ModalNovaExperiencia = ({ handleClose, open, tipoExperiencia, salva
             handleClose={onClose}
             open={open}
             icone={AddIcon}
+            corIcone="primary"
             titulo="Nova experiência"
             subtitulo="Informe os dados para adicionar uma experiência ao perfil."
         >
@@ -65,8 +66,8 @@ export const ModalNovaExperiencia = ({ handleClose, open, tipoExperiencia, salva
                     </Grid>
                 </Stack>
 
-                <Grid container spacing={1} sx={{ placeContent: "end" }}>
-                    <Botao onClick={onClose} variante="outlined" cor="cinza">Cancelar</Botao>
+                <Grid container spacing={2} sx={{ placeContent: "end" }}>
+                    <Botao onClick={onClose} variante="ghost" cor="cinza">Cancelar</Botao>
                     <Subscribe
                         selector={selector => [selector.isSubmitting]}
                         children={([isSubmitting]) => (

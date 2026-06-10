@@ -11,6 +11,7 @@ import { AvatarPerfil } from '@/components/AvatarPerfil/AvatarPerfil'
 import { RotasPerfil } from '@/lib/dominios/perfil'
 import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb'
 import { COR_ITEM } from '@/pages/Notificacoes/Notificacoes.utils'
+import { Dominios } from '@/lib/dominios'
 
 export const Route = createFileRoute('/_autenticado')({
     component: RouteComponent,
@@ -49,8 +50,8 @@ function RouteComponent() {
                 <Logo />
                 <Grid container spacing={3} sx={{ alignItems: "center" }}>
                     <Grid container spacing={3}>
-                        <NavLink underLineColor='primary' to={RotasPerfil[perfil] + "/vaga"}>Vagas</NavLink>
-                        <NavLink underLineColor='primary' to="/candidato/candidaturas">Candidaturas</NavLink>
+                        <NavLink underLineColor={COR_ITEM[perfil][1]} to={RotasPerfil[perfil] + "/vaga"}>Vagas</NavLink>
+                        {perfil === Dominios.Perfil.Candidato && <NavLink underLineColor="primary" to="/candidato/candidaturas">Candidaturas</NavLink>}
                     </Grid>
                     <Tooltip title="Notificações">
                         <IconButton
