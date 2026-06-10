@@ -7,6 +7,7 @@ export type CandidatoAplicacao = {
 }
 
 export type ModalAgendarEntrevistaProps = ModalBaseGenericaProps<{
+    idAplicacao: number
     candidato?: CandidatoAplicacao
 }>
 

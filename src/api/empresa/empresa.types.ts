@@ -1,4 +1,5 @@
 import type { Experiencia, InformacoesCandidato } from "@/api/candidato/candidato.types"
+import type { AgendamentoEntrevista } from "@/api/types"
 import type { VagaVisualizacaoCandidato } from "@/api/vaga/vaga.types"
 import type { Situacao } from "@/lib/dominios/situacao"
 
@@ -39,6 +40,14 @@ export type AtualizarSituacaoAplicacaoVagaRequest = {
     situacao: number
 }
 
+export type AgendarEntrevistaRequest = {
+    idAplicacao: number
+    data: string
+    hora: string
+    local: string
+    observacao: string
+}
+
 export type InformacaoCandidatoAplicacao = InformacoesCandidato & {
     id: number
     idCandidato: number
@@ -52,4 +61,5 @@ export type ObterAplicacaoVagaEmpresaResponse = {
     situacao: Situacao
     dataCadastroAplicacao: Date
     urlCv: string | undefined
+    agendamentoEntrevista?: AgendamentoEntrevista
 }

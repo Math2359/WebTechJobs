@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { EmpresaQueryKeys, type AtualizarInformacoesRequest, type AtualizarSituacaoAplicacaoVagaRequest, type ObterAplicacaoVagaEmpresaResponse, type ObterInformacoesEmpresaPorIdResponse, type ObterInformacoesResponse } from "./empresa.types";
+import { EmpresaQueryKeys, type AgendarEntrevistaRequest, type AtualizarInformacoesRequest, type AtualizarSituacaoAplicacaoVagaRequest, type ObterAplicacaoVagaEmpresaResponse, type ObterInformacoesEmpresaPorIdResponse, type ObterInformacoesResponse } from "./empresa.types";
 import { api } from "@/lib/axios";
 import { toast } from "sonner";
 import { queryClient } from "@/lib/queryClient";
@@ -63,6 +63,19 @@ export const useAtualizarSituacaoAplicacaoVaga = () => useMutation({
     },
     onSuccess: () => {
         toast.success("Situação da aplicação atualizada com sucesso!")
+        queryClient.invalidateQueries({ queryKey: [EmpresaQueryKeys.ObterAplicacaoVaga] })
+    },
+    onError: (erro: ErroResponse) => {
+        toast.error(erro.response?.data.mensagem)
+    }
+})
+
+export const useAgendarEntrevista = () => useMutation({
+    mutationFn: async ({ idAplicacao, ...request }: AgendarEntrevistaRequest) => {
+        await api.post(`/empresa/aplicacao-vaga/${idAplicacao}/entrevista`, request)
+    },
+    onSuccess: () => {
+        toast.success("Entrevista agendada com sucesso!")
         queryClient.invalidateQueries({ queryKey: [EmpresaQueryKeys.ObterAplicacaoVaga] })
     },
     onError: (erro: ErroResponse) => {

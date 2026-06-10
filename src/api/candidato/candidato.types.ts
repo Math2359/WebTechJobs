@@ -1,4 +1,5 @@
 import type { Situacao } from "@/lib/dominios/situacao"
+import type { AgendamentoEntrevista } from "@/api/types"
 import type { VagaVisualizacaoCandidato } from "@/api/vaga/vaga.types"
 import type { TipoExperiencia } from "@/lib/dominios/tipoExperiencia"
 
@@ -53,6 +54,7 @@ export type AplicarVagaRequest = {
 export type AplicacaoVagaCandidato = VagaVisualizacaoCandidato & {
     situacao: Situacao | undefined
     dataAtualizacaoAplicacao: Date | undefined
+    agendamentoEntrevista?: AgendamentoEntrevista
 }
 
 export type ObterAplicacoesResponse = AplicacaoVagaCandidato[]

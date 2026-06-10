@@ -1,22 +1,34 @@
 import { Grid, Stack } from "@mui/material"
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined"
-import { toast } from "sonner"
 import { Botao } from "@/components/Botao/Botao"
 import { useFormCustomizado } from "@/components/Formulario"
 import { ModalBase } from "@/components/ModalBase/ModalBase"
+import { useAgendarEntrevista } from "@/api/empresa/empresa"
+import { format } from "date-fns"
 import { agendarEntrevistaSchema } from "./ModalAgendarEntrevista.schema"
 import { valoresIniciaisAgendarEntrevista } from "./ModalAgendarEntrevista.utils"
 import type { ModalAgendarEntrevistaProps } from "./ModalAgendarEntrevista.types"
 
-export const ModalAgendarEntrevista = ({ open, handleClose, candidato }: ModalAgendarEntrevistaProps) => {
+export const ModalAgendarEntrevista = ({ open, handleClose, idAplicacao, candidato }: ModalAgendarEntrevistaProps) => {
+    const { mutateAsync } = useAgendarEntrevista()
+
     const { AppField, Subscribe, handleSubmit, reset } = useFormCustomizado({
         defaultValues: valoresIniciaisAgendarEntrevista,
         validators: {
             onSubmit: agendarEntrevistaSchema,
             onBlur: agendarEntrevistaSchema
         },
-        onSubmit: async () => {
-            toast.success("Entrevista agendada com sucesso!")
+        onSubmit: async ({ value }) => {
+            if (!value.data) return
+
+            await mutateAsync({
+                idAplicacao,
+                data: format(value.data, "yyyy-MM-dd"),
+                hora: `${value.hora}:00`,
+                local: value.local,
+                observacao: value.observacao
+            })
+
             onClose()
         }
     })

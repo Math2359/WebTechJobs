@@ -4,6 +4,7 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined"
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded"
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined"
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined"
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
 import { Botao } from "@/components/Botao/Botao"
 import { Card } from "@/components/Card/Card"
 import { formatarReal, diffDatas } from "@/lib/utils"
@@ -14,6 +15,8 @@ import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
 import { useObterVagaAplicacaoCandidato } from "@/api/candidato/candidato"
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Dominios } from "@/lib/dominios"
+import { formatarDataHoraEntrevista } from "@/lib/data"
 
 type DetalhesProps = {
     id: number
@@ -131,6 +134,31 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                                         }}
                                     />
 
+                                    {vaga.situacao === Dominios.Situacao.Entrevista && vaga.agendamentoEntrevista && (
+                                        <Box
+                                            sx={(theme) => ({
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: 1,
+                                                padding: theme.spacing(1.5),
+                                                borderRadius: 1,
+                                                backgroundColor: theme.palette.primary.main,
+                                                color: theme.palette.primary.contrastText,
+                                            })}
+                                        >
+                                            <CalendarMonthOutlinedIcon fontSize="small" />
+                                            <Stack spacing={0}>
+                                                <Typography variant="caption">Entrevista marcada para</Typography>
+                                                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                                    {formatarDataHoraEntrevista(
+                                                        vaga.agendamentoEntrevista.data,
+                                                        vaga.agendamentoEntrevista.hora
+                                                    )}
+                                                </Typography>
+                                            </Stack>
+                                        </Box>
+                                    )}
+
                                     <Typography variant="caption" color="text.secondary">
                                         Atualizado em {new Date(vaga?.dataAtualizacaoAplicacao ?? "").toLocaleDateString("pt-BR")}
                                     </Typography>
@@ -157,7 +185,9 @@ export const Detalhes = ({ id }: DetalhesProps) => {
                             <Stack spacing={0.75} sx={{ pt: 2 }}>
                                 <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
                                     <AccessTimeOutlinedIcon fontSize="small" color="action" />
-                                    <Typography variant="caption">Encerra em {diffDatas(new Date(), vaga?.dataFimInscricoes!)}</Typography>
+                                    <Typography variant="caption">
+                                        Encerra em {vaga?.dataFimInscricoes ? diffDatas(new Date(), vaga.dataFimInscricoes) : "-"}
+                                    </Typography>
                                 </Box>
                                 <Botao to={`/candidato/empresa/${vaga?.idEmpresa}`} sx={{ width: "fit-content" }} variante="ghost" cor="info">
                                     <BusinessOutlinedIcon fontSize="small" />

@@ -9,6 +9,7 @@ import GitHubIcon from "@mui/icons-material/GitHub"
 import EventAvailableOutlinedIcon from "@mui/icons-material/EventAvailableOutlined"
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
 import { Card } from "@/components/Card/Card"
 import { AvatarPerfil } from "@/components/AvatarPerfil/AvatarPerfil"
 import { RenderizarTexto } from "@/components/RenderizarTexto/RenderizarTexto"
@@ -25,6 +26,7 @@ import { formatarTelefone } from "@/lib/utils"
 import type { Situacao } from "@/lib/dominios/situacao"
 import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 import { IconeEmailValidado } from "@/components/ValidacaoEmail/ValidacaoEmail"
+import { formatarDataHoraEntrevista } from "@/lib/data"
 
 type AplicacaoProps = {
     idAplicacao: number
@@ -260,6 +262,30 @@ export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
                             </Stack>
 
                             <Stack spacing={0.75} sx={{ pt: 2 }}>
+                                {aplicacao?.situacao === Dominios.Situacao.Entrevista && aplicacao.agendamentoEntrevista && (
+                                    <Box
+                                        sx={(theme) => ({
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 1,
+                                            padding: theme.spacing(1.5),
+                                            borderRadius: 1,
+                                            backgroundColor: theme.palette.secondary.main,
+                                            color: theme.palette.secondary.contrastText,
+                                        })}
+                                    >
+                                        <CalendarMonthOutlinedIcon fontSize="small" />
+                                        <Stack spacing={0}>
+                                            <Typography variant="caption">Entrevista marcada para</Typography>
+                                            <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                                {formatarDataHoraEntrevista(
+                                                    aplicacao.agendamentoEntrevista.data,
+                                                    aplicacao.agendamentoEntrevista.hora
+                                                )}
+                                            </Typography>
+                                        </Stack>
+                                    </Box>
+                                )}
                                 <Typography variant="caption" color="text.secondary">
                                     Aplicação recebida em <b>{aplicacao?.dataCadastroAplicacao ? new Date(aplicacao.dataCadastroAplicacao).toLocaleDateString("pt-BR") : "-"}</b>
                                 </Typography>
@@ -270,6 +296,7 @@ export const Aplicacao = ({ idAplicacao }: AplicacaoProps) => {
             </Grid>
 
             <ModalAgendarEntrevista
+                idAplicacao={idAplicacao}
                 candidato={candidato}
                 open={modalEntrevista}
                 handleClose={() => setModalEntrevista(false)}

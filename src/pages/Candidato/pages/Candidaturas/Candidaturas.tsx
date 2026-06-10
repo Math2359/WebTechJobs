@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react"
 import { Box, Chip, Grid, Stack, Typography } from "@mui/material"
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined"
 import { useNavigate } from "@tanstack/react-router"
 import { Card } from "@/components/Card/Card"
 import { SemDados } from "@/components/SemDados/SemDados"
@@ -11,6 +12,8 @@ import { ChipSituacao } from "@/components/ChipSituacao/ChipSituacao"
 import { situacoes } from "@/components/ChipSituacao/ChipSituacao.utils"
 import type { AplicacaoVagaCandidato } from "@/api/candidato/candidato.types"
 import type { Situacao } from "@/lib/dominios/situacao"
+import { Dominios } from "@/lib/dominios"
+import { formatarDataHoraEntrevista } from "@/lib/data"
 
 const AplicacaoItem = ({ aplicacao }: { aplicacao: AplicacaoVagaCandidato }) => {
     const navigate = useNavigate()
@@ -49,6 +52,29 @@ const AplicacaoItem = ({ aplicacao }: { aplicacao: AplicacaoVagaCandidato }) => 
                         </Typography>
                     </Box>
                 </Box>
+
+                {aplicacao.situacao === Dominios.Situacao.Entrevista && aplicacao.agendamentoEntrevista && (
+                    <Box
+                        sx={(theme) => ({
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                            marginTop: theme.spacing(1.5),
+                            padding: theme.spacing(1),
+                            borderRadius: 1,
+                            color: theme.palette.primary.contrastText,
+                            backgroundColor: theme.palette.primary.main,
+                        })}
+                    >
+                        <CalendarMonthOutlinedIcon fontSize="small" />
+                        <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                            Entrevista marcada para {formatarDataHoraEntrevista(
+                                aplicacao.agendamentoEntrevista.data,
+                                aplicacao.agendamentoEntrevista.hora
+                            )}
+                        </Typography>
+                    </Box>
+                )}
             </Card>
         </Box>
     )
